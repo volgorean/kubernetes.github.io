@@ -20,4 +20,5 @@ defaults:
       layout: docwithnav
       showedit: true
       githubbranch: "release-1.1"
+      docsbranch: "release-1.1"
 permalink: pretty
