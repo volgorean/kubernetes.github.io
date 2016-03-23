@@ -22,3 +22,9 @@ defaults:
       githubbranch: "release-1.1"
       docsbranch: "release-1.1"
 permalink: pretty
+
+exclude:
+  - githubpagesites-0405247c814f.json.enc
+  - githubpagesites-0405247c814f.json
+  - Gemfile
+  - Gemfile.lock
