@@ -4,10 +4,10 @@ rvm:
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_b7b6a058a6f4_key -iv $encrypted_b7b6a058a6f4_iv -in githubpagesites-0405247c814f.json.enc -out githubpagesites-0405247c814f.json -d
-- wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz --directory-prefix=${HOME}/gcloud && \
-         cd ${HOME}/gcloud && \
-         tar xzf google-cloud-sdk.tar.gz && \
-         printf '\ny\n\ny\ny\n' | ./google-cloud-sdk/install.sh && \
+- wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz --directory-prefix=${HOME}/gcloud &&
+         cd ${HOME}/gcloud &&
+         tar xzf google-cloud-sdk.tar.gz &&
+         printf '\ny\n\ny\ny\n' | ./google-cloud-sdk/install.sh &&
          cd ${TRAVIS_BUILD_DIR};
 
 before_script:
