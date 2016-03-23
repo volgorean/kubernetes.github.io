@@ -32,10 +32,12 @@ install:
 - echo $PATH
 - ls ${HOME}/google-cloud-sdk/bin
 - gcloud auth activate-service-account --key-file githubpagesites-0405247c814f.json
-- gcloud components install gsutil
+# - gcloud components install gsutil
 - gcloud config set project githubpagessites
 - gem install github-pages
 
 script:
 - jekyll build
-- gsutil rsync -d -r _site gs://kubernetes-docs-v1-1
+- cd _site
+- gcloud preview app deploy app.yaml
+# - gsutil rsync -d -r _site gs://kubernetes-docs-v1-1
