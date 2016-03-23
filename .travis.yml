@@ -25,7 +25,7 @@ env:
 sudo: false # route your build to the container-based infrastructure for a faster build
 
 install:
-- cat $PATH
+- echo $PATH
 - ls ${HOME}/google-cloud-sdk/bin
 - gcloud auth activate-service-account --key-file githubpagesites-0405247c814f.json
 - gcloud components install gsutil
