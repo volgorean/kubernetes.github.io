@@ -36,5 +36,7 @@ install:
 - gcloud config set project githubpagessites
 
 script:
+- cat $PATH
+- ls ${HOME}/google-cloud-sdk/bin
 - jekyll build
 - gsutil rsync -d -r _site gs://kubernetes-docs-v1-1
