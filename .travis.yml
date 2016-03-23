@@ -34,6 +34,7 @@ install:
 - gcloud auth activate-service-account --key-file githubpagesites-0405247c814f.json
 - gcloud components install gsutil
 - gcloud config set project githubpagessites
+- gem install github-pages
 
 script:
 - jekyll build
