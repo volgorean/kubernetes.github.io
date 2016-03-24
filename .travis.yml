@@ -33,7 +33,7 @@ install:
 - ls ${HOME}/google-cloud-sdk/bin
 - gcloud auth activate-service-account --key-file githubpagesites-0405247c814f.json
 # - gcloud components install gsutil
-- gcloud config set project githubpagessites
+- gcloud config set project githubpagesites
 - gem install github-pages
 
 script:
