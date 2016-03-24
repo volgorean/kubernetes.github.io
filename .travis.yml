@@ -13,6 +13,4 @@ script:
 - cd kubernetes-v1-1.github.io
 - git remote add --fetch --track release-1.1 homebase https://github.com/kubernetes/kubernetes.github.io.git
 - git merge -s recursive -X theirs homebase/release-1.1 -m "Sync from homebase"
-- git add .
-- git commit -m "Sync from homebase"
 - git push
