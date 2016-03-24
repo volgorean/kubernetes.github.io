@@ -8,8 +8,11 @@ branches:
   - release-1.1     # test the gh-pages branch
 
 script:
-- git remote set-url --push origin https://github.com/kubernetes-v1-1/kubernetes-v1-1.github.io.git
-- git fetch -p origin
+- cd $HOME
+- git clone https://github.com/kubernetes-v1-1/kubernetes-v1-1.github.io.git
+- cd kubernetes-v1-1.github.io
+- git remote add --fetch --track release-1.1 homebase https://github.com/kubernetes/kubernetes.github.io.git
+- git merge -s recursive -X theirs homebase/release-1.1 -m "Sync from homebase"
 - git add .
-- git commit -m "Sync from kubernetes.github.io, branch release-1.1" 
+- git commit -m "Sync from homebase"
 - git push
