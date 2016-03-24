@@ -8,11 +8,6 @@
   "engines": {
     "node": "~4.2"
   },
-  "scripts": {
-    "start": "node app.js",
-    "monitor": "nodemon app.js",
-    "deploy": "gcloud preview app deploy"
-  },
   "dependencies": {
     "express": "^4.13.4"
   }
