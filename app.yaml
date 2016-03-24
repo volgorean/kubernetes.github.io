@@ -1,3 +1,5 @@
-runtime: python27
-api_version: 1
-threadsafe: true
+runtime: nodejs
+vm: true
+
+skip_files:
+  - ^(.*/)?.*/node_modules/.*$
