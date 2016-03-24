@@ -39,5 +39,5 @@ install:
 script:
 - jekyll build
 - cd _site
-- gcloud preview app deploy app.yaml
+- gcloud preview app deploy --version v1-1
 # - gsutil rsync -d -r _site gs://kubernetes-docs-v1-1
