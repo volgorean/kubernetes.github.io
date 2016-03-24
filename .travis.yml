@@ -8,7 +8,6 @@ branches:
   - release-1.1     # test the gh-pages branch
 
 script:
-- cd $HOME
 - git remote set-url --push origin https://github.com/kubernetes-v1-1/kubernetes-v1-1.github.io.git
 - git fetch -p origin
 - git add .
