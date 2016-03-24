@@ -28,3 +28,6 @@ exclude:
   - githubpagesites-0405247c814f.json
   - Gemfile
   - Gemfile.lock
+
+include:
+  - *.yaml
