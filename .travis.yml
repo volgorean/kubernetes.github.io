@@ -1,12 +1,9 @@
 language: ruby
 rvm:
 - 2.1
-
-# branch whitelist, only for GitHub Pages
 branches:
   only:
-  - release-1.1     # test the gh-pages branch
-
+  - release-1.1
 script:
 - cd $HOME
 - git clone https://github.com/kubernetes-v1-1/kubernetes-v1-1.github.io.git
@@ -14,3 +11,6 @@ script:
 - git remote add --fetch --track release-1.1 homebase https://github.com/kubernetes/kubernetes.github.io.git
 - git merge -s recursive -X theirs homebase/release-1.1 -m "Sync from homebase"
 - git push
+env:
+  global:
+    secure: A90ij3riUEam9MfdlW/44q8DEW73kamLKUmgTmV8aAi4ReZF/0/nnF5Ohbqb5TX8W0Biz+uKdutOOBSC8v98+TZ+BL3edSnFKU3m4o+/1gXVIHTY+3qKj4CEQvYTkNZCNhYXHf+r3bCZtMbapWJIU2iZWYUxx1UkHDX4uYrUn5ujbajd/eWaHgeLFZnZWp6ZJnoWWuTBCRE4gtkQhAZji6yMwcNy0Aonakpcg6gEPZrYycqcZlAc2Yi6ktaGk1IMr0WGopmjE6iYlPtd/PKH1UXN3Xnv1ckG1f5vuZXHaCylSD9senFu4LqcSXBlfuuH6sAd70UUpbTZthU5XfHUm+RZ0DShfKXTD4aEw/Wb9QkNtwhYkOoHl6vq1sQrADmwj4jyYP+ADPQdgfcTIR8jokp66JxA7Syo9dZDeeXakks1tcZUZQ3oSd2MqPUkmT8NvUMNPnVqq9D6ujQDg6tsNPDDtI0auIqQF+UZi339+HzmzOrCY4AQtxkRd4Dz8Q0CL0fnkwNWd1d0o3ghqKY4vZO75yDu4ZUU9FYwS9KGpO5g4awOINsGCkdRa1mmZpNI4TOrG0eSXiCSkTVt9CVtscahIlZa3H1fbw//N5A8NB7rZBoAlvJRazmvuVrsMIZB9EGu6WcBqk+cbChw3D5N8axbZNhgHEV6ndBpxBHWg3U=
