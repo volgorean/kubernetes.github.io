@@ -1,6 +1,6 @@
 # Contributing to the Kubernetes Documentation and Website
 
-**Note: Be aware that this is the repo for the v1.1 docs. See the "master" branch to edit the current stable release.**
+**Note: This is the repo for the v1.1 docs. See the "master" branch to edit the current stable release.**
 
 Welcome! We are very pleased you want to contribute to Kubernetes.
 
