@@ -1,6 +1,6 @@
 # Contributing to the Kubernetes Documentation and Website
 
-**Note: This is the repo for the v1.1 docs. See the "master" branch to edit the current stable release.**
+**Note: Changes to this branch are automatically served as a website at [http://kubernetes-v1-1.github.io/](http://kubernetes-v1-1.github.io/). This branch is for the v1.1 docs. See the "master" branch to edit the current stable release, which is served at http://kubernetes.io.**
 
 Welcome! We are very pleased you want to contribute to Kubernetes.
 
