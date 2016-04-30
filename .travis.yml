@@ -5,13 +5,10 @@ branches:
   only:
   - release-1.1
 script:
-- echo "echo 1 ${GIT_USERNAME}=${GIT_USERNAME}"
-- echo "echo 2 $ENV{GIT_USERNAME}=$ENV{GIT_USERNAME}"
-- echo "echo 3 $GIT_USERNAME=$GIT_USERNAME"
 - cd $HOME
 - git config --global user.email ${GIT_EMAIL}
 - git config --global user.name "${GIT_NAME}"
-- git clone https://github.com/kubernetes-v1-1/kubernetes-v1-1.github.io.git
+- git clone https://${GIT_USERNAME}:${GH_TOKEN}@github.com/kubernetes-v1-1/kubernetes-v1-1.github.io.git
 - cd kubernetes-v1-1.github.io
 - git remote add --fetch --track release-1.1 homebase "https://${GIT_USERNAME}:${GH_TOKEN}@github.com/kubernetes/kubernetes.github.io.git"
 - git merge -s recursive -X theirs homebase/release-1.1 -m "Sync from homebase"
