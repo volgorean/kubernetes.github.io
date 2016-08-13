@@ -1,0 +1,408 @@
+
+
+<!Doctype html>
+<html id="docs" class="Reference Documentation">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/admin/kube-controller-manager/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - kube-controller-manager</title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Reference Documentation</h1>
+	<h5>Design docs, concept definitions, and references for APIs and CLIs.</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" >GUIDES</a></li>
+			<li><a href="/docs/reference" class="YAH">REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Reference Documentation" href="/docs/reference/"></a>
+<div class="item" data-title="Kubernetes API">
+  <div class="container">
+    <a class="item" data-title="Kubernetes API Overview" href="/docs/api/"></a>
+<div class="item" data-title="Accessing the API">
+  <div class="container">
+    <a class="item" data-title="Overview" href="/docs/admin/accessing-the-api/"></a>
+    <a class="item" data-title="Authenticating" href="/docs/admin/authentication/"></a>
+    <a class="item" data-title="Using Authorization Plugins" href="/docs/admin/authorization/"></a>
+    <a class="item" data-title="Using Admission Controllers" href="/docs/admin/admission-controllers/"></a>
+    <a class="item" data-title="Managing Service Accounts" href="/docs/admin/service-accounts-admin/"></a>
+  </div>
+</div>
+    <a class="item" data-title="Kubernetes API Operations" href="/docs/api-reference/v1/operations/"></a>
+    <a class="item" data-title="Kubernetes API Definitions" href="/docs/api-reference/v1/definitions/"></a>
+    <a class="item" data-title="Kubernetes API Swagger Spec" href="/kubernetes/third_party/swagger-ui/"></a>
+  </div>
+</div>
+<div class="item" data-title="Autoscaling API">
+  <div class="container">
+    <a class="item" data-title="Autoscaling API Operations" href="/docs/api-reference/autoscaling/v1/operations/"></a>
+    <a class="item" data-title="Autoscaling API Definitions" href="/docs/api-reference/autoscaling/v1/definitions/"></a>
+  </div>
+</div>
+<div class="item" data-title="Batch API">
+  <div class="container">
+    <a class="item" data-title="Batch API Operations" href="/docs/api-reference/batch/v1/operations/"></a>
+    <a class="item" data-title="Batch API Definitions" href="/docs/api-reference/batch/v1/definitions/"></a>
+  </div>
+</div>
+<div class="item" data-title="Extensions API">
+  <div class="container">
+    <a class="item" data-title="Extensions API Operations" href="/docs/api-reference/extensions/v1beta1/operations/"></a>
+    <a class="item" data-title="Extensions API Definitions" href="/docs/api-reference/extensions/v1beta1/definitions/"></a>
+  </div>
+</div>
+<div class="item" data-title="kubectl CLI">
+  <div class="container">
+    <a class="item" data-title="kubectl Overview" href="/docs/user-guide/kubectl-overview/"></a>
+    <a class="item" data-title="kubectl for Docker Users" href="/docs/user-guide/docker-cli-to-kubectl/"></a>
+    <a class="item" data-title="kubectl Usage Conventions" href="/docs/user-guide/kubectl-conventions/"></a>
+    <a class="item" data-title="JSONpath Support" href="/docs/user-guide/jsonpath/"></a>
+    <a class="item" data-title="kubectl Cheat Sheet" href="/docs/user-guide/kubectl-cheatsheet/"></a>
+<div class="item" data-title="kubectl Commands">
+  <div class="container">
+    <a class="item" data-title="kubectl" href="/docs/user-guide/kubectl/kubectl/"></a>
+    <a class="item" data-title="kubectl annotate" href="/docs/user-guide/kubectl/kubectl_annotate/"></a>
+    <a class="item" data-title="kubectl api-versions" href="/docs/user-guide/kubectl/kubectl_api-versions/"></a>
+    <a class="item" data-title="kubectl apply" href="/docs/user-guide/kubectl/kubectl_apply/"></a>
+    <a class="item" data-title="kubectl attach" href="/docs/user-guide/kubectl/kubectl_attach/"></a>
+    <a class="item" data-title="kubectl autoscale" href="/docs/user-guide/kubectl/kubectl_autoscale/"></a>
+    <a class="item" data-title="kubectl cluster-info" href="/docs/user-guide/kubectl/kubectl_cluster-info/"></a>
+    <a class="item" data-title="kubectl config" href="/docs/user-guide/kubectl/kubectl_config/"></a>
+    <a class="item" data-title="kubectl config current-context" href="/docs/user-guide/kubectl/kubectl_config_current-context/"></a>
+    <a class="item" data-title="kubectl config set-cluster" href="/docs/user-guide/kubectl/kubectl_config_set-cluster/"></a>
+    <a class="item" data-title="kubectl config set-context" href="/docs/user-guide/kubectl/kubectl_config_set-context/"></a>
+    <a class="item" data-title="kubectl config set-credentials" href="/docs/user-guide/kubectl/kubectl_config_set-credentials/"></a>
+    <a class="item" data-title="kubectl config set" href="/docs/user-guide/kubectl/kubectl_config_set/"></a>
+    <a class="item" data-title="kubectl config unset" href="/docs/user-guide/kubectl/kubectl_config_unset/"></a>
+    <a class="item" data-title="kubectl config use-context" href="/docs/user-guide/kubectl/kubectl_config_use-context/"></a>
+    <a class="item" data-title="kubectl config view" href="/docs/user-guide/kubectl/kubectl_config_view/"></a>
+    <a class="item" data-title="kubectl convert" href="/docs/user-guide/kubectl/kubectl_convert/"></a>
+    <a class="item" data-title="kubectl cordon" href="/docs/user-guide/kubectl/kubectl_cordon/"></a>
+    <a class="item" data-title="kubectl create" href="/docs/user-guide/kubectl/kubectl_create/"></a>
+    <a class="item" data-title="kubectl create configmap" href="/docs/user-guide/kubectl/kubectl_create_configmap/"></a>
+    <a class="item" data-title="kubectl create namespace" href="/docs/user-guide/kubectl/kubectl_create_namespace/"></a>
+    <a class="item" data-title="kubectl create secret docker-registry" href="/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/"></a>
+    <a class="item" data-title="kubectl create secret" href="/docs/user-guide/kubectl/kubectl_create_secret/"></a>
+    <a class="item" data-title="kubectl create secret generic" href="/docs/user-guide/kubectl/kubectl_create_secret_generic/"></a>
+    <a class="item" data-title="kubectl create serviceaccount" href="/docs/user-guide/kubectl/kubectl_create_serviceaccount/"></a>
+    <a class="item" data-title="kubectl delete" href="/docs/user-guide/kubectl/kubectl_delete/"></a>
+    <a class="item" data-title="kubectl describe" href="/docs/user-guide/kubectl/kubectl_describe/"></a>
+    <a class="item" data-title="kubectl drain" href="/docs/user-guide/kubectl/kubectl_drain/"></a>
+    <a class="item" data-title="kubectl edit" href="/docs/user-guide/kubectl/kubectl_edit/"></a>
+    <a class="item" data-title="kubectl exec" href="/docs/user-guide/kubectl/kubectl_exec/"></a>
+    <a class="item" data-title="kubectl explain" href="/docs/user-guide/kubectl/kubectl_explain/"></a>
+    <a class="item" data-title="kubectl expose" href="/docs/user-guide/kubectl/kubectl_expose/"></a>
+    <a class="item" data-title="kubectl get" href="/docs/user-guide/kubectl/kubectl_get/"></a>
+    <a class="item" data-title="kubectl label" href="/docs/user-guide/kubectl/kubectl_label/"></a>
+    <a class="item" data-title="kubectl logs" href="/docs/user-guide/kubectl/kubectl_logs/"></a>
+    <a class="item" data-title="kubectl patch" href="/docs/user-guide/kubectl/kubectl_patch/"></a>
+    <a class="item" data-title="kubectl port-forward" href="/docs/user-guide/kubectl/kubectl_port-forward/"></a>
+    <a class="item" data-title="kubectl proxy" href="/docs/user-guide/kubectl/kubectl_proxy/"></a>
+    <a class="item" data-title="kubectl replace" href="/docs/user-guide/kubectl/kubectl_replace/"></a>
+    <a class="item" data-title="kubectl rolling-update" href="/docs/user-guide/kubectl/kubectl_rolling-update/"></a>
+    <a class="item" data-title="kubectl rollout" href="/docs/user-guide/kubectl/kubectl_rollout/"></a>
+    <a class="item" data-title="kubectl rollout history" href="/docs/user-guide/kubectl/kubectl_rollout_history/"></a>
+    <a class="item" data-title="kubectl rollout pause" href="/docs/user-guide/kubectl/kubectl_rollout_pause/"></a>
+    <a class="item" data-title="kubectl rollout resume" href="/docs/user-guide/kubectl/kubectl_rollout_resume/"></a>
+    <a class="item" data-title="kubectl rollout undo" href="/docs/user-guide/kubectl/kubectl_rollout_undo/"></a>
+    <a class="item" data-title="kubectl run" href="/docs/user-guide/kubectl/kubectl_run/"></a>
+    <a class="item" data-title="kubectl scale" href="/docs/user-guide/kubectl/kubectl_scale/"></a>
+    <a class="item" data-title="kubectl uncordon" href="/docs/user-guide/kubectl/kubectl_uncordon/"></a>
+    <a class="item" data-title="kubectl version" href="/docs/user-guide/kubectl/kubectl_version/"></a>
+<div class="item" data-title="Superseded and Deprecated Commands">
+  <div class="container">
+    <a class="item" data-title="kubectl namespace" href="/docs/user-guide/kubectl/kubectl_namespace/"></a>
+    <a class="item" data-title="kubectl stop" href="/docs/user-guide/kubectl/kubectl_stop/"></a>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="item" data-title="Kubernetes Components">
+  <div class="container">
+    <a class="item" data-title="kube-apiserver" href="/docs/admin/kube-apiserver/"></a>
+    <a class="item" data-title="kube-controller-manager" href="/docs/admin/kube-controller-manager/"></a>
+    <a class="item" data-title="kube-proxy" href="/docs/admin/kube-proxy/"></a>
+    <a class="item" data-title="kube-scheduler" href="/docs/admin/kube-scheduler/"></a>
+    <a class="item" data-title="kubelet" href="/docs/admin/kubelet/"></a>
+  </div>
+</div>
+<div class="item" data-title="Glossary">
+  <div class="container">
+    <a class="item" data-title="Annotations" href="/docs/user-guide/annotations/"></a>
+    <a class="item" data-title="Daemon Sets" href="/docs/admin/daemons/"></a>
+    <a class="item" data-title="Deployments" href="/docs/user-guide/deployments/"></a>
+    <a class="item" data-title="Horizontal Pod Autoscaling" href="/docs/user-guide/horizontal-pod-autoscaling/"></a>
+    <a class="item" data-title="Images" href="/docs/user-guide/images/"></a>
+    <a class="item" data-title="Ingress Resources" href="/docs/user-guide/ingress/"></a>
+    <a class="item" data-title="Jobs" href="/docs/user-guide/jobs/"></a>
+    <a class="item" data-title="Labels and Selectors" href="/docs/user-guide/labels/"></a>
+    <a class="item" data-title="Names" href="/docs/user-guide/identifiers/"></a>
+    <a class="item" data-title="Namespaces" href="/docs/user-guide/namespaces/"></a>
+    <a class="item" data-title="Network Policies" href="/docs/user-guide/networkpolicies/"></a>
+    <a class="item" data-title="Nodes" href="/docs/admin/node/"></a>
+    <a class="item" data-title="Persistent Volumes" href="/docs/user-guide/persistent-volumes/"></a>
+    <a class="item" data-title="Pet Sets" href="/docs/user-guide/petset/"></a>
+    <a class="item" data-title="Pods" href="/docs/user-guide/pods/"></a>
+    <a class="item" data-title="Replica Sets" href="/docs/user-guide/replicasets/"></a>
+    <a class="item" data-title="Replication Controller" href="/docs/user-guide/replication-controller/"></a>
+    <a class="item" data-title="Resource Quotas" href="/docs/admin/resource-quota/"></a>
+    <a class="item" data-title="Secrets" href="/docs/user-guide/secrets/"></a>
+    <a class="item" data-title="Security Context" href="/docs/user-guide/security-context/"></a>
+    <a class="item" data-title="Services" href="/docs/user-guide/services/"></a>
+    <a class="item" data-title="Service Accounts" href="/docs/user-guide/service-accounts/"></a>
+    <a class="item" data-title="Volumes" href="/docs/user-guide/volumes/"></a>
+  </div>
+</div>
+<div class="item" data-title="Kubernetes Design Docs">
+  <div class="container">
+    <a class="item" data-title="Kubernetes Architecture" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/architecture.md" target='_blank'></a>
+    <a class="item" data-title="Kubernetes Design Overview" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/" target='_blank'></a>
+    <a class="item" data-title="Kubernetes Identity and Access Management" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/access.md" target='_blank'></a>
+    <a class="item" data-title="Kubernetes OpenVSwitch GRE/VxLAN networking" href="/docs/admin/ovs-networking/"></a>
+    <a class="item" data-title="Security Contexts" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/security_context.md" target='_blank'></a>
+    <a class="item" data-title="Security in Kubernetes" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/security.md" target='_blank'></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/admin/kube-controller-manager.md" id="editPageButton">Edit This Page</a></p>
+    	
+		<h2 id="kube-controller-manager">kube-controller-manager</h2>
+
+<h3 id="synopsis">Synopsis</h3>
+
+<p>The Kubernetes controller manager is a daemon that embeds
+the core control loops shipped with Kubernetes. In applications of robotics and
+automation, a control loop is a non-terminating loop that regulates the state of
+the system. In Kubernetes, a controller is a control loop that watches the shared
+state of the cluster through the apiserver and makes changes attempting to move the
+current state towards the desired state. Examples of controllers that ship with
+Kubernetes today are the replication controller, endpoints controller, namespace
+controller, and serviceaccounts controller.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kube-controller-manager
+</code></pre>
+</div>
+
+<h3 id="options">Options</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>      --address=0.0.0.0: The IP address to serve on (set to 0.0.0.0 for all interfaces)
+      --allocate-node-cidrs[=false]: Should CIDRs for Pods be allocated and set on the cloud provider.
+      --cloud-config="": The path to the cloud provider configuration file.  Empty string for no configuration file.
+      --cloud-provider="": The provider for cloud services.  Empty string for no provider.
+      --cluster-cidr="": CIDR Range for Pods in cluster.
+      --cluster-name="kubernetes": The instance prefix for the cluster
+      --concurrent-deployment-syncs=5: The number of deployment objects that are allowed to sync concurrently. Larger number = more responsive deployments, but more CPU (and network) load
+      --concurrent-endpoint-syncs=5: The number of endpoint syncing operations that will be done concurrently. Larger number = faster endpoint updating, but more CPU (and network) load
+      --concurrent-namespace-syncs=2: The number of namespace objects that are allowed to sync concurrently. Larger number = more responsive namespace termination, but more CPU (and network) load
+      --concurrent-replicaset-syncs=5: The number of replica sets that are allowed to sync concurrently. Larger number = more responsive replica management, but more CPU (and network) load
+      --concurrent-resource-quota-syncs=5: The number of resource quotas that are allowed to sync concurrently. Larger number = more responsive quota management, but more CPU (and network) load
+      --concurrent_rc_syncs=5: The number of replication controllers that are allowed to sync concurrently. Larger number = more responsive replica management, but more CPU (and network) load
+      --configure-cloud-routes[=true]: Should CIDRs allocated by allocate-node-cidrs be configured on the cloud provider.
+      --controller-start-interval=0: Interval between starting controller managers.
+      --daemonset-lookup-cache-size=1024: The the size of lookup cache for daemonsets. Larger number = more responsive daemonsets, but more MEM load.
+      --deleting-pods-burst=1: Number of nodes on which pods are bursty deleted in case of node failure. For more details look into RateLimiter.
+      --deleting-pods-qps=0.1: Number of nodes per second on which pods are deleted in case of node failure.
+      --deployment-controller-sync-period=30s: Period for syncing the deployments.
+      --enable-dynamic-provisioning[=true]: Enable dynamic provisioning for environments that support it.
+      --enable-garbage-collector[=false]: Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-apiserver. WARNING: the generic garbage collector is an alpha feature.
+      --enable-hostpath-provisioner[=false]: Enable HostPath PV provisioning when running without a cloud provider. This allows testing and development of provisioning features.  HostPath provisioning is not supported in any way, won't work in a multi-node cluster, and should not be used for anything other than testing or development.
+      --flex-volume-plugin-dir="/usr/libexec/kubernetes/kubelet-plugins/volume/exec/": Full path of the directory in which the flex volume plugin should search for additional third party volume plugins.
+      --google-json-key="": The Google Cloud Platform Service Account JSON Key to use for authentication.
+      --horizontal-pod-autoscaler-sync-period=30s: The period for syncing the number of pods in horizontal pod autoscaler.
+      --kube-api-burst=30: Burst to use while talking with kubernetes apiserver
+      --kube-api-content-type="application/vnd.kubernetes.protobuf": Content type of requests sent to apiserver.
+      --kube-api-qps=20: QPS to use while talking with kubernetes apiserver
+      --kubeconfig="": Path to kubeconfig file with authorization and master location information.
+      --leader-elect[=false]: Start a leader election client and gain leadership before executing the main loop. Enable this when running replicated components for high availability.
+      --leader-elect-lease-duration=15s: The duration that non-leader candidates will wait after observing a leadership renewal until attempting to acquire leadership of a led but unrenewed leader slot. This is effectively the maximum duration that a leader can be stopped before it is replaced by another candidate. This is only applicable if leader election is enabled.
+      --leader-elect-renew-deadline=10s: The interval between attempts by the acting master to renew a leadership slot before it stops leading. This must be less than or equal to the lease duration. This is only applicable if leader election is enabled.
+      --leader-elect-retry-period=2s: The duration the clients should wait between attempting acquisition and renewal of a leadership. This is only applicable if leader election is enabled.
+      --log-flush-frequency=5s: Maximum number of seconds between log flushes
+      --master="": The address of the Kubernetes API server (overrides any value in kubeconfig)
+      --min-resync-period=12h0m0s: The resync period in reflectors will be random between MinResyncPeriod and 2*MinResyncPeriod
+      --namespace-sync-period=5m0s: The period for syncing namespace life-cycle updates
+      --node-cidr-mask-size=24: Mask size for node cidr in cluster.
+      --node-monitor-grace-period=40s: Amount of time which we allow running Node to be unresponsive before marking it unhealty. Must be N times more than kubelet's nodeStatusUpdateFrequency, where N means number of retries allowed for kubelet to post node status.
+      --node-monitor-period=5s: The period for syncing NodeStatus in NodeController.
+      --node-startup-grace-period=1m0s: Amount of time which we allow starting Node to be unresponsive before marking it unhealty.
+      --node-sync-period=10s: The period for syncing nodes from cloudprovider. Longer periods will result in fewer calls to cloud provider, but may delay addition of new nodes to cluster.
+      --pod-eviction-timeout=5m0s: The grace period for deleting pods on failed nodes.
+      --port=10252: The port that the controller-manager's http service runs on
+      --profiling[=true]: Enable profiling via web interface host:port/debug/pprof/
+      --pv-recycler-increment-timeout-nfs=30: the increment of time added per Gi to ActiveDeadlineSeconds for an NFS scrubber pod
+      --pv-recycler-minimum-timeout-hostpath=60: The minimum ActiveDeadlineSeconds to use for a HostPath Recycler pod.  This is for development and testing only and will not work in a multi-node cluster.
+      --pv-recycler-minimum-timeout-nfs=300: The minimum ActiveDeadlineSeconds to use for an NFS Recycler pod
+      --pv-recycler-pod-template-filepath-hostpath="": The file path to a pod definition used as a template for HostPath persistent volume recycling. This is for development and testing only and will not work in a multi-node cluster.
+      --pv-recycler-pod-template-filepath-nfs="": The file path to a pod definition used as a template for NFS persistent volume recycling
+      --pv-recycler-timeout-increment-hostpath=30: the increment of time added per Gi to ActiveDeadlineSeconds for a HostPath scrubber pod.  This is for development and testing only and will not work in a multi-node cluster.
+      --pvclaimbinder-sync-period=15s: The period for syncing persistent volumes and persistent volume claims
+      --replicaset-lookup-cache-size=4096: The the size of lookup cache for replicatsets. Larger number = more responsive replica management, but more MEM load.
+      --replication-controller-lookup-cache-size=4096: The the size of lookup cache for replication controllers. Larger number = more responsive replica management, but more MEM load.
+      --resource-quota-sync-period=5m0s: The period for syncing quota usage status in the system
+      --root-ca-file="": If set, this root certificate authority will be included in service account's token secret. This must be a valid PEM-encoded CA bundle.
+      --service-account-private-key-file="": Filename containing a PEM-encoded private RSA key used to sign service account tokens.
+      --service-cluster-ip-range="": CIDR Range for Services in cluster.
+      --service-sync-period=5m0s: The period for syncing services with their external load balancers
+      --terminated-pod-gc-threshold=12500: Number of terminated pods that can exist before the terminated pod garbage collector starts deleting terminated pods. If &lt;= 0, the terminated pod garbage collector is disabled.
+</code></pre>
+</div>
+
+<h6 id="auto-generated-by-spf13cobra-on-12-aug-2016">Auto generated by spf13/cobra on 12-Aug-2016</h6>
+
+<!-- BEGIN MUNGE: GENERATED_ANALYTICS -->
+<p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/admin/kube-controller-manager.md?pixel" alt="Analytics" /></a>
+<!-- END MUNGE: GENERATED_ANALYTICS --></p>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/admin/kube-controller-manager.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/admin/kube-controller-manager/",
+		        "title" : "kube-controller-manager",
+		        "permalink" : "http://kubernetes.github.io/docs/admin/kube-controller-manager/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

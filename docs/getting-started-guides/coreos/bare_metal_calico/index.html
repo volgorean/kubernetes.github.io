@@ -1,0 +1,626 @@
+
+
+<!Doctype html>
+<html id="docs" class="Guides">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/getting-started-guides/coreos/bare_metal_calico/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - CoreOS with Calico</title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Guides</h1>
+	<h5>How to get started, and achieve tasks, using Kubernetes</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" class="YAH">GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Guides" href="/docs/"></a>
+<div class="item" data-title="Getting Started">
+  <div class="container">
+    <a class="item" data-title="What is Kubernetes?" href="/docs/whatisk8s/"></a>
+    <a class="item" data-title="Downloading or Building Kubernetes" href="/docs/getting-started-guides/binary_release/"></a>
+    <a class="item" data-title="Hello World Walkthrough" href="/docs/hellonode/"></a>
+    <a class="item" data-title="Online Training Course" href="https://www.udacity.com/course/scalable-microservices-with-kubernetes--ud615" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Accessing the Cluster">
+  <div class="container">
+    <a class="item" data-title="Installing and Setting up kubectl" href="/docs/user-guide/prereqs/"></a>
+    <a class="item" data-title="Accessing Clusters" href="/docs/user-guide/accessing-the-cluster/"></a>
+    <a class="item" data-title="Sharing Cluster Access with kubeconfig" href="/docs/user-guide/sharing-clusters/"></a>
+    <a class="item" data-title="Authenticating Across Clusters with kubeconfig" href="/docs/user-guide/kubeconfig-file/"></a>
+  </div>
+</div>
+    <a class="item" data-title="User Guide" href="/docs/user-guide/"></a>
+    <a class="item" data-title="Web UI (Dashboard)" href="/docs/user-guide/ui/"></a>
+<div class="item" data-title="Workload Deployment and Management">
+  <div class="container">
+    <a class="item" data-title="Launching, Exposing, and Killing Applications" href="/docs/user-guide/quick-start/"></a>
+    <a class="item" data-title="Deploying Applications" href="/docs/user-guide/deploying-applications/"></a>
+    <a class="item" data-title="Managing Resources" href="/docs/user-guide/managing-deployments/"></a>
+    <a class="item" data-title="Replication Controller Operations" href="/docs/user-guide/replication-controller/operations/"></a>
+    <a class="item" data-title="Resizing a Replication Controller" href="/docs/user-guide/resizing-a-replication-controller/"></a>
+    <a class="item" data-title="Rolling Updates" href="/docs/user-guide/rolling-updates/"></a>
+    <a class="item" data-title="Rolling Update Demo" href="/docs/user-guide/update-demo/"></a>
+    <a class="item" data-title="Secrets Walkthrough" href="/docs/user-guide/secrets/walkthrough/"></a>
+    <a class="item" data-title="Using ConfigMap" href="/docs/user-guide/configmap/"></a>
+    <a class="item" data-title="Horizontal Pod Autoscaling" href="/docs/user-guide/horizontal-pod-autoscaling/walkthrough/"></a>
+    <a class="item" data-title="Best Practices for Configuration" href="/docs/user-guide/config-best-practices/"></a>
+    <a class="item" data-title="Using kubectl to Manage Resources" href="/docs/user-guide/working-with-resources/"></a>
+    <a class="item" data-title="Garbage collection" href="/docs/user-guide/garbage-collector/"></a>
+  </div>
+</div>
+<div class="item" data-title="Batch Jobs">
+  <div class="container">
+    <a class="item" data-title="Jobs" href="/docs/user-guide/jobs/"></a>
+    <a class="item" data-title="Parallel Processing using Expansions" href="/docs/user-guide/jobs/expansions/"></a>
+    <a class="item" data-title="Coarse Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-1/"></a>
+    <a class="item" data-title="Fine Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-2/"></a>
+  </div>
+</div>
+<div class="item" data-title="Service Discovery and Load Balancing">
+  <div class="container">
+    <a class="item" data-title="Connecting Applications with Services" href="/docs/user-guide/connecting-applications/"></a>
+    <a class="item" data-title="Service Operations" href="/docs/user-guide/services/operations/"></a>
+    <a class="item" data-title="Creating an External Load Balancer" href="/docs/user-guide/load-balancer/"></a>
+    <a class="item" data-title="Configuring Your Cloud Provider's Firewalls" href="/docs/user-guide/services-firewalls/"></a>
+    <a class="item" data-title="Cross-cluster Service Discovery using Federated Services" href="/docs/user-guide/federation/federated-services/"></a>
+  </div>
+</div>
+<div class="item" data-title="Containers and Pods">
+  <div class="container">
+    <a class="item" data-title="Running Your First Containers" href="/docs/user-guide/simple-nginx/"></a>
+    <a class="item" data-title="Creating Single-Container Pods" href="/docs/user-guide/pods/single-container/"></a>
+    <a class="item" data-title="Creating Multi-Container Pods" href="/docs/user-guide/pods/multi-container/"></a>
+    <a class="item" data-title="Configuring Containers" href="/docs/user-guide/configuring-containers/"></a>
+    <a class="item" data-title="Working with Containers in Production" href="/docs/user-guide/production-pods/"></a>
+    <a class="item" data-title="Commands and Capabilities" href="/docs/user-guide/containers/"></a>
+    <a class="item" data-title="Using Environment Variables" href="/docs/user-guide/environment-guide/"></a>
+    <a class="item" data-title="Managing Compute Resources" href="/docs/user-guide/compute-resources/"></a>
+    <a class="item" data-title="The Lifecycle of a Pod" href="/docs/user-guide/pod-states/"></a>
+    <a class="item" data-title="Checking Pod Health" href="/docs/user-guide/liveness/"></a>
+    <a class="item" data-title="Container Lifecycle Hooks" href="/docs/user-guide/container-environment/"></a>
+    <a class="item" data-title="Assigning Pods to Nodes" href="/docs/user-guide/node-selection/"></a>
+    <a class="item" data-title="Using the Downward API to Convey Pod Properties" href="/docs/user-guide/downward-api/"></a>
+    <a class="item" data-title="Downward API Volumes" href="/docs/user-guide/downward-api/volume"></a>
+    <a class="item" data-title="Persistent Volumes Walkthrough" href="/docs/user-guide/persistent-volumes/walkthrough/"></a>
+    <a class="item" data-title="Bootstrapping Pet Sets" href="/docs/user-guide/petset/bootstrapping/"></a>
+  </div>
+</div>
+<div class="item" data-title="Monitoring, Logging, and Debugging Containers">
+  <div class="container">
+    <a class="item" data-title="Resource Usage Monitoring" href="/docs/user-guide/monitoring/"></a>
+    <a class="item" data-title="Logging" href="/docs/getting-started-guides/logging/"></a>
+    <a class="item" data-title="Logging with Elasticsearch and Kibana" href="/docs/getting-started-guides/logging-elasticsearch/"></a>
+    <a class="item" data-title="Running Commands in a Container with kubectl exec" href="/docs/user-guide/getting-into-containers/"></a>
+    <a class="item" data-title="Connect with Proxies" href="/docs/user-guide/connecting-to-applications-proxy/"></a>
+    <a class="item" data-title="Connect with Port Forwarding" href="/docs/user-guide/connecting-to-applications-port-forward/"></a>
+    <a class="item" data-title="Using Explorer to Examine the Runtime Environment" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/explorer" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Creating a Cluster">
+  <div class="container">
+    <a class="item" data-title="Picking the Right Solution" href="/docs/getting-started-guides/"></a>
+<div class="item" data-title="Running Kubernetes on Your Local Machine">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes Locally via Minikube" href="/docs/getting-started-guides/minikube/"></a>
+    <a class="item" data-title="Deprecated Alternatives" href="/docs/getting-started-guides/alternatives/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Turn-key Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes on Google Container Engine" href="https://cloud.google.com/container-engine/docs/before-you-begin/" target='_blank'></a>
+    <a class="item" data-title="Running Kubernetes on Google Compute Engine" href="/docs/getting-started-guides/gce/"></a>
+    <a class="item" data-title="Running Kubernetes on AWS EC2" href="/docs/getting-started-guides/aws/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Weave-based)" href="/docs/getting-started-guides/coreos/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Flannel-based)" href="/docs/getting-started-guides/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on CenturyLink Cloud" href="/docs/getting-started-guides/clc/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Custom Solutions">
+  <div class="container">
+    <a class="item" data-title="Creating a Custom Cluster from Scratch" href="/docs/getting-started-guides/scratch/"></a>
+<div class="item" data-title="Custom Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="CoreOS on AWS or GCE" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Ubuntu on AWS or Joyent" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="CoreOS on Rackspace" href="/docs/getting-started-guides/rackspace/"></a>
+  </div>
+</div>
+<div class="item" data-title="On-Premise VMs">
+  <div class="container">
+    <a class="item" data-title="CoreOS on Vagrant" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Cloudstack" href="/docs/getting-started-guides/cloudstack/"></a>
+    <a class="item" data-title="VMware vSphere" href="/docs/getting-started-guides/vsphere/"></a>
+    <a class="item" data-title="VMware Photon Controller" href="/docs/getting-started-guides/photon-controller/"></a>
+    <a class="item" data-title="Juju" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="DCOS" href="/docs/getting-started-guides/dcos/"></a>
+    <a class="item" data-title="CoreOS on libvirt" href="/docs/getting-started-guides/libvirt-coreos/"></a>
+    <a class="item" data-title="oVirt" href="/docs/getting-started-guides/ovirt/"></a>
+    <a class="item" data-title="OpenStack Heat" href="/docs/getting-started-guides/openstack-heat/"></a>
+    <a class="item" data-title="CoreOS on Multinode Cluster" href="/docs/getting-started-guides/coreos/coreos_multinode_cluster/"></a>
+    <a class="item" data-title="Fedora With Calico Networking" href="/docs/getting-started-guides/fedora/fedora-calico/"></a>
+<div class="item" data-title="rkt">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes with rkt" href="/docs/getting-started-guides/rkt/"></a>
+    <a class="item" data-title="Known Issues when Using rkt" href="/docs/getting-started-guides/rkt/notes/"></a>
+  </div>
+</div>
+    <a class="item" data-title="Kubernetes on Mesos" href="/docs/getting-started-guides/mesos/"></a>
+    <a class="item" data-title="Kubernetes on Mesos on Docker" href="/docs/getting-started-guides/mesos-docker/"></a>
+  </div>
+</div>
+<div class="item" data-title="Bare Metal">
+  <div class="container">
+    <a class="item" data-title="Offline" href="/docs/getting-started-guides/coreos/bare_metal_offline/"></a>
+    <a class="item" data-title="Fedora via Ansible" href="/docs/getting-started-guides/fedora/fedora_ansible_config/"></a>
+    <a class="item" data-title="Fedora (Single Node)" href="/docs/getting-started-guides/fedora/fedora_manual_config/"></a>
+    <a class="item" data-title="Fedora (Multi Node)" href="/docs/getting-started-guides/fedora/flannel_multi_node_cluster/"></a>
+    <a class="item" data-title="CentOS" href="/docs/getting-started-guides/centos/centos_manual_config/"></a>
+    <a class="item" data-title="CoreOS" href="/docs/getting-started-guides/coreos"></a>
+    <a class="item" data-title="CoreOS with Calico" href="/docs/getting-started-guides/coreos/bare_metal_calico/"></a>
+    <a class="item" data-title="Ubuntu" href="/docs/getting-started-guides/ubuntu/"></a>
+    <a class="item" data-title="Ubuntu Nodes with Calico" href="/docs/getting-started-guides/ubuntu-calico/"></a>
+  </div>
+</div>
+  </div>
+</div>
+    <a class="item" data-title="Portable Multi-Node Cluster" href="/docs/getting-started-guides/docker-multinode/"></a>
+    <a class="item" data-title="Building Large Clusters" href="/docs/admin/cluster-large/"></a>
+    <a class="item" data-title="Running in Multiple Zones" href="/docs/admin/multiple-zones/"></a>
+    <a class="item" data-title="Building High-Availability Clusters" href="/docs/admin/high-availability/"></a>
+  </div>
+</div>
+<div class="item" data-title="Administering Clusters">
+  <div class="container">
+    <a class="item" data-title="Admin Guide" href="/docs/admin/"></a>
+    <a class="item" data-title="Cluster Management Guide" href="/docs/admin/cluster-management/"></a>
+    <a class="item" data-title="Sharing a Cluster with Namespaces" href="/docs/admin/namespaces/"></a>
+    <a class="item" data-title="Namespaces Walkthrough" href="/docs/admin/namespaces/walkthrough/"></a>
+    <a class="item" data-title="Setting Pod CPU and Memory Limits" href="/docs/admin/limitrange/"></a>
+    <a class="item" data-title="Understanding Resource Quotas" href="/docs/admin/resourcequota/"></a>
+    <a class="item" data-title="Applying Resource Quotas and Limits" href="/docs/admin/resourcequota/walkthrough/"></a>
+    <a class="item" data-title="Kubernetes Components" href="/docs/admin/cluster-components/"></a>
+    <a class="item" data-title="Configuring Kubernetes Use of etcd" href="/docs/admin/etcd/"></a>
+    <a class="item" data-title="Federating Clusters" href="/docs/admin/federation/"></a>
+    <a class="item" data-title="Using Multiple Clusters" href="/docs/admin/multi-cluster/"></a>
+    <a class="item" data-title="Changing Cluster Size" href="https://github.com/kubernetes/kubernetes/wiki/User-FAQ#how-do-i-change-the-size-of-my-cluster/" target='_blank'></a>
+    <a class="item" data-title="Configuring Multiple Schedulers" href="/docs/admin/multiple-schedulers/"></a>
+    <a class="item" data-title="Networking in Kubernetes" href="/docs/admin/networking/"></a>
+    <a class="item" data-title="Using DNS Pods and Services" href="/docs/admin/dns/"></a>
+    <a class="item" data-title="Setting Up and Configuring DNS" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/cluster-dns" target='_blank'></a>
+    <a class="item" data-title="Master <-> Node Communication" href="/docs/admin/master-node-communication/"></a>
+    <a class="item" data-title="Network Plugins" href="/docs/admin/network-plugins/"></a>
+    <a class="item" data-title="Static Pods" href="/docs/admin/static-pods/"></a>
+    <a class="item" data-title="Configuring kubelet Garbage Collection" href="/docs/admin/garbage-collection/"></a>
+    <a class="item" data-title="Configuring Out Of Resource Handling" href="/docs/admin/out-of-resource/"></a>
+    <a class="item" data-title="Configuring Kubernetes with Salt" href="/docs/admin/salt/"></a>
+    <a class="item" data-title="Monitoring Node Health" href="/docs/admin/node-problem/"></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/getting-started-guides/coreos/bare_metal_calico.md" id="editPageButton">Edit This Page</a></p>
+    	<h1>CoreOS with Calico</h1>
+		<p>This document describes how to deploy Kubernetes with Calico networking on <em>bare metal</em> CoreOS. For more information on Project Calico, visit <a href="http://projectcalico.org">projectcalico.org</a> and the <a href="https://github.com/projectcalico/calico-containers">calico-containers repository</a>.</p>
+
+<p>To install Calico on an existing Kubernetes cluster, or for more information on deploying Calico with Kubernetes in a number of other environments take a look at our supported <a href="https://github.com/projectcalico/calico-containers/tree/master/docs/cni/kubernetes">deployment guides</a>.</p>
+
+<p>Specifically, this guide will have you do the following:</p>
+
+<ul>
+  <li>Deploy a Kubernetes master node on CoreOS using cloud-config.</li>
+  <li>Deploy two Kubernetes compute nodes with Calico Networking using cloud-config.</li>
+  <li>Configure <code class="highlighter-rouge">kubectl</code> to access your cluster.</li>
+</ul>
+
+<p>The resulting cluster will use SSL between Kubernetes components.  It will run the SkyDNS service and kube-ui, and be fully conformant with the Kubernetes v1.1 conformance tests.</p>
+
+<h2 id="prerequisites-and-assumptions">Prerequisites and Assumptions</h2>
+
+<ul>
+  <li>At least three bare-metal machines (or VMs) to work with. This guide will configure them as follows:
+    <ul>
+      <li>1 Kubernetes Master</li>
+      <li>2 Kubernetes Nodes</li>
+    </ul>
+  </li>
+  <li>Your nodes should have IP connectivity to each other and the internet.</li>
+  <li>This guide assumes a DHCP server on your network to assign server IPs.</li>
+  <li>This guide uses <code class="highlighter-rouge">192.168.0.0/16</code> as the subnet from which pod IP addresses are assigned.  If this overlaps with your host subnet, you will need to configure Calico to use a different <a href="https://github.com/projectcalico/calico-containers/blob/master/docs/calicoctl/pool.md#calicoctl-pool-commands">IP pool</a>.</li>
+</ul>
+
+<h2 id="cloud-config">Cloud-config</h2>
+
+<p>This guide will use <a href="https://coreos.com/docs/cluster-management/setup/cloudinit-cloud-config/">cloud-config</a> to configure each of the nodes in our Kubernetes cluster.</p>
+
+<p>We’ll use two cloud-config files:
+- <code class="highlighter-rouge">master-config.yaml</code>: cloud-config for the Kubernetes master
+- <code class="highlighter-rouge">node-config.yaml</code>: cloud-config for each Kubernetes node</p>
+
+<h2 id="download-coreos">Download CoreOS</h2>
+
+<p>Download the stable CoreOS bootable ISO from the <a href="https://coreos.com/docs/running-coreos/platforms/iso/">CoreOS website</a>.</p>
+
+<h2 id="configure-the-kubernetes-master">Configure the Kubernetes Master</h2>
+
+<ol>
+  <li>
+    <p>Once you’ve downloaded the ISO image, burn the ISO to a CD/DVD/USB key and boot from it (if using a virtual machine you can boot directly from the ISO).  Once booted, you should be automatically logged in as the <code class="highlighter-rouge">core</code> user at the terminal. At this point CoreOS is running from the ISO and it hasn’t been installed yet.</p>
+  </li>
+  <li>
+    <p><em>On another machine</em>, download the the <a href="https://raw.githubusercontent.com/projectcalico/calico-cni/k8s-1.1-docs/samples/kubernetes/cloud-config/master-config-template.yaml">master cloud-config template</a> and save it as <code class="highlighter-rouge">master-config.yaml</code>.</p>
+  </li>
+  <li>
+    <p>Replace the following variables in the <code class="highlighter-rouge">master-config.yaml</code> file.</p>
+
+    <ul>
+      <li><code class="highlighter-rouge">&lt;SSH_PUBLIC_KEY&gt;</code>: The public key you will use for SSH access to this server. See <a href="https://help.github.com/articles/generating-ssh-keys/">generating ssh keys</a></li>
+    </ul>
+  </li>
+  <li>
+    <p>Copy the edited <code class="highlighter-rouge">master-config.yaml</code> to your Kubernetes master machine (using a USB stick, for example).</p>
+  </li>
+  <li>
+    <p>The CoreOS bootable ISO comes with a tool called <code class="highlighter-rouge">coreos-install</code> which will allow us to install CoreOS and configure the machine using a cloud-config file.  The following command will download and install stable CoreOS using the <code class="highlighter-rouge">master-config.yaml</code> file we just created for configuration.  Run this on the Kubernetes master.</p>
+
+    <blockquote>
+      <p><strong>Warning:</strong> this is a destructive operation that erases disk <code class="highlighter-rouge">sda</code> on your server.</p>
+    </blockquote>
+
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo coreos-install -d /dev/sda -C stable -c master-config.yaml
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Once complete, restart the server and boot from <code class="highlighter-rouge">/dev/sda</code> (you may need to remove the ISO image). When it comes back up, you should have SSH access as the <code class="highlighter-rouge">core</code> user using the public key provided in the <code class="highlighter-rouge">master-config.yaml</code> file.</p>
+  </li>
+</ol>
+
+<h3 id="configure-tls">Configure TLS</h3>
+
+<p>The master requires the CA certificate, <code class="highlighter-rouge">ca.pem</code>; its own certificate, <code class="highlighter-rouge">apiserver.pem</code> and its private key, <code class="highlighter-rouge">apiserver-key.pem</code>.  This <a href="https://coreos.com/kubernetes/docs/latest/openssl.html">CoreOS guide</a> explains how to generate these.</p>
+
+<ol>
+  <li>
+    <p>Generate the necessary certificates for the master. This <a href="https://coreos.com/kubernetes/docs/latest/openssl.html">guide for generating Kubernetes TLS Assets</a> explains how to use OpenSSL to generate the required assets.</p>
+  </li>
+  <li>
+    <p>Send the three files to your master host (using <code class="highlighter-rouge">scp</code> for example).</p>
+  </li>
+  <li>
+    <p>Move them to the <code class="highlighter-rouge">/etc/kubernetes/ssl</code> folder and ensure that only the root user can read the key:</p>
+
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># Move keys</span>
+sudo mkdir -p /etc/kubernetes/ssl/
+sudo mv -t /etc/kubernetes/ssl/ ca.pem apiserver.pem apiserver-key.pem
+    
+<span class="c"># Set Permissions</span>
+sudo chmod 600 /etc/kubernetes/ssl/apiserver-key.pem
+sudo chown root:root /etc/kubernetes/ssl/apiserver-key.pem
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Restart the kubelet to pick up the changes:</p>
+
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo systemctl restart kubelet
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h2 id="configure-the-compute-nodes">Configure the compute nodes</h2>
+
+<p>The following steps will set up a single Kubernetes node for use as a compute host.  Run these steps to deploy each Kubernetes node in your cluster.</p>
+
+<ol>
+  <li>
+    <p>Boot up the node machine using the bootable ISO we downloaded earlier.  You should be automatically logged in as the <code class="highlighter-rouge">core</code> user.</p>
+  </li>
+  <li>
+    <p>Make a copy of the <a href="https://raw.githubusercontent.com/projectcalico/calico-cni/k8s-1.1-docs/samples/kubernetes/cloud-config/node-config-template.yaml">node cloud-config template</a> for this machine.</p>
+  </li>
+  <li>
+    <p>Replace the following placeholders in the <code class="highlighter-rouge">node-config.yaml</code> file to match your deployment.</p>
+
+    <ul>
+      <li><code class="highlighter-rouge">&lt;HOSTNAME&gt;</code>: Hostname for this node (e.g. kube-node1, kube-node2)</li>
+      <li><code class="highlighter-rouge">&lt;SSH_PUBLIC_KEY&gt;</code>: The public key you will use for SSH access to this server.</li>
+      <li><code class="highlighter-rouge">&lt;KUBERNETES_MASTER&gt;</code>: The IPv4 address of the Kubernetes master.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Replace the following placeholders with the contents of their respective files.</p>
+
+    <ul>
+      <li><code class="highlighter-rouge">&lt;CA_CERT&gt;</code>: Complete contents of <code class="highlighter-rouge">ca.pem</code></li>
+      <li><code class="highlighter-rouge">&lt;CA_KEY_CERT&gt;</code>: Complete contents of <code class="highlighter-rouge">ca-key.pem</code></li>
+    </ul>
+
+    <blockquote>
+      <p><strong>Important:</strong> in a production deployment, embedding the secret key in cloud-config is a bad idea!  In production you should use an appropriate secret manager.</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>Important:</strong> Make sure you indent the entire file to match the indentation of the placeholder.  For example:</p>
+
+      <div class="language-shell highlighter-rouge"><pre class="highlight"><code> - path: /etc/kubernetes/ssl/ca.pem
+   owner: core
+   permissions: 0644
+   content: |
+     &lt;CA_CERT&gt;
+</code></pre>
+      </div>
+
+      <p>should look like this once the certificate is in place:</p>
+
+      <div class="language-shell highlighter-rouge"><pre class="highlight"><code>  - path: /etc/kubernetes/ssl/ca.pem
+    owner: core
+    permissions: 0644
+    content: |
+      -----BEGIN CERTIFICATE-----
+      MIIC9zCCAd+gAwIBAgIJAJMnVnhVhy5pMA0GCSqGSIb3DQEBCwUAMBIxEDAOBgNV
+      ...&lt;snip&gt;...
+      QHwi1rNc8eBLNrd4BM/A1ZeDVh/Q9KxN+ZG/hHIXhmWKgN5wQx6/81FIFg<span class="o">==</span>
+      -----END CERTIFICATE-----
+</code></pre>
+      </div>
+    </blockquote>
+  </li>
+  <li>
+    <p>Move the modified <code class="highlighter-rouge">node-config.yaml</code> to your Kubernetes node machine and install and configure CoreOS on the node using the following command.</p>
+
+    <blockquote>
+      <p><strong>Warning:</strong> this is a destructive operation that erases disk <code class="highlighter-rouge">sda</code> on your server.</p>
+    </blockquote>
+
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo coreos-install -d /dev/sda -C stable -c node-config.yaml
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Once complete, restart the server and boot into <code class="highlighter-rouge">/dev/sda</code>. When it comes back up, you should have SSH access as the <code class="highlighter-rouge">core</code> user using the public key provided in the <code class="highlighter-rouge">node-config.yaml</code> file.  It will take some time for the node to be fully configured.</p>
+  </li>
+</ol>
+
+<h2 id="configure-kubeconfig">Configure Kubeconfig</h2>
+
+<p>To administer your cluster from a separate host, you will need the client and admin certificates generated earlier (<code class="highlighter-rouge">ca.pem</code>, <code class="highlighter-rouge">admin.pem</code>, <code class="highlighter-rouge">admin-key.pem</code>). With certificates in place, run the following commands with the appropriate filepaths.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl config <span class="nb">set</span>-cluster calico-cluster --server<span class="o">=</span>https://&lt;KUBERNETES_MASTER&gt; --certificate-authority<span class="o">=</span>&lt;CA_CERT_PATH&gt;
+kubectl config <span class="nb">set</span>-credentials calico-admin --certificate-authority<span class="o">=</span>&lt;CA_CERT_PATH&gt; --client-key<span class="o">=</span>&lt;ADMIN_KEY_PATH&gt; --client-certificate<span class="o">=</span>&lt;ADMIN_CERT_PATH&gt;
+kubectl config <span class="nb">set</span>-context calico --cluster<span class="o">=</span>calico-cluster --user<span class="o">=</span>calico-admin
+kubectl config use-context calico
+</code></pre>
+</div>
+
+<p>Check your work with <code class="highlighter-rouge">kubectl get nodes</code>.</p>
+
+<h2 id="install-the-dns-addon">Install the DNS Addon</h2>
+
+<p>Most Kubernetes deployments will require the DNS addon for service discovery. To install DNS, create the skydns service and replication controller provided.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl create -f https://raw.githubusercontent.com/projectcalico/calico-cni/k8s-1.1-docs/samples/kubernetes/master/dns/skydns.yaml
+</code></pre>
+</div>
+
+<h2 id="install-the-kubernetes-ui-addon-optional">Install the Kubernetes UI Addon (Optional)</h2>
+
+<p>The Kubernetes UI can be installed using <code class="highlighter-rouge">kubectl</code> to run the following manifest file.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl create -f https://raw.githubusercontent.com/projectcalico/calico-cni/k8s-1.1-docs/samples/kubernetes/master/kube-ui/kube-ui.yaml
+</code></pre>
+</div>
+
+<h2 id="launch-other-services-with-calico-kubernetes">Launch other Services With Calico-Kubernetes</h2>
+
+<p>At this point, you have a fully functioning cluster running on Kubernetes with a master and two nodes networked with Calico. You can now follow any of the <a href="https://github.com/kubernetes/kubernetes/tree/v1.3.0/examples/">standard documentation</a> to set up other services on your cluster.</p>
+
+<h2 id="connectivity-to-outside-the-cluster">Connectivity to outside the cluster</h2>
+
+<p>Because containers in this guide have private <code class="highlighter-rouge">192.168.0.0/16</code> IPs, you will need NAT to allow connectivity between containers and the internet. However, in a production data center deployment, NAT is not always necessary, since Calico can peer with the data center’s border routers over BGP.</p>
+
+<h3 id="nat-on-the-nodes">NAT on the nodes</h3>
+
+<p>The simplest method for enabling connectivity from containers to the internet is to use outgoing NAT on your Kubernetes nodes.</p>
+
+<p>Calico can provide outgoing NAT for containers.  To enable it, use the following <code class="highlighter-rouge">calicoctl</code> command:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">ETCD_AUTHORITY=&lt;master_ip:6666&gt; </span>calicoctl pool add &lt;CONTAINER_SUBNET&gt; --nat-outgoing
+</code></pre>
+</div>
+
+<p>By default, <code class="highlighter-rouge">&lt;CONTAINER_SUBNET&gt;</code> will be <code class="highlighter-rouge">192.168.0.0/16</code>.  You can find out which pools have been configured with the following command:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">ETCD_AUTHORITY=&lt;master_ip:6666&gt; </span>calicoctl pool show
+</code></pre>
+</div>
+
+<h3 id="nat-at-the-border-router">NAT at the border router</h3>
+
+<p>In a data center environment, it is recommended to configure Calico to peer with the border routers over BGP. This means that the container IPs will be routable anywhere in the data center, and so NAT is not needed on the nodes (though it may be enabled at the data center edge to allow outbound-only internet connectivity).</p>
+
+<p>The Calico documentation contains more information on how to configure Calico to <a href="https://github.com/projectcalico/calico-containers/blob/master/docs/ExternalConnectivity.md">peer with existing infrastructure</a>.</p>
+
+<h2 id="support-level">Support Level</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>IaaS Provider</th>
+      <th>Config. Mgmt</th>
+      <th>OS</th>
+      <th>Networking</th>
+      <th>Docs</th>
+      <th>Conforms</th>
+      <th>Support Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bare-metal</td>
+      <td>CoreOS</td>
+      <td>CoreOS</td>
+      <td>Calico</td>
+      <td><a href="/docs/getting-started-guides/coreos/bare_metal_calico">docs</a></td>
+      <td> </td>
+      <td>Community (<a href="https://github.com/caseydavenport">@caseydavenport</a>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For support level information on all solutions, see the <a href="/docs/getting-started-guides/#table-of-solutions">Table of solutions</a> chart.</p>
+
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/getting-started-guides/coreos/bare_metal_calico.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/getting-started-guides/coreos/bare_metal_calico/",
+		        "title" : "CoreOS with Calico",
+		        "permalink" : "http://kubernetes.github.io/docs/getting-started-guides/coreos/bare_metal_calico/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

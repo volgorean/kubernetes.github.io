@@ -1,0 +1,498 @@
+
+
+<!Doctype html>
+<html id="docs" class="">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/user-guide/walkthrough/k8s201/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - </title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1></h1>
+	<h5></h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" >GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/user-guide/walkthrough/k8s201.md" id="editPageButton">Edit This Page</a></p>
+    	<h1></h1>
+		<h2 id="labels-deployments-services-and-health-checking">Labels, Deployments, Services and Health Checking</h2>
+
+<p>If you went through <a href="/docs/user-guide/walkthrough/">Kubernetes 101</a>, you learned about kubectl, Pods, Volumes, and multiple containers.
+For Kubernetes 201, we will pick up where 101 left off and cover some slightly more advanced topics in Kubernetes, related to application productionization, Deployment and
+scaling.</p>
+
+<p>In order for the kubectl usage examples to work, make sure you have an examples directory locally, either from <a href="https://github.com/kubernetes/kubernetes/releases">a release</a> or <a href="https://github.com/kubernetes/kubernetes">the source</a>.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#labels-deployments-services-and-health-checking" id="markdown-toc-labels-deployments-services-and-health-checking">Labels, Deployments, Services and Health Checking</a></li>
+  <li><a href="#labels" id="markdown-toc-labels">Labels</a></li>
+  <li><a href="#deployments" id="markdown-toc-deployments">Deployments</a>    <ul>
+      <li><a href="#deployment-management" id="markdown-toc-deployment-management">Deployment Management</a></li>
+    </ul>
+  </li>
+  <li><a href="#services" id="markdown-toc-services">Services</a>    <ul>
+      <li><a href="#service-management" id="markdown-toc-service-management">Service Management</a></li>
+    </ul>
+  </li>
+  <li><a href="#health-checking" id="markdown-toc-health-checking">Health Checking</a>    <ul>
+      <li><a href="#process-health-checking" id="markdown-toc-process-health-checking">Process Health Checking</a></li>
+      <li><a href="#application-health-checking" id="markdown-toc-application-health-checking">Application Health Checking</a></li>
+    </ul>
+  </li>
+  <li><a href="#whats-next" id="markdown-toc-whats-next">What’s Next?</a></li>
+</ul>
+
+<h2 id="labels">Labels</h2>
+
+<p>Having already learned about Pods and how to create them, you may be struck by an urge to create many, many Pods.  Please do!  But eventually you will need a system to organize these Pods into groups.  The system for achieving this in Kubernetes is Labels.  Labels are key-value pairs that are attached to each object in Kubernetes.  Label selectors can be passed along with a RESTful <code class="highlighter-rouge">list</code> request to the apiserver to retrieve a list of objects which match that label selector.</p>
+
+<p>To add a label, add a labels section under metadata in the Pod definition:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>  <span class="s">labels</span><span class="pi">:</span>
+    <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+</code></pre>
+</div>
+
+<p>For example, here is the nginx Pod definition with labels (<a href="/docs/user-guide/walkthrough/pod-nginx-with-label.yaml">pod-nginx-with-label.yaml</a>):</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/walkthrough/pod-nginx-with-label.yaml" download="pod-nginx-with-label.yaml"><code>pod-nginx-with-label.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-nginx-with-label.yaml')" title="Copy pod-nginx-with-label.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-nginx-with-label.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+  <span class="s">labels</span><span class="pi">:</span>
+    <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">image</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">80</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<p>Create the labeled Pod (<a href="/docs/user-guide/walkthrough/pod-nginx-with-label.yaml">pod-nginx-with-label.yaml</a>):</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl create -f docs/user-guide/walkthrough/pod-nginx-with-label.yaml
+</code></pre>
+</div>
+
+<p>List all Pods with the label <code class="highlighter-rouge">app=nginx</code>:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx
+</code></pre>
+</div>
+
+<p>For more information, see <a href="/docs/user-guide/labels/">Labels</a>.
+They are a core concept used by two additional Kubernetes building blocks: Deployments and Services.</p>
+
+<h2 id="deployments">Deployments</h2>
+
+<p>Now that you know how to make awesome, multi-container, labeled Pods and you want to use them to build an application, you might be tempted to just start building a whole bunch of individual Pods, but if you do that, a whole host of operational concerns pop up.  For example: how will you scale the number of Pods up or down?  How will you roll out a new release?</p>
+
+<p>The answer to those questions and more is to use a <a href="/docs/user-guide/deployments/#what-is-a-deployment"><em>Deployment</em></a> to manage maintaining and updating your running <em>Pods</em>.</p>
+
+<p>A Deployment object defines a Pod creation template (a “cookie-cutter” if you will) and desired replica count.  The Deployment uses a label selector to identify the Pods it manages, and will create or delete Pods as needed to meet the replica count.  Deployments are also used to manage safely rolling out changes to your running Pods.</p>
+
+<p>Here is a Deployment that instantiates two nginx Pods:</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/walkthrough/deployment.yaml" download="deployment.yaml"><code>deployment.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('deployment.yaml')" title="Copy deployment.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="deployment.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">extensions/v1beta1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">nginx-deployment</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">replicas</span><span class="pi">:</span> <span class="s">2</span> <span class="c1"># tells deployment to run 2 pods matching the template</span>
+  <span class="s">template</span><span class="pi">:</span> <span class="c1"># create pods using pod definition in this template</span>
+    <span class="s">metadata</span><span class="pi">:</span>
+      <span class="c1"># unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is</span>
+      <span class="c1"># generated from the deployment name</span>
+      <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">spec</span><span class="pi">:</span>
+      <span class="s">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+        <span class="s">image</span><span class="pi">:</span> <span class="s">nginx:1.7.9</span>
+        <span class="s">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">80</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<h4 id="deployment-management">Deployment Management</h4>
+
+<p>Create an nginx Deployment:</p>
+
+<p>Download the <code class="highlighter-rouge">deployment.yaml</code> above by clicking on the file name and copy to your local directory.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl create -f ./deployment.yaml
+</code></pre>
+</div>
+
+<p>List all Deployments:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl get deployment
+</code></pre>
+</div>
+
+<p>List the Pods created by the Deployment:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx
+</code></pre>
+</div>
+
+<p>Upgrade the nginx container from 1.7.9 to 1.8 by changing the Deployment and calling <code class="highlighter-rouge">apply</code>.  The following config
+contains the desired changes:</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/walkthrough/deployment-update.yaml" download="deployment-update.yaml"><code>deployment-update.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('deployment-update.yaml')" title="Copy deployment-update.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="deployment-update.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">extensions/v1beta1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">nginx-deployment</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">replicas</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="s">template</span><span class="pi">:</span>
+    <span class="s">metadata</span><span class="pi">:</span>
+      <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">spec</span><span class="pi">:</span>
+      <span class="s">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+        <span class="s">image</span><span class="pi">:</span> <span class="s">nginx:1.8</span> <span class="c1"># Update the version of nginx from 1.7.9 to 1.8</span>
+        <span class="s">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">80</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<p>Download ./deployment-update.yaml and copy to your local directory.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl apply -f ./deployment-update.yaml
+</code></pre>
+</div>
+
+<p>Watch the Deployment create Pods with new names and delete the old Pods:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx
+</code></pre>
+</div>
+
+<p>Delete the Deployment by name:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl delete deployment nginx-deployment
+</code></pre>
+</div>
+
+<p>For more information, such as how to rollback Deployment changes to a previous version, see <a href="/docs/user-guide/deployments/"><em>Deployments</em></a>.</p>
+
+<h2 id="services">Services</h2>
+
+<p>Once you have a replicated set of Pods, you need an abstraction that enables connectivity between the layers of your application.  For example, if you have a Deployment managing your backend jobs, you don’t want to have to reconfigure your front-ends whenever you re-scale your backends.  Likewise, if the Pods in your backends are scheduled (or rescheduled) onto different machines, you can’t be required to re-configure your front-ends.  In Kubernetes, the service abstraction achieves these goals.  A service provides a way to refer to a set of Pods (selected by labels) with a single static IP address. It may also provide load balancing, if supported by the provider.</p>
+
+<p>For example, here is a service that balances across the Pods created in the previous nginx Deployment example (<a href="/docs/user-guide/walkthrough/service.yaml">service.yaml</a>):</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/walkthrough/service.yaml" download="service.yaml"><code>service.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('service.yaml')" title="Copy service.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="service.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">nginx-service</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">port</span><span class="pi">:</span> <span class="s">8000</span> <span class="c1"># the port that this service should serve on</span>
+    <span class="c1"># the container on each pod to connect to, can be a name</span>
+    <span class="c1"># (e.g. 'www') or a number (e.g. 80)</span>
+    <span class="s">targetPort</span><span class="pi">:</span> <span class="s">80</span>
+    <span class="s">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+  <span class="c1"># just like the selector in the deployment,</span>
+  <span class="c1"># but this time it identifies the set of pods to load balance</span>
+  <span class="c1"># traffic to.</span>
+  <span class="s">selector</span><span class="pi">:</span>
+    <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<h4 id="service-management">Service Management</h4>
+
+<p>Create an nginx service (<a href="/docs/user-guide/walkthrough/service.yaml">service.yaml</a>):</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl create -f docs/user-guide/walkthrough/service.yaml
+</code></pre>
+</div>
+
+<p>List all services:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl get services
+</code></pre>
+</div>
+
+<p>On most providers, the service IPs are not externally accessible. The easiest way to test that the service is working is to create a busybox Pod and exec commands on it remotely. See the <a href="/docs/user-guide/kubectl-overview/">command execution documentation</a> for details.</p>
+
+<p>Provided the service IP is accessible, you should be able to access its http endpoint with wget on the exposed port:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">export </span><span class="nv">SERVICE_IP</span><span class="o">=</span><span class="k">$(</span>kubectl get service nginx-service -o go-template<span class="o">=</span><span class="s1">'{{.spec.clusterIP}}'</span><span class="k">)</span>
+<span class="gp">$ </span><span class="nb">export </span><span class="nv">SERVICE_PORT</span><span class="o">=</span><span class="k">$(</span>kubectl get service nginx-service -o go-template<span class="o">=</span><span class="s1">'{{(index .spec.ports 0).port}}'</span><span class="k">)</span>
+<span class="gp">$ </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$SERVICE_IP</span><span class="s2">:</span><span class="nv">$SERVICE_PORT</span><span class="s2">"</span>
+<span class="gp">$ </span>kubectl run busybox  --generator<span class="o">=</span>run-pod/v1 --image<span class="o">=</span>busybox --restart<span class="o">=</span>Never --tty -i --env <span class="s2">"SERVICE_IP=</span><span class="nv">$SERVICE_IP</span><span class="s2">,SERVICE_PORT=</span><span class="nv">$SERVICE_PORT</span><span class="s2">"</span>
+<span class="gp">u@busybox$ </span>wget -qO- http://<span class="nv">$SERVICE_IP</span>:<span class="nv">$SERVICE_PORT</span> <span class="c"># Run in the busybox container</span>
+<span class="gp">u@busybox$ </span><span class="nb">exit</span> <span class="c"># Exit the busybox container</span>
+<span class="gp">$ </span>kubectl delete pod busybox <span class="c"># Clean up the pod we created with "kubectl run"</span>
+</code></pre>
+</div>
+
+<p>To delete the service by name:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl delete service nginx-service
+</code></pre>
+</div>
+
+<p>When created, each service is assigned a unique IP address.  This address is tied to the lifespan of the Service, and will not change while the Service is alive.  Pods can be configured to talk to the service, and know that communication to the service will be automatically load-balanced out to some Pod that is a member of the set identified by the label selector in the Service.</p>
+
+<p>For more information, see <a href="/docs/user-guide/services/">Services</a>.</p>
+
+<h2 id="health-checking">Health Checking</h2>
+
+<p>When I write code it never crashes, right?  Sadly the <a href="https://github.com/kubernetes/kubernetes/issues">Kubernetes issues list</a> indicates otherwise…</p>
+
+<p>Rather than trying to write bug-free code, a better approach is to use a management system to perform periodic health checking
+and repair of your application.  That way a system outside of your application itself is responsible for monitoring the
+application and taking action to fix it.  It’s important that the system be outside of the application, since if
+your application fails and the health checking agent is part of your application, it may fail as well and you’ll never know.
+In Kubernetes, the health check monitor is the Kubelet agent.</p>
+
+<h4 id="process-health-checking">Process Health Checking</h4>
+
+<p>The simplest form of health-checking is just process level health checking.  The Kubelet constantly asks the Docker daemon
+if the container process is still running, and if not, the container process is restarted.  In all of the Kubernetes examples
+you have run so far, this health checking was actually already enabled.  It’s on for every single container that runs in
+Kubernetes.</p>
+
+<h4 id="application-health-checking">Application Health Checking</h4>
+
+<p>However, in many cases this low-level health checking is insufficient.  Consider, for example, the following code:</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="n">lockOne</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">sync</span><span class="o">.</span><span class="n">Mutex</span><span class="p">{}</span><span class="x">
+</span><span class="n">lockTwo</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">sync</span><span class="o">.</span><span class="n">Mutex</span><span class="p">{}</span><span class="x">
+
+</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="n">lockOne</span><span class="o">.</span><span class="n">Lock</span><span class="p">();</span><span class="x">
+  </span><span class="n">lockTwo</span><span class="o">.</span><span class="n">Lock</span><span class="p">();</span><span class="x">
+  </span><span class="o">...</span><span class="x">
+</span><span class="p">}()</span><span class="x">
+
+</span><span class="n">lockTwo</span><span class="o">.</span><span class="n">Lock</span><span class="p">();</span><span class="x">
+</span><span class="n">lockOne</span><span class="o">.</span><span class="n">Lock</span><span class="p">();</span><span class="x">
+</span></code></pre>
+</div>
+
+<p>This is a classic example of a problem in computer science known as <a href="https://en.wikipedia.org/wiki/Deadlock">“Deadlock”</a>. From Docker’s perspective your application is
+still operating and the process is still running, but from your application’s perspective your code is locked up and will never respond correctly.</p>
+
+<p>To address this problem, Kubernetes supports user implemented application health-checks.  These checks are performed by the
+Kubelet to ensure that your application is operating correctly for a definition of “correctly” that <em>you</em> provide.</p>
+
+<p>Currently, there are three types of application health checks that you can choose from:</p>
+
+<ul>
+  <li>HTTP Health Checks - The Kubelet will call a web hook.  If it returns between 200 and 399, it is considered success, failure otherwise. See health check examples <a href="/docs/user-guide/liveness/">here</a>.</li>
+  <li>Container Exec - The Kubelet will execute a command inside your container.  If it exits with status 0 it will be considered a success. See health check examples <a href="/docs/user-guide/liveness/">here</a>.</li>
+  <li>TCP Socket - The Kubelet will attempt to open a socket to your container.  If it can establish a connection, the container is considered healthy, if it can’t it is considered a failure.</li>
+</ul>
+
+<p>In all cases, if the Kubelet discovers a failure the container is restarted.</p>
+
+<p>The container health checks are configured in the <code class="highlighter-rouge">livenessProbe</code> section of your container config. There you can also specify an <code class="highlighter-rouge">initialDelaySeconds</code> that is a grace period from when the container is started to when health checks are performed, to enable your container to perform any necessary initialization.</p>
+
+<p>Here is an example config for a Pod with an HTTP health check (<a href="/docs/user-guide/walkthrough/pod-with-http-healthcheck.yaml">pod-with-http-healthcheck.yaml</a>):</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/walkthrough/pod-with-http-healthcheck.yaml" download="pod-with-http-healthcheck.yaml"><code>pod-with-http-healthcheck.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-with-http-healthcheck.yaml')" title="Copy pod-with-http-healthcheck.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-with-http-healthcheck.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">pod-with-healthcheck</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">image</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="c1"># defines the health checking</span>
+    <span class="s">livenessProbe</span><span class="pi">:</span>
+      <span class="c1"># an http probe</span>
+      <span class="s">httpGet</span><span class="pi">:</span>
+        <span class="s">path</span><span class="pi">:</span> <span class="s">/_status/healthz</span>
+        <span class="s">port</span><span class="pi">:</span> <span class="s">80</span>
+      <span class="c1"># length of time to wait for a pod to initialize</span>
+      <span class="c1"># after pod startup, before applying health checking</span>
+      <span class="s">initialDelaySeconds</span><span class="pi">:</span> <span class="s">30</span>
+      <span class="s">timeoutSeconds</span><span class="pi">:</span> <span class="s">1</span>
+    <span class="s">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">80</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<p>For more information about health checking, see <a href="/docs/user-guide/pod-states/#container-probes">Container Probes</a>.</p>
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>For a complete application see the <a href="https://github.com/kubernetes/kubernetes/tree/master/examples/guestbook/">guestbook example</a>.</p>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/walkthrough/k8s201.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/user-guide/walkthrough/k8s201/",
+		        "title" : "",
+		        "permalink" : "http://kubernetes.github.io/docs/user-guide/walkthrough/k8s201/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

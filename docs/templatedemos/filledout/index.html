@@ -1,0 +1,303 @@
+
+
+<!Doctype html>
+<html id="docs" class="">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/templatedemos/filledout/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - </title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1></h1>
+	<h5></h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" >GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/templatedemos/filledout.md" id="editPageButton">Edit This Page</a></p>
+    	<h1></h1>
+		
+<!-- check for this before going any further; if not present, skip to else at bottom -->
+
+<h1 id="overview-of-pods">Overview of Pods</h1>
+
+<h3 id="what-is-a-pod">What is a Pod?</h3>
+
+<p>A pod is the vehicle for running containers in Kubernetes. A pod consists of:</p>
+
+<ul>
+  <li>One or more containers</li>
+  <li>An IP address that is unique within the cluster</li>
+  <li>Optionally: Environment variables, storage volumes, and enterprise features (such as health checking)</li>
+</ul>
+
+<p>Resources are shared amongst containers in the pod. Containers within a pod also share an IP address and port space, and can find each other via localhost, or interprocess communications (such as semaphores).</p>
+
+<p><img src="/images/docs/pod-overview.svg" alt="Pod diagram" style="max-width: 25%" /></p>
+
+<h3 id="when-to-use-pods">When to use Pods</h3>
+
+<p>Pods are used any time you need a container to be run. However, they are rarely created by a user, and are instead automatically created by controllers such as jobs, replication controllers, deployments, daemon set. The following table describes the strategy each controller uses to create pods.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Controller</th>
+      <th>Usage Strategy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Deployment</td>
+      <td>For running pods as a continuous and healthy application</td>
+    </tr>
+    <tr>
+      <td>Replication Controller</td>
+      <td>Used for the same purpose as Deployments (superseded Replication Controllers)</td>
+    </tr>
+    <tr>
+      <td>Jobs</td>
+      <td>For running pods “to completion” (which are then shut down)</td>
+    </tr>
+    <tr>
+      <td>Daemon Set</td>
+      <td>Mainly for performing operations on any nodes that match given parameters</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="when-not-to-use-pods">When not to use Pods</h3>
+
+<p>Do not use pods directly. Pods should always be managed by a controller.</p>
+
+<h3 id="pod-status">Pod status</h3>
+
+<p>To retrieve the status of a pod, run the following command:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl get pod &lt;name&gt;
+</code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Return Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">READY</code></td>
+      <td>Describes the number of containers that are ready to recieve traffic.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">STATUS</code></td>
+      <td>A value from the <code class="highlighter-rouge">PodPhase</code> enum describing the current status of the pod. Can be <code class="highlighter-rouge">Running</code>, <code class="highlighter-rouge">Pending</code>, <code class="highlighter-rouge">Succeeded</code>, <code class="highlighter-rouge">Failed</code>, and <code class="highlighter-rouge">Unknown</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>TODO: Link to refpage for <code class="highlighter-rouge">kubectl get pod</code></p>
+
+<p>To get a full description of a pod, including past events, run the following command:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>kubectl describe pod &lt;name&gt;
+</code></pre>
+</div>
+
+<p>TODO: Link to refpage for <code class="highlighter-rouge">kubectl describe pod</code></p>
+
+<h4 id="possible-status-results">Possible status results</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Deployment</td>
+      <td>For running pods as a continuous and healthy application</td>
+    </tr>
+    <tr>
+      <td>Replication Controller</td>
+      <td>Used for the same purpose as Deployments (superseded Replication Controllers)</td>
+    </tr>
+    <tr>
+      <td>Jobs</td>
+      <td>For running pods “to completion” (which are then shut down)</td>
+    </tr>
+    <tr>
+      <td>Daemon Set</td>
+      <td>Mainly for performing operations on any nodes that match given parameters</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="usage">Usage</h4>
+
+<p>Pods are defined when configuring the controller of your choice. In controller specifications,
+the parts that define the contents of the pod are inside the <code class="highlighter-rouge">template:</code> section.</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">YAML EXAMPLE HERE</span>
+</code></pre>
+</div>
+
+<!-- continuing the "if concept" if/then: -->
+
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/templatedemos/filledout.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/templatedemos/filledout/",
+		        "title" : "",
+		        "permalink" : "http://kubernetes.github.io/docs/templatedemos/filledout/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

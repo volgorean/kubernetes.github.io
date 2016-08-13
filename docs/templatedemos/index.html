@@ -1,0 +1,506 @@
+
+
+<!Doctype html>
+<html id="docs" class="Support">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/templatedemos/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - New Template Instructions</title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Support</h1>
+	<h5>Troubleshooting resources, frequently asked questions, and community support channels.</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" >GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" class="YAH">SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Support" href="/docs/troubleshooting/"></a>
+<div class="item" data-title="Troubleshooting">
+  <div class="container">
+    <a class="item" data-title="Debugging Pods and Replication Controllers" href="/docs/user-guide/debugging-pods-and-replication-controllers/"></a>
+    <a class="item" data-title="Application Introspection and Debugging" href="/docs/user-guide/introspection-and-debugging/"></a>
+    <a class="item" data-title="Retrieving Logs" href="/docs/user-guide/logging/"></a>
+    <a class="item" data-title="Troubleshooting Applications" href="/docs/user-guide/application-troubleshooting/"></a>
+    <a class="item" data-title="Troubleshooting Clusters" href="/docs/admin/cluster-troubleshooting/"></a>
+    <a class="item" data-title="Debugging Services" href="/docs/user-guide/debugging-services/"></a>
+  </div>
+</div>
+<div class="item" data-title="Frequently Asked Questions">
+  <div class="container">
+    <a class="item" data-title="User FAQ" href="https://github.com/kubernetes/kubernetes/wiki/User-FAQ/" target='_blank'></a>
+    <a class="item" data-title="Debugging FAQ" href="https://github.com/kubernetes/kubernetes/wiki/Debugging-FAQ/" target='_blank'></a>
+    <a class="item" data-title="Services FAQ" href="https://github.com/kubernetes/kubernetes/wiki/Services-FAQ/" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Other Resources">
+  <div class="container">
+    <a class="item" data-title="Kubernetes Issue Tracker on GitHub" href="https://github.com/kubernetes/kubernetes/issues/" target='_blank'></a>
+    <a class="item" data-title="Report a Security Vulnerability" href="/docs/reporting-security-issues/"></a>
+    <a class="item" data-title="Release Notes" href="https://github.com/kubernetes/kubernetes/releases/" target='_blank'></a>
+    <a class="item" data-title="Release Roadmap" href="https://github.com/kubernetes/kubernetes/milestones/" target='_blank'></a>
+    <a class="item" data-title="Contributing to Kubernetes Documentation" href="/editdocs/"></a>
+    <a class="item" data-title="New Template Instructions" href="/docs/templatedemos/"></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/templatedemos/index.md" id="editPageButton">Edit This Page</a></p>
+    	<h1>New Template Instructions</h1>
+		<ul id="markdown-toc">
+  <li><a href="#before-you-begin-get-the-docs-code-checked-out-locally" id="markdown-toc-before-you-begin-get-the-docs-code-checked-out-locally">Before you Begin: Get the docs code checked out locally</a>    <ul>
+      <li><a href="#step-1-fork-and-clone-the-repo" id="markdown-toc-step-1-fork-and-clone-the-repo">Step 1: Fork and Clone the repo</a></li>
+      <li><a href="#step-2-switch-to-the-docsv2-branch" id="markdown-toc-step-2-switch-to-the-docsv2-branch">Step 2: Switch to the docsv2 branch</a></li>
+      <li><a href="#step-3-make-sure-you-can-serve-rendered-docs" id="markdown-toc-step-3-make-sure-you-can-serve-rendered-docs">Step 3: Make sure you can serve rendered docs</a></li>
+    </ul>
+  </li>
+  <li><a href="#writing-docs-using-templates" id="markdown-toc-writing-docs-using-templates">Writing Docs Using Templates</a>    <ul>
+      <li><a href="#types-of-templates" id="markdown-toc-types-of-templates">Types of Templates</a></li>
+    </ul>
+  </li>
+  <li><a href="#concept-overview-template-details" id="markdown-toc-concept-overview-template-details">Concept Overview Template Details</a>    <ul>
+      <li><a href="#reference-examples" id="markdown-toc-reference-examples">Reference Examples</a></li>
+      <li><a href="#usage" id="markdown-toc-usage">Usage</a></li>
+      <li><a href="#creating-the-file" id="markdown-toc-creating-the-file">Creating the file</a></li>
+      <li><a href="#adding-the-page-to-navigation" id="markdown-toc-adding-the-page-to-navigation">Adding the page to navigation</a></li>
+      <li><a href="#adding-the-template-sections" id="markdown-toc-adding-the-template-sections">Adding the Template sections</a></li>
+      <li><a href="#tags-structure" id="markdown-toc-tags-structure">Tags structure</a></li>
+    </ul>
+  </li>
+  <li><a href="#task-template-details" id="markdown-toc-task-template-details">Task Template Details</a>    <ul>
+      <li><a href="#example" id="markdown-toc-example">Example</a></li>
+      <li><a href="#usage-1" id="markdown-toc-usage-1">Usage</a></li>
+      <li><a href="#creating-the-file-1" id="markdown-toc-creating-the-file-1">Creating the file</a></li>
+      <li><a href="#adding-the-page-to-navigation-1" id="markdown-toc-adding-the-page-to-navigation-1">Adding the page to navigation</a></li>
+      <li><a href="#adding-the-template-sections-1" id="markdown-toc-adding-the-template-sections-1">Adding the Template sections</a></li>
+      <li><a href="#tags-structure-1" id="markdown-toc-tags-structure-1">Tags structure</a></li>
+    </ul>
+  </li>
+  <li><a href="#landing-pages" id="markdown-toc-landing-pages">Landing Pages</a>    <ul>
+      <li><a href="#demos" id="markdown-toc-demos">Demos</a></li>
+      <li><a href="#usage-2" id="markdown-toc-usage-2">Usage</a></li>
+      <li><a href="#adding-page-to-navigation" id="markdown-toc-adding-page-to-navigation">Adding page to navigation</a></li>
+    </ul>
+  </li>
+  <li><a href="#kubectl-yaml" id="markdown-toc-kubectl-yaml">kubectl yaml</a>    <ul>
+      <li><a href="#demos-1" id="markdown-toc-demos-1">Demos</a></li>
+      <li><a href="#adding-page-to-navigation-1" id="markdown-toc-adding-page-to-navigation-1">Adding page to navigation</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="before-you-begin-get-the-docs-code-checked-out-locally">Before you Begin: Get the docs code checked out locally</h2>
+
+<p>Check out the kubernetes/kubernetes.github.io repo and the docsv2 branch.</p>
+
+<h3 id="step-1-fork-and-clone-the-repo">Step 1: Fork and Clone the repo</h3>
+
+<ul>
+  <li>Fork <a href="https://github.com/kubernetes/kubernetes.github.io">kubernetes/kubernetes.github.io</a></li>
+  <li><a href="https://help.github.com/articles/generating-an-ssh-key/">Setup your GitHub authentication using ssh</a></li>
+  <li>Clone the repo under ~/go/src/k8s.io</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">cd</span> ~/go/src/k8s.io
+git clone git@github.com:&lt;your-github-username&gt;/kubernetes.github.io
+<span class="nb">cd </span>kubernetes.github.io
+git remote add upstream https://github.com/kubernetes/kubernetes.github.io.git
+</code></pre>
+</div>
+
+<h3 id="step-2-switch-to-the-docsv2-branch">Step 2: Switch to the docsv2 branch</h3>
+
+<p>Docs v2 development is being performed in the <code class="highlighter-rouge">docsv2</code> branch.  This is the branch
+you want to be working from.</p>
+
+<p>From ~/go/src/k8s.io/kubernetes.github.io:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>git checkout -b docsv2
+git fetch upstream
+git reset --hard upstream/docsv2
+</code></pre>
+</div>
+
+<h3 id="step-3-make-sure-you-can-serve-rendered-docs">Step 3: Make sure you can serve rendered docs</h3>
+
+<p>One option is to simply rename your fork’s repo on GitHub.com to <code class="highlighter-rouge">yourusername.github.io</code>, which will auto-stage your commits at that URL.</p>
+
+<p>Or, just use Docker! Run this from within your local <code class="highlighter-rouge">kubernetes.github.io</code> directory and you should be good:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>docker run -ti --rm -v <span class="s2">"</span><span class="nv">$PWD</span><span class="s2">"</span>:/k8sdocs -p 4000:4000 johndmulhausen/k8sdocs
+</code></pre>
+</div>
+
+<p>The site will then be viewable at <a href="http://localhost:4000/">http://localhost:4000/</a>.</p>
+
+<p>Or, you can <a href="/editdocs/">follow the instructions</a> for running a from-scratch staging server, which is both the most performant option and the biggest pain to get set up.</p>
+
+<h2 id="writing-docs-using-templates">Writing Docs Using Templates</h2>
+
+<h3 id="types-of-templates">Types of Templates</h3>
+
+<ul>
+  <li>Concept Template
+    <ul>
+      <li>Introduce K8s Api Objects e.g. Pod</li>
+    </ul>
+  </li>
+  <li>Task Template
+    <ul>
+      <li>Step-by-step guide for “Doing X”.</li>
+      <li>Useful for breaking down various ways of configuring Concepts into sub-topics</li>
+    </ul>
+  </li>
+  <li>Landing Pages Template
+    <ul>
+      <li>Collection of click-able cards on a grid</li>
+      <li>Useful for directing users to actual content from a visual Table of Contents</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="concept-overview-template-details">Concept Overview Template Details</h2>
+
+<p>A concept overview covers the most essential, important information about core
+Kubernetes concepts and features.  Examples of Concepts include <code class="highlighter-rouge">Pod</code>,
+<code class="highlighter-rouge">Deployment</code>, <code class="highlighter-rouge">Service</code>, etc.</p>
+
+<h3 id="reference-examples">Reference Examples</h3>
+
+<ul>
+  <li><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/docsv2/docs/pod/index.md">Link to Example Template: Source</a></li>
+  <li><a href="http://k8sdocs.github.io/docs/pod/">Link to Example Template: Rendered</a></li>
+</ul>
+
+<h3 id="usage">Usage</h3>
+
+<h3 id="creating-the-file">Creating the file</h3>
+
+<p>To create a new concept overview page, create a new directory with the concept
+name under the docs directory and an index.md file.
+e.g. <code class="highlighter-rouge">docs/your-concept-name/index.md</code>.</p>
+
+<h3 id="adding-the-page-to-navigation">Adding the page to navigation</h3>
+
+<p>Once your page is saved, somewhere in the <code class="highlighter-rouge">/docs/</code> directory, add a reference to the <code class="highlighter-rouge">concepts.yml</code> file under <code class="highlighter-rouge">/_data/</code> so that it will appear in the left-hand navigation of the site. This is also where you add a title to the page.</p>
+
+<h3 id="adding-the-template-sections">Adding the Template sections</h3>
+
+<ul>
+  <li>concept: the concept name e.g. Pod</li>
+  <li>what_is: one sentence description the function / role  of the concept.  Diagrams are helpful.</li>
+  <li>when_to_use: disambiguate when to use this vs alternatives</li>
+  <li>when_not_to_use: highlight common anti-patterns</li>
+  <li>status: how to get the status for this object using kubectl</li>
+  <li>usage: example yaml</li>
+  <li>template: include the template at the end</li>
+</ul>
+
+<h3 id="tags-structure">Tags structure</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">glossary:</code> a brief (~140 character) definition of what this concept is.</li>
+  <li><code class="highlighter-rouge">object_rankings:</code> associates the page with API objects/functions.</li>
+  <li><code class="highlighter-rouge">concept_rankings:</code> associates the page with Kubernetes concepts.</li>
+  <li><code class="highlighter-rouge">command_rankings:</code> associates the page with CLI commands</li>
+</ul>
+
+<p>In each case, the association is ranked. If ranked “1,” the topic will surface as a “Core Topic” (of high importance) on various associated pages. If ranked “2,” the topic will be grouped under “Advanced Topics,” which are deemed less essential.</p>
+
+<p>Only ranks 1 and 2 are supported.</p>
+
+<p>Tags are mandatory and should be thorough; they are the connective tissue of the site. To see them in action, <a href="http://k8sdocs.github.io/docs/sitemap/">visit our sitemap</a>.</p>
+
+<div class="language-liquid highlighter-rouge"><pre class="highlight"><code>---
+glossary: A pod is the vehicle for running containers in Kubernetes.
+object_rankings:
+- object: pod
+  rank: 1
+concept_rankings:
+- concept: pod
+  rank: 1
+command_rankings:
+- command: kubect describe
+  rank: 1
+- command: kubectl get
+  rank: 1
+---
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">concept</span><span class="w"> </span><span class="p">%}</span> concept-name-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">what_is</span><span class="w"> </span><span class="p">%}</span> description-of-concept-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">when_to_use</span><span class="w"> </span><span class="p">%}</span> when-to-use-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">when_not_to_use</span><span class="w"> </span><span class="p">%}</span> anti-patterns-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">status</span><span class="w"> </span><span class="p">%}</span> how-to-get-with-kubectl-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">usage</span><span class="w"> </span><span class="p">%}</span> yaml-config-usage-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nv">templates</span>/<span class="nv">concept</span>-<span class="nv">overview</span><span class="p">.</span><span class="nv">md</span><span class="w"> </span><span class="p">%}</span>
+</code></pre>
+</div>
+
+<h2 id="task-template-details">Task Template Details</h2>
+
+<p>A task page offers step-by-step instructions for completing a task with Kubernetes. <strong>A task page should be narrowly focused on task completion and not delve into concepts or reference information.</strong></p>
+
+<h3 id="example">Example</h3>
+
+<ul>
+  <li><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/docsv2/docs/tasks/explicitly-scheduling-pod-node.md">Link to Example Template: Source</a></li>
+  <li><a href="http://k8sdocs.github.io/docs/tasks/explicitly-scheduling-pod-node/">Link to Example Template: Rendered</a></li>
+</ul>
+
+<h3 id="usage-1">Usage</h3>
+
+<h3 id="creating-the-file-1">Creating the file</h3>
+
+<p>To create a new task page, create a file under docs/tasks/task-name.
+e.g. <code class="highlighter-rouge">docs/tasks/your-task-name</code>.</p>
+
+<p>Task filenames should match the title, chaining words with dashes in all lowercase, omitting articles and prepositions. For example, the topic “Explictly Scheduling a Pod on a Node” is stored in file <code class="highlighter-rouge">/docs/tasks/explicitly-scheduling-pod-node.md</code>.</p>
+
+<h3 id="adding-the-page-to-navigation-1">Adding the page to navigation</h3>
+
+<p>Add a reference to the <code class="highlighter-rouge">tasks.yml</code> file under <code class="highlighter-rouge">/_data/</code> so that it will appear in the left-hand navigation of the site. This is also where you add a title to the page.</p>
+
+<h3 id="adding-the-template-sections-1">Adding the Template sections</h3>
+
+<ul>
+  <li>metadata: structured description of the doc content</li>
+  <li>purpose: one sentence description of the task and motivation</li>
+  <li>recommended_background: List of Concepts referenced or other Tasks, Tutorials that provide needed context</li>
+  <li>set_by_step: Add multiple sections.  1 per step in the task.</li>
+  <li>template: include the template at the end</li>
+</ul>
+
+<h3 id="tags-structure-1">Tags structure</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">object_rankings:</code> associates the page with API objects/functions.</li>
+  <li><code class="highlighter-rouge">concept_rankings:</code> associates the page with Kubernetes concepts.</li>
+  <li><code class="highlighter-rouge">command_rankings:</code> associates the page with CLI commands</li>
+</ul>
+
+<p>In each case, the association is ranked. If ranked “1,” the topic will surface as a “Core Topic” (of high importance) on various associated pages. If ranked “2,” the topic will be grouped under “Advanced Topics,” which are deemed less essential.</p>
+
+<p>Only ranks 1 and 2 are supported.</p>
+
+<p>Tags are mandatory and should be thorough; they are the connective tissue of the site. To see them in action, <a href="http://k8sdocs.github.io/docs/sitemap/">visit our sitemap</a>.</p>
+
+<div class="language-liquid highlighter-rouge"><pre class="highlight"><code>---
+object_rankings:
+- object: nodeAffinity
+  rank: 1
+- object: nodeSelector
+  rank: 2
+concept_rankings:
+- concept: node
+  rank: 1
+- concept: pod
+  rank: 1
+command_rankings:
+- command: kubectl label
+  rank: 1
+- command: kubectl get
+  rank: 2
+---
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">purpose</span><span class="w"> </span><span class="p">%}</span> task-description-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">recommended_background</span><span class="w"> </span><span class="p">%}</span> prereq-reading-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">capture</span><span class="w"> </span><span class="na">step_by_step</span><span class="w"> </span><span class="p">%}</span> single-step-here <span class="p">{%</span><span class="w"> </span><span class="nt">endcapture</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nv">templates</span>/<span class="nv">task</span><span class="p">.</span><span class="nv">md</span><span class="w"> </span><span class="p">%}</span>
+</code></pre>
+</div>
+
+<h2 id="landing-pages">Landing Pages</h2>
+
+<p>Landing pages are a set of clickable “cards” arranged in a grid. Each card has a heading and description, and optioninall, a thumbnail image. They are meant to be index pages that quickly forward users on to deeper content.</p>
+
+<h3 id="demos">Demos</h3>
+
+<ul>
+  <li><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/master/docs/templatedemos/landingpage.md">Link to Example Landing Page</a></li>
+  <li><a href="landingpage/">Link to Rendered Landing Page</a></li>
+</ul>
+
+<h3 id="usage-2">Usage</h3>
+
+<p>To use this template, create a new file with these contents. Essentially, you declare the cards you want by inserting the following YAML structure in the front-matter YAML section at the top of the page, and the body of the page just has the include statement.</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="nn">---</span>
+<span class="s">cards</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="s">progression</span><span class="pi">:</span> <span class="s">no</span> <span class="c1">#"yes" = display cards as linearly progressing</span>
+<span class="pi">-</span> <span class="s">card</span><span class="pi">:</span>
+  <span class="s">title</span><span class="pi">:</span> <span class="s">Mean Stack</span>
+  <span class="s">image</span><span class="pi">:</span> <span class="s">/images/docs/meanstack/image_0.png</span>
+  <span class="s">description</span><span class="pi">:</span> <span class="s">Lorem ipsum dolor it verberum.</span>
+<span class="c1"># repeat -card: items as necessary</span>
+<span class="nn">---</span>
+<span class="pi">{</span><span class="err">%</span> <span class="nv">include templates/landing-page.md %</span><span class="pi">}</span>
+</code></pre>
+</div>
+
+<h3 id="adding-page-to-navigation">Adding page to navigation</h3>
+
+<p>Once your page is saved, somewhere in the <code class="highlighter-rouge">/docs/</code> directory, add a reference to the appropriate .yml file under <code class="highlighter-rouge">/_data/</code> so that it will appear in the left-hand navigation of the site. This is also where you add a title to the page.</p>
+
+<h2 id="kubectl-yaml">kubectl yaml</h2>
+
+<p>You probably shouldn’t be using this, but we also have templates which consume YAML files that are generated by the Kubernetes authors. These are turned into pages which display the reference information for the various CLI tools.</p>
+
+<h3 id="demos-1">Demos</h3>
+
+<ul>
+  <li><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/docsv2/docs/kubectl/kubectl_api-versions.md">Link to Example Template</a></li>
+  <li><a href="http://k8sdocs.github.io/docs/kubectl/kubectl_api-versions/">Link to Rendered Template</a></li>
+</ul>
+
+<h3 id="adding-page-to-navigation-1">Adding page to navigation</h3>
+
+<p>Once your page is saved, somewhere in the <code class="highlighter-rouge">/docs/</code> directory, add a reference to the <code class="highlighter-rouge">reference.yml</code> file under <code class="highlighter-rouge">/_data/</code> so that it will appear in the left-hand navigation of the site. This is also where you add a title to the page.</p>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/templatedemos/index.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/templatedemos/",
+		        "title" : "New Template Instructions",
+		        "permalink" : "http://kubernetes.github.io/docs/templatedemos/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

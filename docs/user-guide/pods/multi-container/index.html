@@ -1,0 +1,836 @@
+
+
+<!Doctype html>
+<html id="docs" class="Guides">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/user-guide/pods/multi-container/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - Creating Multi-Container Pods</title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Guides</h1>
+	<h5>How to get started, and achieve tasks, using Kubernetes</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" class="YAH">GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Guides" href="/docs/"></a>
+<div class="item" data-title="Getting Started">
+  <div class="container">
+    <a class="item" data-title="What is Kubernetes?" href="/docs/whatisk8s/"></a>
+    <a class="item" data-title="Downloading or Building Kubernetes" href="/docs/getting-started-guides/binary_release/"></a>
+    <a class="item" data-title="Hello World Walkthrough" href="/docs/hellonode/"></a>
+    <a class="item" data-title="Online Training Course" href="https://www.udacity.com/course/scalable-microservices-with-kubernetes--ud615" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Accessing the Cluster">
+  <div class="container">
+    <a class="item" data-title="Installing and Setting up kubectl" href="/docs/user-guide/prereqs/"></a>
+    <a class="item" data-title="Accessing Clusters" href="/docs/user-guide/accessing-the-cluster/"></a>
+    <a class="item" data-title="Sharing Cluster Access with kubeconfig" href="/docs/user-guide/sharing-clusters/"></a>
+    <a class="item" data-title="Authenticating Across Clusters with kubeconfig" href="/docs/user-guide/kubeconfig-file/"></a>
+  </div>
+</div>
+    <a class="item" data-title="User Guide" href="/docs/user-guide/"></a>
+    <a class="item" data-title="Web UI (Dashboard)" href="/docs/user-guide/ui/"></a>
+<div class="item" data-title="Workload Deployment and Management">
+  <div class="container">
+    <a class="item" data-title="Launching, Exposing, and Killing Applications" href="/docs/user-guide/quick-start/"></a>
+    <a class="item" data-title="Deploying Applications" href="/docs/user-guide/deploying-applications/"></a>
+    <a class="item" data-title="Managing Resources" href="/docs/user-guide/managing-deployments/"></a>
+    <a class="item" data-title="Replication Controller Operations" href="/docs/user-guide/replication-controller/operations/"></a>
+    <a class="item" data-title="Resizing a Replication Controller" href="/docs/user-guide/resizing-a-replication-controller/"></a>
+    <a class="item" data-title="Rolling Updates" href="/docs/user-guide/rolling-updates/"></a>
+    <a class="item" data-title="Rolling Update Demo" href="/docs/user-guide/update-demo/"></a>
+    <a class="item" data-title="Secrets Walkthrough" href="/docs/user-guide/secrets/walkthrough/"></a>
+    <a class="item" data-title="Using ConfigMap" href="/docs/user-guide/configmap/"></a>
+    <a class="item" data-title="Horizontal Pod Autoscaling" href="/docs/user-guide/horizontal-pod-autoscaling/walkthrough/"></a>
+    <a class="item" data-title="Best Practices for Configuration" href="/docs/user-guide/config-best-practices/"></a>
+    <a class="item" data-title="Using kubectl to Manage Resources" href="/docs/user-guide/working-with-resources/"></a>
+    <a class="item" data-title="Garbage collection" href="/docs/user-guide/garbage-collector/"></a>
+  </div>
+</div>
+<div class="item" data-title="Batch Jobs">
+  <div class="container">
+    <a class="item" data-title="Jobs" href="/docs/user-guide/jobs/"></a>
+    <a class="item" data-title="Parallel Processing using Expansions" href="/docs/user-guide/jobs/expansions/"></a>
+    <a class="item" data-title="Coarse Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-1/"></a>
+    <a class="item" data-title="Fine Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-2/"></a>
+  </div>
+</div>
+<div class="item" data-title="Service Discovery and Load Balancing">
+  <div class="container">
+    <a class="item" data-title="Connecting Applications with Services" href="/docs/user-guide/connecting-applications/"></a>
+    <a class="item" data-title="Service Operations" href="/docs/user-guide/services/operations/"></a>
+    <a class="item" data-title="Creating an External Load Balancer" href="/docs/user-guide/load-balancer/"></a>
+    <a class="item" data-title="Configuring Your Cloud Provider's Firewalls" href="/docs/user-guide/services-firewalls/"></a>
+    <a class="item" data-title="Cross-cluster Service Discovery using Federated Services" href="/docs/user-guide/federation/federated-services/"></a>
+  </div>
+</div>
+<div class="item" data-title="Containers and Pods">
+  <div class="container">
+    <a class="item" data-title="Running Your First Containers" href="/docs/user-guide/simple-nginx/"></a>
+    <a class="item" data-title="Creating Single-Container Pods" href="/docs/user-guide/pods/single-container/"></a>
+    <a class="item" data-title="Creating Multi-Container Pods" href="/docs/user-guide/pods/multi-container/"></a>
+    <a class="item" data-title="Configuring Containers" href="/docs/user-guide/configuring-containers/"></a>
+    <a class="item" data-title="Working with Containers in Production" href="/docs/user-guide/production-pods/"></a>
+    <a class="item" data-title="Commands and Capabilities" href="/docs/user-guide/containers/"></a>
+    <a class="item" data-title="Using Environment Variables" href="/docs/user-guide/environment-guide/"></a>
+    <a class="item" data-title="Managing Compute Resources" href="/docs/user-guide/compute-resources/"></a>
+    <a class="item" data-title="The Lifecycle of a Pod" href="/docs/user-guide/pod-states/"></a>
+    <a class="item" data-title="Checking Pod Health" href="/docs/user-guide/liveness/"></a>
+    <a class="item" data-title="Container Lifecycle Hooks" href="/docs/user-guide/container-environment/"></a>
+    <a class="item" data-title="Assigning Pods to Nodes" href="/docs/user-guide/node-selection/"></a>
+    <a class="item" data-title="Using the Downward API to Convey Pod Properties" href="/docs/user-guide/downward-api/"></a>
+    <a class="item" data-title="Downward API Volumes" href="/docs/user-guide/downward-api/volume"></a>
+    <a class="item" data-title="Persistent Volumes Walkthrough" href="/docs/user-guide/persistent-volumes/walkthrough/"></a>
+    <a class="item" data-title="Bootstrapping Pet Sets" href="/docs/user-guide/petset/bootstrapping/"></a>
+  </div>
+</div>
+<div class="item" data-title="Monitoring, Logging, and Debugging Containers">
+  <div class="container">
+    <a class="item" data-title="Resource Usage Monitoring" href="/docs/user-guide/monitoring/"></a>
+    <a class="item" data-title="Logging" href="/docs/getting-started-guides/logging/"></a>
+    <a class="item" data-title="Logging with Elasticsearch and Kibana" href="/docs/getting-started-guides/logging-elasticsearch/"></a>
+    <a class="item" data-title="Running Commands in a Container with kubectl exec" href="/docs/user-guide/getting-into-containers/"></a>
+    <a class="item" data-title="Connect with Proxies" href="/docs/user-guide/connecting-to-applications-proxy/"></a>
+    <a class="item" data-title="Connect with Port Forwarding" href="/docs/user-guide/connecting-to-applications-port-forward/"></a>
+    <a class="item" data-title="Using Explorer to Examine the Runtime Environment" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/explorer" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Creating a Cluster">
+  <div class="container">
+    <a class="item" data-title="Picking the Right Solution" href="/docs/getting-started-guides/"></a>
+<div class="item" data-title="Running Kubernetes on Your Local Machine">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes Locally via Minikube" href="/docs/getting-started-guides/minikube/"></a>
+    <a class="item" data-title="Deprecated Alternatives" href="/docs/getting-started-guides/alternatives/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Turn-key Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes on Google Container Engine" href="https://cloud.google.com/container-engine/docs/before-you-begin/" target='_blank'></a>
+    <a class="item" data-title="Running Kubernetes on Google Compute Engine" href="/docs/getting-started-guides/gce/"></a>
+    <a class="item" data-title="Running Kubernetes on AWS EC2" href="/docs/getting-started-guides/aws/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Weave-based)" href="/docs/getting-started-guides/coreos/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Flannel-based)" href="/docs/getting-started-guides/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on CenturyLink Cloud" href="/docs/getting-started-guides/clc/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Custom Solutions">
+  <div class="container">
+    <a class="item" data-title="Creating a Custom Cluster from Scratch" href="/docs/getting-started-guides/scratch/"></a>
+<div class="item" data-title="Custom Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="CoreOS on AWS or GCE" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Ubuntu on AWS or Joyent" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="CoreOS on Rackspace" href="/docs/getting-started-guides/rackspace/"></a>
+  </div>
+</div>
+<div class="item" data-title="On-Premise VMs">
+  <div class="container">
+    <a class="item" data-title="CoreOS on Vagrant" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Cloudstack" href="/docs/getting-started-guides/cloudstack/"></a>
+    <a class="item" data-title="VMware vSphere" href="/docs/getting-started-guides/vsphere/"></a>
+    <a class="item" data-title="VMware Photon Controller" href="/docs/getting-started-guides/photon-controller/"></a>
+    <a class="item" data-title="Juju" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="DCOS" href="/docs/getting-started-guides/dcos/"></a>
+    <a class="item" data-title="CoreOS on libvirt" href="/docs/getting-started-guides/libvirt-coreos/"></a>
+    <a class="item" data-title="oVirt" href="/docs/getting-started-guides/ovirt/"></a>
+    <a class="item" data-title="OpenStack Heat" href="/docs/getting-started-guides/openstack-heat/"></a>
+    <a class="item" data-title="CoreOS on Multinode Cluster" href="/docs/getting-started-guides/coreos/coreos_multinode_cluster/"></a>
+    <a class="item" data-title="Fedora With Calico Networking" href="/docs/getting-started-guides/fedora/fedora-calico/"></a>
+<div class="item" data-title="rkt">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes with rkt" href="/docs/getting-started-guides/rkt/"></a>
+    <a class="item" data-title="Known Issues when Using rkt" href="/docs/getting-started-guides/rkt/notes/"></a>
+  </div>
+</div>
+    <a class="item" data-title="Kubernetes on Mesos" href="/docs/getting-started-guides/mesos/"></a>
+    <a class="item" data-title="Kubernetes on Mesos on Docker" href="/docs/getting-started-guides/mesos-docker/"></a>
+  </div>
+</div>
+<div class="item" data-title="Bare Metal">
+  <div class="container">
+    <a class="item" data-title="Offline" href="/docs/getting-started-guides/coreos/bare_metal_offline/"></a>
+    <a class="item" data-title="Fedora via Ansible" href="/docs/getting-started-guides/fedora/fedora_ansible_config/"></a>
+    <a class="item" data-title="Fedora (Single Node)" href="/docs/getting-started-guides/fedora/fedora_manual_config/"></a>
+    <a class="item" data-title="Fedora (Multi Node)" href="/docs/getting-started-guides/fedora/flannel_multi_node_cluster/"></a>
+    <a class="item" data-title="CentOS" href="/docs/getting-started-guides/centos/centos_manual_config/"></a>
+    <a class="item" data-title="CoreOS" href="/docs/getting-started-guides/coreos"></a>
+    <a class="item" data-title="CoreOS with Calico" href="/docs/getting-started-guides/coreos/bare_metal_calico/"></a>
+    <a class="item" data-title="Ubuntu" href="/docs/getting-started-guides/ubuntu/"></a>
+    <a class="item" data-title="Ubuntu Nodes with Calico" href="/docs/getting-started-guides/ubuntu-calico/"></a>
+  </div>
+</div>
+  </div>
+</div>
+    <a class="item" data-title="Portable Multi-Node Cluster" href="/docs/getting-started-guides/docker-multinode/"></a>
+    <a class="item" data-title="Building Large Clusters" href="/docs/admin/cluster-large/"></a>
+    <a class="item" data-title="Running in Multiple Zones" href="/docs/admin/multiple-zones/"></a>
+    <a class="item" data-title="Building High-Availability Clusters" href="/docs/admin/high-availability/"></a>
+  </div>
+</div>
+<div class="item" data-title="Administering Clusters">
+  <div class="container">
+    <a class="item" data-title="Admin Guide" href="/docs/admin/"></a>
+    <a class="item" data-title="Cluster Management Guide" href="/docs/admin/cluster-management/"></a>
+    <a class="item" data-title="Sharing a Cluster with Namespaces" href="/docs/admin/namespaces/"></a>
+    <a class="item" data-title="Namespaces Walkthrough" href="/docs/admin/namespaces/walkthrough/"></a>
+    <a class="item" data-title="Setting Pod CPU and Memory Limits" href="/docs/admin/limitrange/"></a>
+    <a class="item" data-title="Understanding Resource Quotas" href="/docs/admin/resourcequota/"></a>
+    <a class="item" data-title="Applying Resource Quotas and Limits" href="/docs/admin/resourcequota/walkthrough/"></a>
+    <a class="item" data-title="Kubernetes Components" href="/docs/admin/cluster-components/"></a>
+    <a class="item" data-title="Configuring Kubernetes Use of etcd" href="/docs/admin/etcd/"></a>
+    <a class="item" data-title="Federating Clusters" href="/docs/admin/federation/"></a>
+    <a class="item" data-title="Using Multiple Clusters" href="/docs/admin/multi-cluster/"></a>
+    <a class="item" data-title="Changing Cluster Size" href="https://github.com/kubernetes/kubernetes/wiki/User-FAQ#how-do-i-change-the-size-of-my-cluster/" target='_blank'></a>
+    <a class="item" data-title="Configuring Multiple Schedulers" href="/docs/admin/multiple-schedulers/"></a>
+    <a class="item" data-title="Networking in Kubernetes" href="/docs/admin/networking/"></a>
+    <a class="item" data-title="Using DNS Pods and Services" href="/docs/admin/dns/"></a>
+    <a class="item" data-title="Setting Up and Configuring DNS" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/cluster-dns" target='_blank'></a>
+    <a class="item" data-title="Master <-> Node Communication" href="/docs/admin/master-node-communication/"></a>
+    <a class="item" data-title="Network Plugins" href="/docs/admin/network-plugins/"></a>
+    <a class="item" data-title="Static Pods" href="/docs/admin/static-pods/"></a>
+    <a class="item" data-title="Configuring kubelet Garbage Collection" href="/docs/admin/garbage-collection/"></a>
+    <a class="item" data-title="Configuring Out Of Resource Handling" href="/docs/admin/out-of-resource/"></a>
+    <a class="item" data-title="Configuring Kubernetes with Salt" href="/docs/admin/salt/"></a>
+    <a class="item" data-title="Monitoring Node Health" href="/docs/admin/node-problem/"></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/user-guide/pods/multi-container.md" id="editPageButton">Edit This Page</a></p>
+    	<h1>Creating Multi-Container Pods</h1>
+		<ul id="markdown-toc">
+  <li><a href="#creating-a-pod" id="markdown-toc-creating-a-pod">Creating a pod</a>    <ul>
+      <li><a href="#using-create" id="markdown-toc-using-create">Using <code class="highlighter-rouge">create</code></a></li>
+      <li><a href="#pod-configuration-file" id="markdown-toc-pod-configuration-file">Pod configuration file</a></li>
+      <li><a href="#the-spec-schema" id="markdown-toc-the-spec-schema">The <code class="highlighter-rouge">spec</code> schema</a>        <ul>
+          <li><a href="#containers" id="markdown-toc-containers"><code class="highlighter-rouge">containers[]</code></a></li>
+          <li><a href="#restartpolicy" id="markdown-toc-restartpolicy"><code class="highlighter-rouge">restartPolicy</code></a></li>
+          <li><a href="#volumes" id="markdown-toc-volumes"><code class="highlighter-rouge">volumes[]</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#sample-file" id="markdown-toc-sample-file">Sample file</a></li>
+    </ul>
+  </li>
+  <li><a href="#viewing-a-pod" id="markdown-toc-viewing-a-pod">Viewing a pod</a></li>
+  <li><a href="#deleting-a-pod" id="markdown-toc-deleting-a-pod">Deleting a pod</a></li>
+</ul>
+
+<p>A pod is a group of containers that are scheduled
+onto the same host. Pods serve as units of scheduling, deployment, and
+horizontal scaling/replication. Pods share fate, and share some resources, such
+as storage volumes and IP addresses.</p>
+
+<h2 id="creating-a-pod">Creating a pod</h2>
+
+<p>Multi-container pods must be created with the <code class="highlighter-rouge">create</code> command. Properties
+are passed to the command as a YAML- or JSON-formatted configuration file.</p>
+
+<p>The <code class="highlighter-rouge">create</code> command can be used to create a pod directly, or it can create
+a pod or pods through a <code class="highlighter-rouge">Deployment</code>. It is highly recommended that
+you use a
+<a href="/docs/user-guide/deployments/">Deployment</a>
+to create your pods. It watches for failed pods and will start up
+new pods as required to maintain the specified number.</p>
+
+<p>If you don’t want a Deployment to monitor your pod (e.g. your pod
+is writing non-persistent data which won’t survive a restart, or your pod is
+intended to be very short-lived), you can create a pod directly with the
+<code class="highlighter-rouge">create</code> command.</p>
+
+<h3 id="using-create">Using <code class="highlighter-rouge">create</code></h3>
+
+<p>Note: We recommend using a
+<a href="/docs/user-guide/deployments/">Deployment</a>
+to create pods. You should use the instructions below only if you don’t want
+to create a Deployment.</p>
+
+<p>If your pod will contain more than one container, or if you don’t want to
+create a Deployment to manage your pod, use the
+<code class="highlighter-rouge">kubectl create</code> command and pass a pod specification as a JSON- or
+YAML-formatted configuration file.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f FILE
+</code></pre>
+</div>
+
+<p>Where:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-f FILE</code> or <code class="highlighter-rouge">--filename FILE</code> is the name of a
+<a href="#pod-configuration-file">pod configuration file</a> in either JSON or YAML
+format.</li>
+</ul>
+
+<p>A successful create request returns the pod name. Use the
+<a href="#viewing_a_pod"><code class="highlighter-rouge">kubectl get</code></a> command to view status after creation.</p>
+
+<h3 id="pod-configuration-file">Pod configuration file</h3>
+
+<p>A pod configuration file specifies required information about the pod.
+It can be formatted as YAML or as JSON, and supports the following fields:</p>
+
+<script>$(function(){$("#configfiles").tabs();});</script>
+
+<div id="configfiles">
+  <ul>
+    <li><a href="#JSON">JSON</a></li>
+    <li><a href="#YAML">YAML</a></li>
+  </ul>
+  <div id="JSON">
+    <table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/pods/pod-config.json" download="pod-config.json"><code>pod-config.json</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-config.json')" title="Copy pod-config.json to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-config.json" class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pod"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"apiVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"generateName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"namespace"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"spec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+    </span><span class="err">//</span><span class="w"> </span><span class="err">See</span><span class="w"> </span><span class="err">'The</span><span class="w"> </span><span class="err">spec</span><span class="w"> </span><span class="err">schema'</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">details.</span><span class="w">
+
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+</td></tr></table>
+  </div>
+  <div id="YAML">
+    <table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/pods/pod-config.yaml" download="pod-config.yaml"><code>pod-config.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-config.yaml')" title="Copy pod-config.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-config.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="s">labels</span><span class="pi">:</span>
+    <span class="s">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="s">namespace</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="s">annotations</span><span class="pi">:</span> <span class="pi">[]</span>
+  <span class="s">generateName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="pi">?</span> <span class="s2">"</span><span class="s">//</span><span class="nv"> </span><span class="s">See</span><span class="nv"> </span><span class="s">'The</span><span class="nv"> </span><span class="s">spec</span><span class="nv"> </span><span class="s">schema'</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">details."</span>
+  <span class="pi">:</span> <span class="s">~</span>
+</code></pre>
+</div>
+</td></tr></table>
+  </div>
+</div>
+
+<p>Required fields are:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">kind</code>: Always <code class="highlighter-rouge">Pod</code>.</li>
+  <li><code class="highlighter-rouge">apiVersion</code>: Currently <code class="highlighter-rouge">v1</code>.</li>
+  <li><code class="highlighter-rouge">metadata</code>: An object containing:
+    <ul>
+      <li><code class="highlighter-rouge">name</code>: Required if <code class="highlighter-rouge">generateName</code> is not specified. The name of this pod.
+It must be an
+<a href="https://www.ietf.org/rfc/rfc1035.txt">RFC1035</a> compatible value and be
+unique within the namespace.</li>
+      <li><code class="highlighter-rouge">labels</code>: Optional. Labels are arbitrary key:value pairs that can be used
+by
+<a href="/docs/user-guide/deployments/">Deployment</a>
+and <a href="/docs/user-guide/services/">services</a> for grouping and targeting
+pods.</li>
+      <li><code class="highlighter-rouge">generateName</code>: Required if <code class="highlighter-rouge">name</code> is not set. A prefix to use to generate
+a unique name. Has the same validation rules as <code class="highlighter-rouge">name</code>.</li>
+      <li><code class="highlighter-rouge">namespace</code>: Required. The namespace of the pod.</li>
+      <li><code class="highlighter-rouge">annotations</code>: Optional. A map of string keys and values that can be used
+by external tooling to store and retrieve arbitrary metadata about
+objects.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">spec</code>: The pod specification. See <a href="#the_spec_schema">The <code class="highlighter-rouge">spec</code> schema</a> for
+details.</li>
+</ul>
+
+<h3 id="the-spec-schema">The <code class="highlighter-rouge">spec</code> schema</h3>
+
+<p>A full description of the <code class="highlighter-rouge">spec</code> schema is contained in the
+<a href="/docs/api-reference/v1/definitions/#_v1_podspec">Kubernetes API reference</a>.</p>
+
+<p>The following fields are required or commonly used in the <code class="highlighter-rouge">spec</code> schema:</p>
+
+<script>$(function(){$("#specfiles").tabs();});</script>
+
+<div id="specfiles">
+  <ul>
+    <li><a href="#JSON">JSON</a></li>
+    <li><a href="#YAML">YAML</a></li>
+  </ul>
+  <div id="JSON">
+    <table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/pods/pod-spec-common.json" download="pod-spec-common.json"><code>pod-spec-common.json</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-spec-common.json')" title="Copy pod-spec-common.json to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-spec-common.json" class="language-json highlighter-rouge"><pre class="highlight"><code><span class="s2">"spec"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"containers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">""</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">""</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"imagePullPolicy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ports"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"containerPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"cpu"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="s2">"memory"</span><span class="err">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"restartPolicy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"volumes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"emptyDir"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"medium"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"secretName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+</td></tr></table>
+  </div>
+  <div id="YAML">
+    <table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/pods/pod-spec-common.yaml" download="pod-spec-common.yaml"><code>pod-spec-common.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-spec-common.yaml')" title="Copy pod-spec-common.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-spec-common.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">spec</span><span class="pi">:</span>
+  <span class="s">containers</span><span class="pi">:</span>
+    <span class="pi">-</span>
+      <span class="s">args</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">command</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">env</span><span class="pi">:</span>
+        <span class="pi">-</span>
+          <span class="s">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+          <span class="s">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">image</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">imagePullPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">ports</span><span class="pi">:</span>
+        <span class="pi">-</span>
+          <span class="s">containerPort</span><span class="pi">:</span> <span class="s">0</span>
+          <span class="s">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+          <span class="s">protocol</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">resources</span><span class="pi">:</span>
+        <span class="s">cpu</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+        <span class="s">memory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="s">restartPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="s">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span>
+      <span class="s">emptyDir</span><span class="pi">:</span>
+        <span class="s">medium</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="s">secret</span><span class="pi">:</span>
+        <span class="s">secretName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+</code></pre>
+</div>
+</td></tr></table>
+  </div>
+</div>
+
+<h4 id="containers"><code class="highlighter-rouge">containers[]</code></h4>
+
+<p>A list of containers belonging to the pod. Containers cannot be added or removed once the pod is created, and there must be at least one container in a pod.</p>
+
+<p>The <code class="highlighter-rouge">containers</code> object <strong>must contain</strong>:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">name</code>: Name of the container. It must be a DNS_LABEL and be unique within the pod. Cannot be updated.</li>
+  <li><code class="highlighter-rouge">image</code>: Docker image name.</li>
+</ul>
+
+<p>The <code class="highlighter-rouge">containers</code> object <strong>commonly contains</strong> the following optional properties:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">command[]</code>: The entrypoint array. Commands are not executed within a shell. The docker image’s entrypoint is used if this is not provided. Cannot be updated.</li>
+  <li><code class="highlighter-rouge">args[]</code>: A command array containing arguments to the entrypoint. The docker image’s <code class="highlighter-rouge">cmd</code> is used if this is not provided. Cannot be updated.</li>
+  <li><code class="highlighter-rouge">env[]</code>: A list of environment variables in key:value format to set in the container. Cannot be updated.
+    <ul>
+      <li><code class="highlighter-rouge">name</code>: The name of the environment variable; must be a <code class="highlighter-rouge">C_IDENTIFIER</code>.</li>
+      <li><code class="highlighter-rouge">value</code>: The value of the environment variable. Defaults to empty string.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">imagePullPolicy</code>: The image pull policy. Accepted values are:
+    <ul>
+      <li><code class="highlighter-rouge">Always</code></li>
+      <li><code class="highlighter-rouge">Never</code></li>
+      <li><code class="highlighter-rouge">IfNotPresent</code>Defaults to <code class="highlighter-rouge">Always</code> if <code class="highlighter-rouge">:latest</code> tag is specified, or <code class="highlighter-rouge">IfNotPresent</code> otherwise. Cannot be updated.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">ports[]</code>: A list of ports to expose from the container. Cannot be updated.
+    <ul>
+      <li><code class="highlighter-rouge">containerPort</code>: The port number to expose on the pod’s IP address.</li>
+      <li><code class="highlighter-rouge">name</code>: The name for the port that can be referred to by services. Must be a <code class="highlighter-rouge">DNS_LABEL</code> and be unique without the pod.</li>
+      <li><code class="highlighter-rouge">protocol</code>: Protocol for the port. Must be UDP or TCP. Default is TCP.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">resources</code>: The Compute resources required by this container. Contains:
+    <ul>
+      <li><code class="highlighter-rouge">cpu</code>: CPUs to reserve for each container. Default is whole CPUs; scale suffixes (e.g. <code class="highlighter-rouge">100m</code> for one hundred milli-CPUs) are supported. If the host does not have enough available resources, your pod will not be scheduled.</li>
+      <li><code class="highlighter-rouge">memory</code>: Memory to reserve for each container. Default is bytes; <a href="http://en.wikipedia.org/wiki/Binary_prefix">binary scale suffixes</a> (e.g. <code class="highlighter-rouge">100Mi</code> for one hundred mebibytes) are supported. If the host does not have enough available resources, your pod will not be scheduled.Cannot be updated.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="restartpolicy"><code class="highlighter-rouge">restartPolicy</code></h4>
+
+<p>Restart policy for all containers within the pod. Options are:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Always</code></li>
+  <li><code class="highlighter-rouge">OnFailure</code></li>
+  <li><code class="highlighter-rouge">Never</code></li>
+</ul>
+
+<h4 id="volumes"><code class="highlighter-rouge">volumes[]</code></h4>
+
+<p>A list of volumes that can be mounted by containers belonging to the pod. You must specify a <code class="highlighter-rouge">name</code> and a source for each volume. The container must also include a <code class="highlighter-rouge">volumeMount</code> with matching <code class="highlighter-rouge">name</code>. Source is one of:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">emptyDir</code>: A temporary directory that shares a pod’s lifetime. Contains:
+    <ul>
+      <li><code class="highlighter-rouge">medium</code>: The type of storage used to back the volume. Must be an empty string (default) or <code class="highlighter-rouge">Memory</code>.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">hostPath</code>: A pre-existing host file or directory. This is generally used for privileged system daemons or other agents tied to the host. Contains:
+    <ul>
+      <li><code class="highlighter-rouge">path</code>: The path of the directory on the host.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">secret</code>: Secret to populate volume. Secrets are used to hold sensitive information, such as passwords, OAuth tokens, and SSH keys. Learn more from <a href="/docs/user-guide/secrets/">the docs on secrets</a>. Contains:
+    <ul>
+      <li><code class="highlighter-rouge">secretName</code>: The name of a secret in the pod’s namespace.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The <code class="highlighter-rouge">name</code> must be a DNS_LABEL and unique within the pod.</p>
+
+<h3 id="sample-file">Sample file</h3>
+
+<p>For example, the following configuration file creates two containers: a
+<code class="highlighter-rouge">redis</code> key-value store image, and a <code class="highlighter-rouge">django</code> frontend image.</p>
+
+<script>$(function(){$("#samplefiles").tabs();});</script>
+
+<div id="samplefiles">
+  <ul>
+    <li><a href="#JSON">JSON</a></li>
+    <li><a href="#YAML">YAML</a></li>
+  </ul>
+  <div id="JSON">
+    <table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/pods/pod-sample.json" download="pod-sample.json"><code>pod-sample.json</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-sample.json')" title="Copy pod-sample.json to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-sample.json" class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pod"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"apiVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"redis-django"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"app"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webapp"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"spec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"containers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"key-value-store"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"redis"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"ports"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"containerPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">6379</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"frontend"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"django"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"ports"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"containerPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">8000</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+</td></tr></table>
+  </div>
+  <div id="YAML">
+    <table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/pods/pod-sample.yaml" download="pod-sample.yaml"><code>pod-sample.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-sample.yaml')" title="Copy pod-sample.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-sample.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">redis-django</span>
+  <span class="s">labels</span><span class="pi">:</span>
+    <span class="s">app</span><span class="pi">:</span> <span class="s">web</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">key-value-store</span>
+      <span class="s">image</span><span class="pi">:</span> <span class="s">redis</span>
+      <span class="s">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">6379</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">frontend</span>
+      <span class="s">image</span><span class="pi">:</span> <span class="s">django</span>
+      <span class="s">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">8000</span>
+</code></pre>
+</div>
+</td></tr></table>
+  </div>
+</div>
+
+<h2 id="viewing-a-pod">Viewing a pod</h2>
+
+<p>To view a specific pod, use the <code class="highlighter-rouge">kubectl get</code> command:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get pod NAME
+NAME                       READY   STATUS    RESTARTS   AGE
+example-1934187764-scau1   1/1     Running   0          2d
+</code></pre>
+</div>
+
+<p>To return the name of the node on which the pod is scheduled, use the <code class="highlighter-rouge">-o wide</code>
+option:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get pod NAME -o wide
+NAME                       READY   STATUS    RESTARTS   AGE   NODE
+example-1934187764-scau1   1/1     Running   0          2d    gke-example-c6a38-node-xij3
+</code></pre>
+</div>
+
+<p>For more details about a pod, including events, use <code class="highlighter-rouge">describe</code> in place of
+<code class="highlighter-rouge">get</code>:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl describe pod NAME
+Name:        example-1934187764-scau1
+Namespace:   default
+Image<span class="o">(</span>s<span class="o">)</span>:    kubernetes/example-php-redis:v2
+Node:        gke-example-c6a38461-node-xij3/10.240.34.183
+Labels:      <span class="nv">name</span><span class="o">=</span>frontend
+Status:      Running
+Reason:
+Message:
+IP:          10.188.2.10
+Replication Controllers:  example <span class="o">(</span>5/5 replicas created<span class="o">)</span>
+Containers:
+  php-redis:
+    Image:   kubernetes/example-php-redis:v2
+    Limits:
+      cpu:   100m
+    State:   Running
+      Started:   Tue, 04 Aug 2015 09:02:46 -0700
+    Ready:   True
+    Restart Count: 0
+Conditions:
+  Type    Status
+  Ready   True
+Events:
+  FirstSeen                       LastSeen                        Coun From                                     SubobjectPath            Reason  Message
+  Thu, 06 Aug 2015 11:49:44 -0700 Thu, 06 Aug 2015 11:49:44 -0700 1    <span class="o">{</span>kubelet gke-example-c6a38461-node-xij3<span class="o">}</span> spec.containers<span class="o">{</span>example<span class="o">}</span> started Started with docker id 5705bffa65e2
+</code></pre>
+</div>
+
+<p>To list all pods running on a cluster:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get pods
+
+NAME                       READY     STATUS    RESTARTS   AGE
+example-1934187764-scau1   1/1       Running   0          1m
+frontend-7kdod             1/1       Running   0          1d
+</code></pre>
+</div>
+
+<h2 id="deleting-a-pod">Deleting a pod</h2>
+
+<p>If you created your pod directly with <code class="highlighter-rouge">kubectl create</code>, use <code class="highlighter-rouge">kubectl delete</code>:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl delete pod NAME
+</code></pre>
+</div>
+
+<p>A successful delete request returns the name of the deleted pod.</p>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/pods/multi-container.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/user-guide/pods/multi-container/",
+		        "title" : "Creating Multi-Container Pods",
+		        "permalink" : "http://kubernetes.github.io/docs/user-guide/pods/multi-container/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

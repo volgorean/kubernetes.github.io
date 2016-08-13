@@ -1,0 +1,602 @@
+
+
+<!Doctype html>
+<html id="docs" class="Guides">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/user-guide/ui/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - Web UI (Dashboard)</title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Guides</h1>
+	<h5>How to get started, and achieve tasks, using Kubernetes</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" class="YAH">GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Guides" href="/docs/"></a>
+<div class="item" data-title="Getting Started">
+  <div class="container">
+    <a class="item" data-title="What is Kubernetes?" href="/docs/whatisk8s/"></a>
+    <a class="item" data-title="Downloading or Building Kubernetes" href="/docs/getting-started-guides/binary_release/"></a>
+    <a class="item" data-title="Hello World Walkthrough" href="/docs/hellonode/"></a>
+    <a class="item" data-title="Online Training Course" href="https://www.udacity.com/course/scalable-microservices-with-kubernetes--ud615" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Accessing the Cluster">
+  <div class="container">
+    <a class="item" data-title="Installing and Setting up kubectl" href="/docs/user-guide/prereqs/"></a>
+    <a class="item" data-title="Accessing Clusters" href="/docs/user-guide/accessing-the-cluster/"></a>
+    <a class="item" data-title="Sharing Cluster Access with kubeconfig" href="/docs/user-guide/sharing-clusters/"></a>
+    <a class="item" data-title="Authenticating Across Clusters with kubeconfig" href="/docs/user-guide/kubeconfig-file/"></a>
+  </div>
+</div>
+    <a class="item" data-title="User Guide" href="/docs/user-guide/"></a>
+    <a class="item" data-title="Web UI (Dashboard)" href="/docs/user-guide/ui/"></a>
+<div class="item" data-title="Workload Deployment and Management">
+  <div class="container">
+    <a class="item" data-title="Launching, Exposing, and Killing Applications" href="/docs/user-guide/quick-start/"></a>
+    <a class="item" data-title="Deploying Applications" href="/docs/user-guide/deploying-applications/"></a>
+    <a class="item" data-title="Managing Resources" href="/docs/user-guide/managing-deployments/"></a>
+    <a class="item" data-title="Replication Controller Operations" href="/docs/user-guide/replication-controller/operations/"></a>
+    <a class="item" data-title="Resizing a Replication Controller" href="/docs/user-guide/resizing-a-replication-controller/"></a>
+    <a class="item" data-title="Rolling Updates" href="/docs/user-guide/rolling-updates/"></a>
+    <a class="item" data-title="Rolling Update Demo" href="/docs/user-guide/update-demo/"></a>
+    <a class="item" data-title="Secrets Walkthrough" href="/docs/user-guide/secrets/walkthrough/"></a>
+    <a class="item" data-title="Using ConfigMap" href="/docs/user-guide/configmap/"></a>
+    <a class="item" data-title="Horizontal Pod Autoscaling" href="/docs/user-guide/horizontal-pod-autoscaling/walkthrough/"></a>
+    <a class="item" data-title="Best Practices for Configuration" href="/docs/user-guide/config-best-practices/"></a>
+    <a class="item" data-title="Using kubectl to Manage Resources" href="/docs/user-guide/working-with-resources/"></a>
+    <a class="item" data-title="Garbage collection" href="/docs/user-guide/garbage-collector/"></a>
+  </div>
+</div>
+<div class="item" data-title="Batch Jobs">
+  <div class="container">
+    <a class="item" data-title="Jobs" href="/docs/user-guide/jobs/"></a>
+    <a class="item" data-title="Parallel Processing using Expansions" href="/docs/user-guide/jobs/expansions/"></a>
+    <a class="item" data-title="Coarse Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-1/"></a>
+    <a class="item" data-title="Fine Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-2/"></a>
+  </div>
+</div>
+<div class="item" data-title="Service Discovery and Load Balancing">
+  <div class="container">
+    <a class="item" data-title="Connecting Applications with Services" href="/docs/user-guide/connecting-applications/"></a>
+    <a class="item" data-title="Service Operations" href="/docs/user-guide/services/operations/"></a>
+    <a class="item" data-title="Creating an External Load Balancer" href="/docs/user-guide/load-balancer/"></a>
+    <a class="item" data-title="Configuring Your Cloud Provider's Firewalls" href="/docs/user-guide/services-firewalls/"></a>
+    <a class="item" data-title="Cross-cluster Service Discovery using Federated Services" href="/docs/user-guide/federation/federated-services/"></a>
+  </div>
+</div>
+<div class="item" data-title="Containers and Pods">
+  <div class="container">
+    <a class="item" data-title="Running Your First Containers" href="/docs/user-guide/simple-nginx/"></a>
+    <a class="item" data-title="Creating Single-Container Pods" href="/docs/user-guide/pods/single-container/"></a>
+    <a class="item" data-title="Creating Multi-Container Pods" href="/docs/user-guide/pods/multi-container/"></a>
+    <a class="item" data-title="Configuring Containers" href="/docs/user-guide/configuring-containers/"></a>
+    <a class="item" data-title="Working with Containers in Production" href="/docs/user-guide/production-pods/"></a>
+    <a class="item" data-title="Commands and Capabilities" href="/docs/user-guide/containers/"></a>
+    <a class="item" data-title="Using Environment Variables" href="/docs/user-guide/environment-guide/"></a>
+    <a class="item" data-title="Managing Compute Resources" href="/docs/user-guide/compute-resources/"></a>
+    <a class="item" data-title="The Lifecycle of a Pod" href="/docs/user-guide/pod-states/"></a>
+    <a class="item" data-title="Checking Pod Health" href="/docs/user-guide/liveness/"></a>
+    <a class="item" data-title="Container Lifecycle Hooks" href="/docs/user-guide/container-environment/"></a>
+    <a class="item" data-title="Assigning Pods to Nodes" href="/docs/user-guide/node-selection/"></a>
+    <a class="item" data-title="Using the Downward API to Convey Pod Properties" href="/docs/user-guide/downward-api/"></a>
+    <a class="item" data-title="Downward API Volumes" href="/docs/user-guide/downward-api/volume"></a>
+    <a class="item" data-title="Persistent Volumes Walkthrough" href="/docs/user-guide/persistent-volumes/walkthrough/"></a>
+    <a class="item" data-title="Bootstrapping Pet Sets" href="/docs/user-guide/petset/bootstrapping/"></a>
+  </div>
+</div>
+<div class="item" data-title="Monitoring, Logging, and Debugging Containers">
+  <div class="container">
+    <a class="item" data-title="Resource Usage Monitoring" href="/docs/user-guide/monitoring/"></a>
+    <a class="item" data-title="Logging" href="/docs/getting-started-guides/logging/"></a>
+    <a class="item" data-title="Logging with Elasticsearch and Kibana" href="/docs/getting-started-guides/logging-elasticsearch/"></a>
+    <a class="item" data-title="Running Commands in a Container with kubectl exec" href="/docs/user-guide/getting-into-containers/"></a>
+    <a class="item" data-title="Connect with Proxies" href="/docs/user-guide/connecting-to-applications-proxy/"></a>
+    <a class="item" data-title="Connect with Port Forwarding" href="/docs/user-guide/connecting-to-applications-port-forward/"></a>
+    <a class="item" data-title="Using Explorer to Examine the Runtime Environment" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/explorer" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Creating a Cluster">
+  <div class="container">
+    <a class="item" data-title="Picking the Right Solution" href="/docs/getting-started-guides/"></a>
+<div class="item" data-title="Running Kubernetes on Your Local Machine">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes Locally via Minikube" href="/docs/getting-started-guides/minikube/"></a>
+    <a class="item" data-title="Deprecated Alternatives" href="/docs/getting-started-guides/alternatives/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Turn-key Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes on Google Container Engine" href="https://cloud.google.com/container-engine/docs/before-you-begin/" target='_blank'></a>
+    <a class="item" data-title="Running Kubernetes on Google Compute Engine" href="/docs/getting-started-guides/gce/"></a>
+    <a class="item" data-title="Running Kubernetes on AWS EC2" href="/docs/getting-started-guides/aws/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Weave-based)" href="/docs/getting-started-guides/coreos/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Flannel-based)" href="/docs/getting-started-guides/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on CenturyLink Cloud" href="/docs/getting-started-guides/clc/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Custom Solutions">
+  <div class="container">
+    <a class="item" data-title="Creating a Custom Cluster from Scratch" href="/docs/getting-started-guides/scratch/"></a>
+<div class="item" data-title="Custom Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="CoreOS on AWS or GCE" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Ubuntu on AWS or Joyent" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="CoreOS on Rackspace" href="/docs/getting-started-guides/rackspace/"></a>
+  </div>
+</div>
+<div class="item" data-title="On-Premise VMs">
+  <div class="container">
+    <a class="item" data-title="CoreOS on Vagrant" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Cloudstack" href="/docs/getting-started-guides/cloudstack/"></a>
+    <a class="item" data-title="VMware vSphere" href="/docs/getting-started-guides/vsphere/"></a>
+    <a class="item" data-title="VMware Photon Controller" href="/docs/getting-started-guides/photon-controller/"></a>
+    <a class="item" data-title="Juju" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="DCOS" href="/docs/getting-started-guides/dcos/"></a>
+    <a class="item" data-title="CoreOS on libvirt" href="/docs/getting-started-guides/libvirt-coreos/"></a>
+    <a class="item" data-title="oVirt" href="/docs/getting-started-guides/ovirt/"></a>
+    <a class="item" data-title="OpenStack Heat" href="/docs/getting-started-guides/openstack-heat/"></a>
+    <a class="item" data-title="CoreOS on Multinode Cluster" href="/docs/getting-started-guides/coreos/coreos_multinode_cluster/"></a>
+    <a class="item" data-title="Fedora With Calico Networking" href="/docs/getting-started-guides/fedora/fedora-calico/"></a>
+<div class="item" data-title="rkt">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes with rkt" href="/docs/getting-started-guides/rkt/"></a>
+    <a class="item" data-title="Known Issues when Using rkt" href="/docs/getting-started-guides/rkt/notes/"></a>
+  </div>
+</div>
+    <a class="item" data-title="Kubernetes on Mesos" href="/docs/getting-started-guides/mesos/"></a>
+    <a class="item" data-title="Kubernetes on Mesos on Docker" href="/docs/getting-started-guides/mesos-docker/"></a>
+  </div>
+</div>
+<div class="item" data-title="Bare Metal">
+  <div class="container">
+    <a class="item" data-title="Offline" href="/docs/getting-started-guides/coreos/bare_metal_offline/"></a>
+    <a class="item" data-title="Fedora via Ansible" href="/docs/getting-started-guides/fedora/fedora_ansible_config/"></a>
+    <a class="item" data-title="Fedora (Single Node)" href="/docs/getting-started-guides/fedora/fedora_manual_config/"></a>
+    <a class="item" data-title="Fedora (Multi Node)" href="/docs/getting-started-guides/fedora/flannel_multi_node_cluster/"></a>
+    <a class="item" data-title="CentOS" href="/docs/getting-started-guides/centos/centos_manual_config/"></a>
+    <a class="item" data-title="CoreOS" href="/docs/getting-started-guides/coreos"></a>
+    <a class="item" data-title="CoreOS with Calico" href="/docs/getting-started-guides/coreos/bare_metal_calico/"></a>
+    <a class="item" data-title="Ubuntu" href="/docs/getting-started-guides/ubuntu/"></a>
+    <a class="item" data-title="Ubuntu Nodes with Calico" href="/docs/getting-started-guides/ubuntu-calico/"></a>
+  </div>
+</div>
+  </div>
+</div>
+    <a class="item" data-title="Portable Multi-Node Cluster" href="/docs/getting-started-guides/docker-multinode/"></a>
+    <a class="item" data-title="Building Large Clusters" href="/docs/admin/cluster-large/"></a>
+    <a class="item" data-title="Running in Multiple Zones" href="/docs/admin/multiple-zones/"></a>
+    <a class="item" data-title="Building High-Availability Clusters" href="/docs/admin/high-availability/"></a>
+  </div>
+</div>
+<div class="item" data-title="Administering Clusters">
+  <div class="container">
+    <a class="item" data-title="Admin Guide" href="/docs/admin/"></a>
+    <a class="item" data-title="Cluster Management Guide" href="/docs/admin/cluster-management/"></a>
+    <a class="item" data-title="Sharing a Cluster with Namespaces" href="/docs/admin/namespaces/"></a>
+    <a class="item" data-title="Namespaces Walkthrough" href="/docs/admin/namespaces/walkthrough/"></a>
+    <a class="item" data-title="Setting Pod CPU and Memory Limits" href="/docs/admin/limitrange/"></a>
+    <a class="item" data-title="Understanding Resource Quotas" href="/docs/admin/resourcequota/"></a>
+    <a class="item" data-title="Applying Resource Quotas and Limits" href="/docs/admin/resourcequota/walkthrough/"></a>
+    <a class="item" data-title="Kubernetes Components" href="/docs/admin/cluster-components/"></a>
+    <a class="item" data-title="Configuring Kubernetes Use of etcd" href="/docs/admin/etcd/"></a>
+    <a class="item" data-title="Federating Clusters" href="/docs/admin/federation/"></a>
+    <a class="item" data-title="Using Multiple Clusters" href="/docs/admin/multi-cluster/"></a>
+    <a class="item" data-title="Changing Cluster Size" href="https://github.com/kubernetes/kubernetes/wiki/User-FAQ#how-do-i-change-the-size-of-my-cluster/" target='_blank'></a>
+    <a class="item" data-title="Configuring Multiple Schedulers" href="/docs/admin/multiple-schedulers/"></a>
+    <a class="item" data-title="Networking in Kubernetes" href="/docs/admin/networking/"></a>
+    <a class="item" data-title="Using DNS Pods and Services" href="/docs/admin/dns/"></a>
+    <a class="item" data-title="Setting Up and Configuring DNS" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/cluster-dns" target='_blank'></a>
+    <a class="item" data-title="Master <-> Node Communication" href="/docs/admin/master-node-communication/"></a>
+    <a class="item" data-title="Network Plugins" href="/docs/admin/network-plugins/"></a>
+    <a class="item" data-title="Static Pods" href="/docs/admin/static-pods/"></a>
+    <a class="item" data-title="Configuring kubelet Garbage Collection" href="/docs/admin/garbage-collection/"></a>
+    <a class="item" data-title="Configuring Out Of Resource Handling" href="/docs/admin/out-of-resource/"></a>
+    <a class="item" data-title="Configuring Kubernetes with Salt" href="/docs/admin/salt/"></a>
+    <a class="item" data-title="Monitoring Node Health" href="/docs/admin/node-problem/"></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/user-guide/ui.md" id="editPageButton">Edit This Page</a></p>
+    	<h1>Web UI (Dashboard)</h1>
+		<p>Dashboard (the web-based user interface of Kubernetes) allows you to deploy containerized applications to a Kubernetes cluster, troubleshoot them, and manage the cluster and its resources itself. You can use it for getting an overview of applications running on the cluster, as well as for creating or modifying individual Kubernetes resources and workloads, such as Daemon sets, Pet sets, Replica sets, Jobs, Replication controllers and corresponding Services, or Pods.</p>
+
+<p>Dashboard also provides information on the state of Pods, Replication controllers, etc. and on any errors that might have occurred. You can inspect and manage the Kubernetes resources, as well as your deployed containerized applications. You can also change the number of replicated Pods, delete Pods, and deploy new applications using a deploy wizard.</p>
+
+<p>By default, Dashboard is installed as a cluster addon. It is enabled by default as of Kubernetes 1.2 clusters.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#dashboard-access" id="markdown-toc-dashboard-access">Dashboard access</a></li>
+  <li><a href="#welcome-page" id="markdown-toc-welcome-page">Welcome page</a></li>
+  <li><a href="#deploying-containerized-applications" id="markdown-toc-deploying-containerized-applications">Deploying containerized applications</a>    <ul>
+      <li><a href="#specifying-application-details" id="markdown-toc-specifying-application-details">Specifying application details</a></li>
+      <li><a href="#uploading-a-yaml-or-json-file" id="markdown-toc-uploading-a-yaml-or-json-file">Uploading a YAML or JSON file</a></li>
+    </ul>
+  </li>
+  <li><a href="#managing-resources" id="markdown-toc-managing-resources">Managing resources</a>    <ul>
+      <li><a href="#list-view" id="markdown-toc-list-view">List view</a></li>
+      <li><a href="#details-view" id="markdown-toc-details-view">Details view</a></li>
+      <li><a href="#workload-categories" id="markdown-toc-workload-categories">Workload categories</a></li>
+      <li><a href="#actions" id="markdown-toc-actions">Actions</a></li>
+    </ul>
+  </li>
+  <li><a href="#more-information" id="markdown-toc-more-information">More information</a></li>
+</ul>
+
+<h2 id="dashboard-access">Dashboard access</h2>
+
+<p>Navigate in your Browser to the following URL:
+<code class="highlighter-rouge">
+https://&lt;kubernetes-master&gt;/ui
+</code>
+This redirects to the following URL:
+<code class="highlighter-rouge">
+https://&lt;kubernetes-master&gt;/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
+</code>
+The Dashboard UI lives in the <code class="highlighter-rouge">kube-system</code> <a href="/docs/admin/namespaces/">namespace</a>, but shows all resources from all namespaces in your environment.</p>
+
+<p>If you find that you are not able to access Dashboard, you can install and open the latest stable release by running the following command:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+</code></pre>
+</div>
+
+<p>Then, navigate to</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>https://&lt;kubernetes-master&gt;/ui
+</code></pre>
+</div>
+
+<p>In case you have to provide a password, use the following command to find it out:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kubectl config view
+</code></pre>
+</div>
+
+<h2 id="welcome-page">Welcome page</h2>
+
+<p>When accessing Dashboard on an empty cluster for the first time, the Welcome page is displayed. This page contains a link to this document as well as a button to deploy your first application. In addition, you can view which system applications are running by <strong>default</strong> in the <code class="highlighter-rouge">kube-system</code> <a href="/docs/admin/namespaces/">namespace</a> of your cluster, for example monitoring applications such as Heapster.</p>
+
+<p><img src="/images/docs/ui-dashboard-zerostate.png" alt="Kubernetes Dashboard welcome page" /></p>
+
+<h2 id="deploying-containerized-applications">Deploying containerized applications</h2>
+
+<p>Dashboard lets you create and deploy a containerized application as a Replication Controller and corresponding Service with a simple wizard. You can either manually specify application details, or upload a YAML or JSON file containing the required information.</p>
+
+<p>To access the deploy wizard from the Welcome page, click the respective button. To access the wizard at a later point in time, click the <strong>DEPLOY APP</strong> or <strong>UPLOAD YAML</strong> link in the upper right corner of any page listing workloads.</p>
+
+<p><img src="/images/docs/ui-dashboard-deploy-simple.png" alt="Deploy wizard" /></p>
+
+<h3 id="specifying-application-details">Specifying application details</h3>
+
+<p>The deploy wizard expects that you provide the following information:</p>
+
+<ul>
+  <li>
+    <p><strong>App name</strong> (mandatory): Name for your application. A <a href="/docs/user-guide/labels/">label</a> with the name will be added to the Replication Controller and Service, if any, that will be deployed.</p>
+
+    <p>The application name must be unique within the selected Kubernetes <a href="/docs/admin/namespaces/">namespace</a>. It must start and end with a lowercase character, and contain only lowercase letters, numbers and dashes (-). It is limited to 24 characters. Leading and trailing spaces are ignored.</p>
+  </li>
+  <li>
+    <p><strong>Container image</strong> (mandatory): The URL of a public Docker <a href="/docs/user-guide/images/">container image</a> on any registry, or a private image (commonly hosted on the Google Container Registry or Docker Hub). The container image specification must end with a colon.</p>
+  </li>
+  <li>
+    <p><strong>Number of pods</strong> (mandatory): The target number of Pods you want your application to be deployed in. The value must be a positive integer.</p>
+
+    <p>A <a href="/docs/user-guide/replication-controller/">Replication Controller</a> will be created to maintain the desired number of Pods across your cluster.</p>
+  </li>
+  <li>
+    <p><strong>Service</strong> (optional): For some parts of your application (e.g. frontends) you may want to expose a <a href="http://kubernetes.io/docs/user-guide/services/">Service</a> onto an external, maybe public IP address outside of your cluster (external Service). For external Services, you may need to open up one or more ports to do so. Find more details <a href="/docs/user-guide/services-firewalls/">here</a>.</p>
+
+    <p>Other Services that are only visible from inside the cluster are called internal Services.</p>
+
+    <p>Irrespective of the Service type, if you choose to create a Service and your container listens on a port (incoming), you need to specify two ports. The Service will be created mapping the port (incoming) to the target port seen by the container. This Service will route to your deployed Pods. Supported protocols are TCP and UDP. The internal DNS name for this Service will be the value you specified as application name above.</p>
+  </li>
+</ul>
+
+<p>If needed, you can expand the <strong>Advanced options</strong> section where you can specify more settings:</p>
+
+<p><img src="/images/docs/ui-dashboard-deploy-more.png" alt="Deploy wizard advanced options" /></p>
+
+<ul>
+  <li>
+    <p><strong>Description</strong>: The text you enter here will be added as an <a href="/docs/user-guide/annotations/">annotation</a> to the Replication Controller and displayed in the application’s details.</p>
+  </li>
+  <li>
+    <p><strong>Labels</strong>: Default <a href="/docs/user-guide/labels/">labels</a> to be used for your application are application name and version. You can specify additional labels to be applied to the Replication Controller, Service (if any), and Pods, such as release, environment, tier, partition, and release track.</p>
+
+    <p>Example:</p>
+
+    <div class="language-conf highlighter-rouge"><pre class="highlight"><code><span class="n">release</span>=<span class="m">1</span>.<span class="m">0</span>
+<span class="n">tier</span>=<span class="n">frontend</span>
+<span class="n">environment</span>=<span class="n">pod</span>
+<span class="n">track</span>=<span class="n">stable</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><strong>Namespace</strong>: Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called <a href="/docs/admin/namespaces/">namespaces</a>. They let you partition resources into logically named groups.</p>
+
+    <p>Dashboard offers all available namespaces in a dropdown list, and allows you to create a new namespace. The namespace name may contain a maximum of 63 alphanumeric characters and dashes (-).</p>
+
+    <p>In case the creation of the namespace is successful, it is selected by default. If the creation fails, the first namespace is selected.</p>
+  </li>
+  <li>
+    <p><strong>Image Pull Secret</strong>: In case the specified Docker container image is private, it may require <a href="/docs/user-guide/secrets/">pull secret</a> credentials.</p>
+
+    <p>Dashboard offers all available secrets in a dropdown list, and allows you to create a new secret. The secret name must follow the DNS domain name syntax, e.g. <code class="highlighter-rouge">new.image-pull.secret</code>. The content of a secret must be base64-encoded and specified in a  <a href="/docs/user-guide/images/#specifying-imagepullsecrets-on-a-pod"><code class="highlighter-rouge">.dockercfg</code></a> file. The secret name may consist of a maximum of 253 characters.</p>
+
+    <p>In case the creation of the image pull secret is successful, it is selected by default. If the creation fails, no secret is applied.</p>
+  </li>
+  <li>
+    <p><strong>CPU requirement (cores)</strong> and <strong>Memory requirement (MiB)</strong>: You can specify the minimum <a href="/docs/admin/limitrange/">resource limits</a> for the container. By default, Pods run with unbounded CPU and memory limits.</p>
+  </li>
+  <li>
+    <p><strong>Run command</strong> and <strong>Run command arguments</strong>: By default, your containers run the specified Docker image’s default <a href="/docs/user-guide/containers/#containers-and-commands">entrypoint command</a>. You can use the command options and arguments to override the default.</p>
+  </li>
+  <li>
+    <p><strong>Run as privileged</strong>: This setting determines whether processes in <a href="/docs/user-guide/pods/#privileged-mode-for-pod-containers">privileged containers</a> are equivalent to processes running as root on the host. Privileged containers can make use of capabilities like manipulating the network stack and accessing devices.</p>
+  </li>
+  <li>
+    <p><strong>Environment variables</strong>: Kubernetes exposes Services through <a href="http://kubernetes.io/docs/user-guide/environment-guide/">environment variables</a>. You can compose environment variable or pass arguments to your commands using the values of environment variables. They can be used in applications to find a Service. Values can reference other variables using the <code class="highlighter-rouge">$(VAR_NAME)</code> syntax.</p>
+  </li>
+</ul>
+
+<h3 id="uploading-a-yaml-or-json-file">Uploading a YAML or JSON file</h3>
+
+<p>Kubernetes supports declarative configuration. In this style, all configuration is stored in YAML or JSON configuration files using the Kubernetes’ <a href="http://kubernetes.io/docs/api/">API</a> resource schemas as the configuration schemas.</p>
+
+<p>As an alternative to specifying application details in the deploy wizard, you can define your Replication Controllers and Services in YAML or JSON files, and upload the files to your Pods:</p>
+
+<p><img src="/images/docs/ui-dashboard-deploy-file.png" alt="Deploy wizard file upload" /></p>
+
+<h2 id="managing-resources">Managing resources</h2>
+
+<h3 id="list-view">List view</h3>
+
+<p>As soon as applications are running on your cluster, Dashboard’s initial view defaults to showing all resources available in all namespaces in a list view, for example:</p>
+
+<p><img src="/images/docs/ui-dashboard-workloadview.png" alt="Workloads view" /></p>
+
+<p>For every resource, the list view shows the following information:</p>
+
+<ul>
+  <li>Name of the resource</li>
+  <li>All labels assigned to the resource</li>
+  <li>Number of pods assigned to the resource</li>
+  <li>Age, i.e. amount of time passed since the resource has been created</li>
+  <li>Docker container image</li>
+</ul>
+
+<p>To filter the resources and only show those of a specific namespace, select it from the dropdown list in the right corner of the title bar:</p>
+
+<p><img src="/images/docs/ui-dashboard-namespace.png" alt="Namespace selector" /></p>
+
+<h3 id="details-view">Details view</h3>
+
+<p>When clicking a resource, the details view is opened, for example:</p>
+
+<p><img src="/images/docs/ui-dashboard-detailsview.png" alt="Details view" /></p>
+
+<p>The <strong>OVERVIEW</strong> tab shows the actual resource details as well as the Pods the resource is running in.</p>
+
+<p>The <strong>EVENTS</strong> tab can be useful for debugging applications.</p>
+
+<p>To go back to the workloads overview, click the Kubernetes logo.</p>
+
+<h3 id="workload-categories">Workload categories</h3>
+
+<p>Workloads are categorized as follows:</p>
+
+<ul>
+  <li><a href="http://kubernetes.io/docs/admin/daemons/">Daemon Sets</a> which ensure that all or some of the nodes in your cluster run a copy of a Pod.</li>
+  <li><a href="http://kubernetes.io/docs/user-guide/deployments/">Deployments</a> which provide declarative updates for Pods and Replica Sets (the next-generation <a href="http://kubernetes.io/docs/user-guide/replication-controller/">Replication Controller</a>)
+The Details page for a Deployment lists resource details, as well as new and old Replica Sets. The resource details also include information on the <a href="http://kubernetes.io/docs/user-guide/rolling-updates/">RollingUpdate</a> strategy, if any.</li>
+  <li><a href="http://kubernetes.io/docs/user-guide/load-balancer/">Pet Sets</a> (nominal Services, also known as load-balanced Services) for legacy application support.</li>
+  <li><a href="http://kubernetes.io/docs/user-guide/replicasets/">Replica Sets</a> for using label selectors.</li>
+  <li><a href="http://kubernetes.io/docs/user-guide/jobs/">Jobs</a> for creating one or more Pods, ensuring that a specified number of them successfully terminate, and tracking the completions.</li>
+  <li><a href="http://kubernetes.io/docs/user-guide/replication-controller/">Replication Controllers</a></li>
+  <li><a href="http://kubernetes.io/docs/user-guide/pods/">Pods</a></li>
+</ul>
+
+<p>You can display the resources of a specific category in two ways:</p>
+
+<ul>
+  <li>Click the category name, e.g. <strong>Deployments</strong></li>
+  <li>
+    <p>Edit the Dashboard URL and add the name of a desired category. For example, to display the list of Replication Controllers, specify the following URL:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>http://&lt;your_host&gt;:9090/#/replicationcontroller
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="actions">Actions</h3>
+
+<p>Every list view offers an action menu to the right of the listed resources. The related details view provides the same actions as buttons in the upper right corner of the page.</p>
+
+<ul>
+  <li>
+    <p><strong>Edit</strong></p>
+
+    <p>Opens a text editor so that you can instantly view or update the JSON or YAML file of the respective resource.</p>
+  </li>
+  <li>
+    <p><strong>Delete</strong></p>
+
+    <p>After confirmation, deletes the respective resource.</p>
+
+    <p>When deleting a Replication Controller, the Pods managed by it are also deleted. You have the option to also delete Services related to the Replication Controller.</p>
+  </li>
+  <li>
+    <p><strong>View details</strong></p>
+
+    <p>For Replication Controllers only. Takes you to the details page where you can view more information about the Pods that make up your application.</p>
+  </li>
+  <li>
+    <p><strong>Scale</strong></p>
+
+    <p>For Replication Controllers only. Changes the number of Pods your application runs in. The respective Replication Controller will be updated to reflect the newly specified number. Be aware that setting a high number of Pods may result in a decrease of performance of the cluster or Dashboard itself.</p>
+  </li>
+</ul>
+
+<h2 id="more-information">More information</h2>
+
+<p>For more information, see the
+<a href="https://github.com/kubernetes/dashboard">Kubernetes Dashboard repository</a>.</p>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/ui.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/user-guide/ui/",
+		        "title" : "Web UI (Dashboard)",
+		        "permalink" : "http://kubernetes.github.io/docs/user-guide/ui/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

@@ -1,0 +1,372 @@
+
+
+<!Doctype html>
+<html id="docs" class="">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/user-guide/walkthrough/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - </title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1></h1>
+	<h5></h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" >GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/user-guide/walkthrough/index.md" id="editPageButton">Edit This Page</a></p>
+    	<h1></h1>
+		<h2 id="kubectl-cli-and-pods">Kubectl CLI and Pods</h2>
+
+<p>For Kubernetes 101, we will cover kubectl, pods, volumes, and multiple containers</p>
+
+<p>In order for the kubectl usage examples to work, make sure you have an examples directory locally, either from <a href="https://github.com/kubernetes/kubernetes/releases">a release</a> or <a href="https://github.com/kubernetes/kubernetes">the source</a>.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#kubectl-cli-and-pods" id="markdown-toc-kubectl-cli-and-pods">Kubectl CLI and Pods</a></li>
+  <li><a href="#kubectl-cli" id="markdown-toc-kubectl-cli">Kubectl CLI</a></li>
+  <li><a href="#pods" id="markdown-toc-pods">Pods</a>    <ul>
+      <li><a href="#pod-definition" id="markdown-toc-pod-definition">Pod Definition</a></li>
+      <li><a href="#pod-management" id="markdown-toc-pod-management">Pod Management</a></li>
+      <li><a href="#volumes" id="markdown-toc-volumes">Volumes</a>        <ul>
+          <li><a href="#volume-types" id="markdown-toc-volume-types">Volume Types</a></li>
+        </ul>
+      </li>
+      <li><a href="#multiple-containers" id="markdown-toc-multiple-containers">Multiple Containers</a></li>
+    </ul>
+  </li>
+  <li><a href="#whats-next" id="markdown-toc-whats-next">What’s Next?</a></li>
+</ul>
+
+<h2 id="kubectl-cli">Kubectl CLI</h2>
+
+<p>The easiest way to interact with Kubernetes is via the <a href="/docs/user-guide/kubectl-overview/">kubectl</a> command-line interface.</p>
+
+<p>For more info about kubectl, including its usage, commands, and parameters, see the <a href="/docs/user-guide/kubectl-overview/">kubectl CLI reference</a>.</p>
+
+<p>If you haven’t installed and configured kubectl, finish the <a href="/docs/user-guide/prereqs/">prerequisites</a> before continuing.</p>
+
+<h2 id="pods">Pods</h2>
+
+<p>In Kubernetes, a group of one or more containers is called a <em>pod</em>. Containers in a pod are deployed together, and are started, stopped, and replicated as a group.</p>
+
+<p>See <a href="/docs/user-guide/pods/">pods</a> for more details.</p>
+
+<h4 id="pod-definition">Pod Definition</h4>
+
+<p>The simplest pod definition describes the deployment of a single container.  For example, an nginx web server pod might be defined as such:</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/walkthrough/pod-nginx.yaml" download="pod-nginx.yaml"><code>pod-nginx.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-nginx.yaml')" title="Copy pod-nginx.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-nginx.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">image</span><span class="pi">:</span> <span class="s">nginx:1.7.9</span>
+    <span class="s">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">80</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<p>A pod definition is a declaration of a <em>desired state</em>.  Desired state is a very important concept in the Kubernetes model.  Many things present a desired state to the system, and it is Kubernetes’ responsibility to make sure that the current state matches the desired state.  For example, when you create a Pod, you declare that you want the containers in it to be running.  If the containers happen to not be running (e.g. program failure, …), Kubernetes will continue to (re-)create them for you in order to drive them to the desired state. This process continues until the Pod is deleted.</p>
+
+<p>See the <a href="https://github.com/kubernetes/kubernetes/blob/master/docs/design/README.md">design document</a> for more details.</p>
+
+<h4 id="pod-management">Pod Management</h4>
+
+<p>Create a pod containing an nginx server (<a href="/docs/user-guide/walkthrough/pod-nginx.yaml">pod-nginx.yaml</a>):</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f docs/user-guide/walkthrough/pod-nginx.yaml
+</code></pre>
+</div>
+
+<p>List all pods:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get pods
+</code></pre>
+</div>
+
+<p>On most providers, the pod IPs are not externally accessible. The easiest way to test that the pod is working is to create a busybox pod and exec commands on it remotely. See the <a href="/docs/user-guide/getting-into-containers/">command execution documentation</a> for details.</p>
+
+<p>Provided the pod IP is accessible, you should be able to access its http endpoint with wget on port 80:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl run busybox --image<span class="o">=</span>busybox --restart<span class="o">=</span>Never --tty -i --generator<span class="o">=</span>run-pod/v1 --env <span class="s2">"POD_IP=</span><span class="k">$(</span>kubectl get pod nginx -o go-template<span class="o">=</span><span class="s1">'{{.status.podIP}}'</span><span class="k">)</span><span class="s2">"</span>
+<span class="gp">u@busybox$ </span>wget -qO- http://<span class="nv">$POD_IP</span> <span class="c"># Run in the busybox container</span>
+<span class="gp">u@busybox$ </span><span class="nb">exit</span> <span class="c"># Exit the busybox container</span>
+<span class="gp">$ </span>kubectl delete pod busybox <span class="c"># Clean up the pod we created with "kubectl run"</span>
+</code></pre>
+</div>
+
+<p>Delete the pod by name:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl delete pod nginx
+</code></pre>
+</div>
+
+<h4 id="volumes">Volumes</h4>
+
+<p>That’s great for a simple static web server, but what about persistent storage?</p>
+
+<p>The container file system only lives as long as the container does. So if your app’s state needs to survive relocation, reboots, and crashes, you’ll need to configure some persistent storage.</p>
+
+<p>For this example we’ll be creating a Redis pod with a named volume and volume mount that defines the path to mount the volume.</p>
+
+<ol>
+  <li>Define a volume:</li>
+</ol>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">redis-persistent-storage</span>
+      <span class="s">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre>
+</div>
+
+<ol>
+  <li>Define a volume mount within a container definition:</li>
+</ol>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">volumeMounts</span><span class="pi">:</span>
+    <span class="c1"># name must match the volume name below</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">redis-persistent-storage</span>
+      <span class="c1"># mount path within the container</span>
+      <span class="s">mountPath</span><span class="pi">:</span> <span class="s">/data/redis</span>
+</code></pre>
+</div>
+
+<p>Example Redis pod definition with a persistent storage volume (<a href="/docs/user-guide/walkthrough/pod-redis.yaml">pod-redis.yaml</a>):</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/walkthrough/pod-redis.yaml" download="pod-redis.yaml"><code>pod-redis.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('pod-redis.yaml')" title="Copy pod-redis.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="pod-redis.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">redis</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="s">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="s">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">redis-persistent-storage</span>
+      <span class="s">mountPath</span><span class="pi">:</span> <span class="s">/data/redis</span>
+  <span class="s">volumes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">redis-persistent-storage</span>
+    <span class="s">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<p>Notes:</p>
+
+<ul>
+  <li>The <code class="highlighter-rouge">volumeMounts</code> <code class="highlighter-rouge">name</code> is a reference to a specific  <code class="highlighter-rouge">volumes</code> <code class="highlighter-rouge">name</code>.</li>
+  <li>The <code class="highlighter-rouge">volumeMounts</code> <code class="highlighter-rouge">mountPath</code> is the path to mount the volume within the container.</li>
+</ul>
+
+<h5 id="volume-types">Volume Types</h5>
+
+<ul>
+  <li><strong>EmptyDir</strong>: Creates a new directory that will exist as long as the Pod is running on the node, but it can persist across container failures and restarts.</li>
+  <li><strong>HostPath</strong>: Mounts an existing directory on the node’s file system (e.g. <code class="highlighter-rouge">/var/logs</code>).</li>
+</ul>
+
+<p>See <a href="/docs/user-guide/volumes/">volumes</a> for more details.</p>
+
+<h4 id="multiple-containers">Multiple Containers</h4>
+
+<p><em>Note:
+The examples below are syntactically correct, but some of the images (e.g. kubernetes/git-monitor) don’t exist yet.  We’re working on turning these into working examples.</em></p>
+
+<p>However, often you want to have two different containers that work together.  An example of this would be a web server, and a helper job that polls a git repository for new updates:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">www</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">image</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">mountPath</span><span class="pi">:</span> <span class="s">/srv/www</span>
+      <span class="s">name</span><span class="pi">:</span> <span class="s">www-data</span>
+      <span class="s">readOnly</span><span class="pi">:</span> <span class="s">true</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">git-monitor</span>
+    <span class="s">image</span><span class="pi">:</span> <span class="s">kubernetes/git-monitor</span>
+    <span class="s">env</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">GIT_REPO</span>
+      <span class="s">value</span><span class="pi">:</span> <span class="s">http://github.com/some/repo.git</span>
+    <span class="s">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">mountPath</span><span class="pi">:</span> <span class="s">/data</span>
+      <span class="s">name</span><span class="pi">:</span> <span class="s">www-data</span>
+  <span class="s">volumes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">www-data</span>
+    <span class="s">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre>
+</div>
+
+<p>Note that we have also added a volume here.  In this case, the volume is mounted into both containers.  It is marked <code class="highlighter-rouge">readOnly</code> in the web server’s case, since it doesn’t need to write to the directory.</p>
+
+<p>Finally, we have also introduced an environment variable to the <code class="highlighter-rouge">git-monitor</code> container, which allows us to parameterize that container with the particular git repository that we want to track.</p>
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>Continue on to <a href="/docs/user-guide/walkthrough/k8s201">Kubernetes 201</a> or
+for a complete application see the <a href="https://github.com/kubernetes/kubernetes/tree/master/examples/guestbook/">guestbook example</a></p>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/walkthrough/index.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/user-guide/walkthrough/",
+		        "title" : "",
+		        "permalink" : "http://kubernetes.github.io/docs/user-guide/walkthrough/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

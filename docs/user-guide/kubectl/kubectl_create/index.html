@@ -1,0 +1,402 @@
+
+
+<!Doctype html>
+<html id="docs" class="Reference Documentation">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/user-guide/kubectl/kubectl_create/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - kubectl create</title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Reference Documentation</h1>
+	<h5>Design docs, concept definitions, and references for APIs and CLIs.</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" >GUIDES</a></li>
+			<li><a href="/docs/reference" class="YAH">REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Reference Documentation" href="/docs/reference/"></a>
+<div class="item" data-title="Kubernetes API">
+  <div class="container">
+    <a class="item" data-title="Kubernetes API Overview" href="/docs/api/"></a>
+<div class="item" data-title="Accessing the API">
+  <div class="container">
+    <a class="item" data-title="Overview" href="/docs/admin/accessing-the-api/"></a>
+    <a class="item" data-title="Authenticating" href="/docs/admin/authentication/"></a>
+    <a class="item" data-title="Using Authorization Plugins" href="/docs/admin/authorization/"></a>
+    <a class="item" data-title="Using Admission Controllers" href="/docs/admin/admission-controllers/"></a>
+    <a class="item" data-title="Managing Service Accounts" href="/docs/admin/service-accounts-admin/"></a>
+  </div>
+</div>
+    <a class="item" data-title="Kubernetes API Operations" href="/docs/api-reference/v1/operations/"></a>
+    <a class="item" data-title="Kubernetes API Definitions" href="/docs/api-reference/v1/definitions/"></a>
+    <a class="item" data-title="Kubernetes API Swagger Spec" href="/kubernetes/third_party/swagger-ui/"></a>
+  </div>
+</div>
+<div class="item" data-title="Autoscaling API">
+  <div class="container">
+    <a class="item" data-title="Autoscaling API Operations" href="/docs/api-reference/autoscaling/v1/operations/"></a>
+    <a class="item" data-title="Autoscaling API Definitions" href="/docs/api-reference/autoscaling/v1/definitions/"></a>
+  </div>
+</div>
+<div class="item" data-title="Batch API">
+  <div class="container">
+    <a class="item" data-title="Batch API Operations" href="/docs/api-reference/batch/v1/operations/"></a>
+    <a class="item" data-title="Batch API Definitions" href="/docs/api-reference/batch/v1/definitions/"></a>
+  </div>
+</div>
+<div class="item" data-title="Extensions API">
+  <div class="container">
+    <a class="item" data-title="Extensions API Operations" href="/docs/api-reference/extensions/v1beta1/operations/"></a>
+    <a class="item" data-title="Extensions API Definitions" href="/docs/api-reference/extensions/v1beta1/definitions/"></a>
+  </div>
+</div>
+<div class="item" data-title="kubectl CLI">
+  <div class="container">
+    <a class="item" data-title="kubectl Overview" href="/docs/user-guide/kubectl-overview/"></a>
+    <a class="item" data-title="kubectl for Docker Users" href="/docs/user-guide/docker-cli-to-kubectl/"></a>
+    <a class="item" data-title="kubectl Usage Conventions" href="/docs/user-guide/kubectl-conventions/"></a>
+    <a class="item" data-title="JSONpath Support" href="/docs/user-guide/jsonpath/"></a>
+    <a class="item" data-title="kubectl Cheat Sheet" href="/docs/user-guide/kubectl-cheatsheet/"></a>
+<div class="item" data-title="kubectl Commands">
+  <div class="container">
+    <a class="item" data-title="kubectl" href="/docs/user-guide/kubectl/kubectl/"></a>
+    <a class="item" data-title="kubectl annotate" href="/docs/user-guide/kubectl/kubectl_annotate/"></a>
+    <a class="item" data-title="kubectl api-versions" href="/docs/user-guide/kubectl/kubectl_api-versions/"></a>
+    <a class="item" data-title="kubectl apply" href="/docs/user-guide/kubectl/kubectl_apply/"></a>
+    <a class="item" data-title="kubectl attach" href="/docs/user-guide/kubectl/kubectl_attach/"></a>
+    <a class="item" data-title="kubectl autoscale" href="/docs/user-guide/kubectl/kubectl_autoscale/"></a>
+    <a class="item" data-title="kubectl cluster-info" href="/docs/user-guide/kubectl/kubectl_cluster-info/"></a>
+    <a class="item" data-title="kubectl config" href="/docs/user-guide/kubectl/kubectl_config/"></a>
+    <a class="item" data-title="kubectl config current-context" href="/docs/user-guide/kubectl/kubectl_config_current-context/"></a>
+    <a class="item" data-title="kubectl config set-cluster" href="/docs/user-guide/kubectl/kubectl_config_set-cluster/"></a>
+    <a class="item" data-title="kubectl config set-context" href="/docs/user-guide/kubectl/kubectl_config_set-context/"></a>
+    <a class="item" data-title="kubectl config set-credentials" href="/docs/user-guide/kubectl/kubectl_config_set-credentials/"></a>
+    <a class="item" data-title="kubectl config set" href="/docs/user-guide/kubectl/kubectl_config_set/"></a>
+    <a class="item" data-title="kubectl config unset" href="/docs/user-guide/kubectl/kubectl_config_unset/"></a>
+    <a class="item" data-title="kubectl config use-context" href="/docs/user-guide/kubectl/kubectl_config_use-context/"></a>
+    <a class="item" data-title="kubectl config view" href="/docs/user-guide/kubectl/kubectl_config_view/"></a>
+    <a class="item" data-title="kubectl convert" href="/docs/user-guide/kubectl/kubectl_convert/"></a>
+    <a class="item" data-title="kubectl cordon" href="/docs/user-guide/kubectl/kubectl_cordon/"></a>
+    <a class="item" data-title="kubectl create" href="/docs/user-guide/kubectl/kubectl_create/"></a>
+    <a class="item" data-title="kubectl create configmap" href="/docs/user-guide/kubectl/kubectl_create_configmap/"></a>
+    <a class="item" data-title="kubectl create namespace" href="/docs/user-guide/kubectl/kubectl_create_namespace/"></a>
+    <a class="item" data-title="kubectl create secret docker-registry" href="/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/"></a>
+    <a class="item" data-title="kubectl create secret" href="/docs/user-guide/kubectl/kubectl_create_secret/"></a>
+    <a class="item" data-title="kubectl create secret generic" href="/docs/user-guide/kubectl/kubectl_create_secret_generic/"></a>
+    <a class="item" data-title="kubectl create serviceaccount" href="/docs/user-guide/kubectl/kubectl_create_serviceaccount/"></a>
+    <a class="item" data-title="kubectl delete" href="/docs/user-guide/kubectl/kubectl_delete/"></a>
+    <a class="item" data-title="kubectl describe" href="/docs/user-guide/kubectl/kubectl_describe/"></a>
+    <a class="item" data-title="kubectl drain" href="/docs/user-guide/kubectl/kubectl_drain/"></a>
+    <a class="item" data-title="kubectl edit" href="/docs/user-guide/kubectl/kubectl_edit/"></a>
+    <a class="item" data-title="kubectl exec" href="/docs/user-guide/kubectl/kubectl_exec/"></a>
+    <a class="item" data-title="kubectl explain" href="/docs/user-guide/kubectl/kubectl_explain/"></a>
+    <a class="item" data-title="kubectl expose" href="/docs/user-guide/kubectl/kubectl_expose/"></a>
+    <a class="item" data-title="kubectl get" href="/docs/user-guide/kubectl/kubectl_get/"></a>
+    <a class="item" data-title="kubectl label" href="/docs/user-guide/kubectl/kubectl_label/"></a>
+    <a class="item" data-title="kubectl logs" href="/docs/user-guide/kubectl/kubectl_logs/"></a>
+    <a class="item" data-title="kubectl patch" href="/docs/user-guide/kubectl/kubectl_patch/"></a>
+    <a class="item" data-title="kubectl port-forward" href="/docs/user-guide/kubectl/kubectl_port-forward/"></a>
+    <a class="item" data-title="kubectl proxy" href="/docs/user-guide/kubectl/kubectl_proxy/"></a>
+    <a class="item" data-title="kubectl replace" href="/docs/user-guide/kubectl/kubectl_replace/"></a>
+    <a class="item" data-title="kubectl rolling-update" href="/docs/user-guide/kubectl/kubectl_rolling-update/"></a>
+    <a class="item" data-title="kubectl rollout" href="/docs/user-guide/kubectl/kubectl_rollout/"></a>
+    <a class="item" data-title="kubectl rollout history" href="/docs/user-guide/kubectl/kubectl_rollout_history/"></a>
+    <a class="item" data-title="kubectl rollout pause" href="/docs/user-guide/kubectl/kubectl_rollout_pause/"></a>
+    <a class="item" data-title="kubectl rollout resume" href="/docs/user-guide/kubectl/kubectl_rollout_resume/"></a>
+    <a class="item" data-title="kubectl rollout undo" href="/docs/user-guide/kubectl/kubectl_rollout_undo/"></a>
+    <a class="item" data-title="kubectl run" href="/docs/user-guide/kubectl/kubectl_run/"></a>
+    <a class="item" data-title="kubectl scale" href="/docs/user-guide/kubectl/kubectl_scale/"></a>
+    <a class="item" data-title="kubectl uncordon" href="/docs/user-guide/kubectl/kubectl_uncordon/"></a>
+    <a class="item" data-title="kubectl version" href="/docs/user-guide/kubectl/kubectl_version/"></a>
+<div class="item" data-title="Superseded and Deprecated Commands">
+  <div class="container">
+    <a class="item" data-title="kubectl namespace" href="/docs/user-guide/kubectl/kubectl_namespace/"></a>
+    <a class="item" data-title="kubectl stop" href="/docs/user-guide/kubectl/kubectl_stop/"></a>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="item" data-title="Kubernetes Components">
+  <div class="container">
+    <a class="item" data-title="kube-apiserver" href="/docs/admin/kube-apiserver/"></a>
+    <a class="item" data-title="kube-controller-manager" href="/docs/admin/kube-controller-manager/"></a>
+    <a class="item" data-title="kube-proxy" href="/docs/admin/kube-proxy/"></a>
+    <a class="item" data-title="kube-scheduler" href="/docs/admin/kube-scheduler/"></a>
+    <a class="item" data-title="kubelet" href="/docs/admin/kubelet/"></a>
+  </div>
+</div>
+<div class="item" data-title="Glossary">
+  <div class="container">
+    <a class="item" data-title="Annotations" href="/docs/user-guide/annotations/"></a>
+    <a class="item" data-title="Daemon Sets" href="/docs/admin/daemons/"></a>
+    <a class="item" data-title="Deployments" href="/docs/user-guide/deployments/"></a>
+    <a class="item" data-title="Horizontal Pod Autoscaling" href="/docs/user-guide/horizontal-pod-autoscaling/"></a>
+    <a class="item" data-title="Images" href="/docs/user-guide/images/"></a>
+    <a class="item" data-title="Ingress Resources" href="/docs/user-guide/ingress/"></a>
+    <a class="item" data-title="Jobs" href="/docs/user-guide/jobs/"></a>
+    <a class="item" data-title="Labels and Selectors" href="/docs/user-guide/labels/"></a>
+    <a class="item" data-title="Names" href="/docs/user-guide/identifiers/"></a>
+    <a class="item" data-title="Namespaces" href="/docs/user-guide/namespaces/"></a>
+    <a class="item" data-title="Network Policies" href="/docs/user-guide/networkpolicies/"></a>
+    <a class="item" data-title="Nodes" href="/docs/admin/node/"></a>
+    <a class="item" data-title="Persistent Volumes" href="/docs/user-guide/persistent-volumes/"></a>
+    <a class="item" data-title="Pet Sets" href="/docs/user-guide/petset/"></a>
+    <a class="item" data-title="Pods" href="/docs/user-guide/pods/"></a>
+    <a class="item" data-title="Replica Sets" href="/docs/user-guide/replicasets/"></a>
+    <a class="item" data-title="Replication Controller" href="/docs/user-guide/replication-controller/"></a>
+    <a class="item" data-title="Resource Quotas" href="/docs/admin/resource-quota/"></a>
+    <a class="item" data-title="Secrets" href="/docs/user-guide/secrets/"></a>
+    <a class="item" data-title="Security Context" href="/docs/user-guide/security-context/"></a>
+    <a class="item" data-title="Services" href="/docs/user-guide/services/"></a>
+    <a class="item" data-title="Service Accounts" href="/docs/user-guide/service-accounts/"></a>
+    <a class="item" data-title="Volumes" href="/docs/user-guide/volumes/"></a>
+  </div>
+</div>
+<div class="item" data-title="Kubernetes Design Docs">
+  <div class="container">
+    <a class="item" data-title="Kubernetes Architecture" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/architecture.md" target='_blank'></a>
+    <a class="item" data-title="Kubernetes Design Overview" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/" target='_blank'></a>
+    <a class="item" data-title="Kubernetes Identity and Access Management" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/access.md" target='_blank'></a>
+    <a class="item" data-title="Kubernetes OpenVSwitch GRE/VxLAN networking" href="/docs/admin/ovs-networking/"></a>
+    <a class="item" data-title="Security Contexts" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/security_context.md" target='_blank'></a>
+    <a class="item" data-title="Security in Kubernetes" href="https://github.com/kubernetes/kubernetes/blob/release-1.3/docs/design/security.md" target='_blank'></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/user-guide/kubectl/kubectl_create.md" id="editPageButton">Edit This Page</a></p>
+    	
+		<h2 id="kubectl-create">kubectl create</h2>
+
+<p>Create a resource by filename or stdin</p>
+
+<h3 id="synopsis">Synopsis</h3>
+
+<p>Create a resource by filename or stdin.</p>
+
+<p>JSON and YAML formats are accepted.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kubectl create -f FILENAME
+</code></pre>
+</div>
+
+<h3 id="examples">Examples</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># Create a pod using the data in pod.json.
+kubectl create -f ./pod.json
+
+# Create a pod based on the JSON passed into stdin.
+cat pod.json | kubectl create -f -
+</code></pre>
+</div>
+
+<h3 id="options">Options</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  -f, --filename=[]: Filename, directory, or URL to file to use to create the resource
+      --include-extended-apis[=true]: If true, include definitions of new APIs via calls to the API server. [default true]
+  -o, --output="": Output mode. Use "-o name" for shorter output (resource/name).
+      --record[=false]: Record current kubectl command in the resource annotation.
+  -R, --recursive[=false]: Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+      --save-config[=false]: If true, the configuration of current object will be saved in its annotation. This is useful when you want to perform kubectl apply on this object in the future.
+      --schema-cache-dir="~/.kube/schema": If non-empty, load/store cached API schemas in this directory, default is '$HOME/.kube/schema'
+      --validate[=true]: If true, use a schema to validate the input before sending it
+</code></pre>
+</div>
+
+<h3 id="options-inherited-from-parent-commands">Options inherited from parent commands</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>      --alsologtostderr[=false]: log to standard error as well as files
+      --as="": Username to impersonate for the operation.
+      --certificate-authority="": Path to a cert. file for the certificate authority.
+      --client-certificate="": Path to a client certificate file for TLS.
+      --client-key="": Path to a client key file for TLS.
+      --cluster="": The name of the kubeconfig cluster to use
+      --context="": The name of the kubeconfig context to use
+      --insecure-skip-tls-verify[=false]: If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.
+      --kubeconfig="": Path to the kubeconfig file to use for CLI requests.
+      --log-backtrace-at=:0: when logging hits line file:N, emit a stack trace
+      --log-dir="": If non-empty, write log files in this directory
+      --log-flush-frequency=5s: Maximum number of seconds between log flushes
+      --logtostderr[=true]: log to standard error instead of files
+      --match-server-version[=false]: Require server version to match client version
+      --namespace="": If present, the namespace scope for this CLI request.
+      --password="": Password for basic authentication to the API server.
+  -s, --server="": The address and port of the Kubernetes API server
+      --stderrthreshold=2: logs at or above this threshold go to stderr
+      --token="": Bearer token for authentication to the API server.
+      --user="": The name of the kubeconfig user to use
+      --username="": Username for basic authentication to the API server.
+      --v=0: log level for V logs
+      --vmodule=: comma-separated list of pattern=N settings for file-filtered logging
+</code></pre>
+</div>
+
+<h3 id="see-also">SEE ALSO</h3>
+
+<ul>
+  <li><a href="kubectl.md">kubectl</a>	 - kubectl controls the Kubernetes cluster manager</li>
+  <li><a href="kubectl_create_configmap.md">kubectl create configmap</a>	 - Create a configMap from a local file, directory or literal value.</li>
+  <li><a href="kubectl_create_namespace.md">kubectl create namespace</a>	 - Create a namespace with the specified name.</li>
+  <li><a href="kubectl_create_secret.md">kubectl create secret</a>	 - Create a secret using specified subcommand.</li>
+  <li><a href="kubectl_create_serviceaccount.md">kubectl create serviceaccount</a>	 - Create a service account with the specified name.</li>
+</ul>
+
+<h6 id="auto-generated-by-spf13cobra-on-12-aug-2016">Auto generated by spf13/cobra on 12-Aug-2016</h6>
+
+<!-- BEGIN MUNGE: GENERATED_ANALYTICS -->
+<p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/kubectl/kubectl_create.md?pixel" alt="Analytics" /></a>
+<!-- END MUNGE: GENERATED_ANALYTICS --></p>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/kubectl/kubectl_create.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/user-guide/kubectl/kubectl_create/",
+		        "title" : "kubectl create",
+		        "permalink" : "http://kubernetes.github.io/docs/user-guide/kubectl/kubectl_create/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

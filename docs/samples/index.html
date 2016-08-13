@@ -1,0 +1,303 @@
+
+
+<!Doctype html>
+<html id="docs" class="Samples">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/samples/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - </title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Samples</h1>
+	<h5>A collection of example applications that show how to use Kubernetes.</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" >GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" class="YAH">SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Samples" href="/docs/samples/"></a>
+<div class="item" data-title="Storage / Database / KV">
+  <div class="container">
+    <a class="item" data-title="Apache Cassandra Database" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/cassandra" target='_blank'></a>
+    <a class="item" data-title="Ceph" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/rbd/" target='_blank'></a>
+    <a class="item" data-title="CephFS" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/cephfs/" target='_blank'></a>
+    <a class="item" data-title="GlusterFS" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/glusterfs/" target='_blank'></a>
+    <a class="item" data-title="Hazelcast" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/hazelcast" target='_blank'></a>
+    <a class="item" data-title="iSCSI" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/iscsi/" target='_blank'></a>
+    <a class="item" data-title="MySQL Galera" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/mysql-galera" target='_blank'></a>
+    <a class="item" data-title="NFS" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/nfs/" target='_blank'></a>
+    <a class="item" data-title="Redis" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/redis/" target='_blank'></a>
+    <a class="item" data-title="RethinkDB" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/rethinkdb/" target='_blank'></a>
+    <a class="item" data-title="Vitess" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/vitess/" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Big Data">
+  <div class="container">
+    <a class="item" data-title="Apache Spark" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/spark" target='_blank'></a>
+    <a class="item" data-title="Apache Storm" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/storm" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Messaging / Queueing">
+  <div class="container">
+    <a class="item" data-title="Celery + RabbitMQ" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/celery-rabbitmq" target='_blank'></a>
+    <a class="item" data-title="Hazelcast" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/hazelcast" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Miscellaneous">
+  <div class="container">
+    <a class="item" data-title="Meteor Applications" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/meteor/" target='_blank'></a>
+    <a class="item" data-title="OpenShift Origin" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/openshift-origin/" target='_blank'></a>
+    <a class="item" data-title="Selenium" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/selenium/" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Monitoring and Logging">
+  <div class="container">
+    <a class="item" data-title="Elasticsearch" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/elasticsearch/" target='_blank'></a>
+    <a class="item" data-title="NewRelic" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/newrelic" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Multi-tier Applications">
+  <div class="container">
+    <a class="item" data-title="Guestbook - Go Server" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/guestbook-go/" target='_blank'></a>
+    <a class="item" data-title="GuestBook - PHP Server" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/guestbook/" target='_blank'></a>
+    <a class="item" data-title="MEAN stack on Google Cloud Platform" href="/docs/getting-started-guides/meanstack/"></a>
+    <a class="item" data-title="MySQL + Wordpress" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/mysql-wordpress-pd/" target='_blank'></a>
+    <a class="item" data-title="MySQL + Phabricator Server" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/phabricator/" target='_blank'></a>
+    <a class="item" data-title="Nodejs + Mongo" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/nodesjs-mongodb" target='_blank'></a>
+    <a class="item" data-title="Petstore" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/k8petstore/" target='_blank'></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/samples.md" id="editPageButton">Edit This Page</a></p>
+    	<h1></h1>
+		<p>We have a wide variety of samples to choose from.</p>
+
+<h2 id="recently-updated-samples">Recently updated samples</h2>
+
+<p>The Kubernetes team is highlighting these samples as being the most up-to-date. Active upkeep is being done or has recently been done
+on these samples to ensure they are high quality and work on Kubernetes v1.3.</p>
+
+<p> </p>
+
+<style>
+h2, h3, h4 {
+  border-bottom: 0px !important;
+}
+.colContainer {
+  padding-top:2px;
+  padding-left: 2px;
+  overflow: auto;
+}
+#samples a {
+  color: #000;
+}
+.col3rd {
+  display: block;
+  width: 250px;
+  float: left;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+.col3rd h3, .col2nd h3 {
+  margin-bottom: 0px !important;
+}
+.col3rd .button, .col2nd .button {
+  margin-top: 20px;
+  border-radius: 2px;
+}
+.col3rd p, .col2nd p {
+  margin-left: 2px;
+}
+.col2nd {
+  display: block;
+  width: 400px;
+  float: left;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+.shadowbox {
+  display: inline;
+  float: left;
+  text-transform: none;
+  font-weight: bold;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 24px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  box-shadow: 0 2px 2px rgba(0,0,0,.24),0 0 2px rgba(0,0,0,.12);
+  border-radius: 10px;
+  background: #fff;
+  transition: all .3s;
+  padding: 16px;
+  margin: 0 16px 16px 0;
+  text-decoration: none;
+  letter-spacing: .01em;
+}
+.shadowbox img {
+    min-width: 150px;
+    max-width: 150px;
+    max-height: 50px;
+}
+</style>
+
+<div id="samples" class="colContainer">
+<a href="/docs/getting-started-guides/meanstack/" class="shadowbox"> <img src="/images/docs/meanstack/image_0.png" /><br />MEAN Stack </a> <a href="https://github.com/kubernetes/kubernetes/tree/master/examples/guestbook" target="_blank" class="shadowbox"> <img src="/images/docs/redis.svg" /><br />Guestbook + Redis </a> <a href="https://github.com/kubernetes/kubernetes/tree/master/examples/storage/cassandra" target="_blank" class="shadowbox"> <img src="/images/docs/cassandra.svg" /><br />Cloud Native Cassandra </a> <a href="https://github.com/kubernetes/kubernetes/tree/master/examples/mysql-wordpress-pd/" target="_blank" class="shadowbox"> <img src="/images/docs/wordpress.svg" /><br />WordPress + MySQL </a>
+</div>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/samples.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/samples/",
+		        "title" : "",
+		        "permalink" : "http://kubernetes.github.io/docs/samples/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>

@@ -1,0 +1,835 @@
+
+
+<!Doctype html>
+<html id="docs" class="Guides">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="http://kubernetes.io/docs/user-guide/managing-deployments/" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Mono' type='text/css'>
+	<link rel="stylesheet" href="/css/styles.css"/>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/sweetalert.css">
+	<script src="/js/jquery-2.2.0.min.js"></script>
+        <script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/script.js"></script>
+        <script src="/js/sweetalert.min.js"></script>
+	<title>Kubernetes - Managing Resources</title>
+</head>
+<body>
+<div id="cellophane" onclick="kub.toggleMenu()"></div>
+<header>
+	<a href="/" class="logo"></a>
+	<div class="nav-buttons" data-auto-burger="primary">
+		<a href="/docs/" class="button" id="viewDocs" data-auto-burger-exclude>View Documentation</a>
+		<a href="/docs/hellonode/" class="button" id="tryKubernetes" data-auto-burger-exclude>Try Kubernetes</a>
+		<button id="hamburger" onclick="kub.toggleMenu()" data-auto-burger-exclude><div></div></button>
+	</div>
+
+	<nav id="mainNav">
+		<main data-auto-burger="primary">
+			<div class="nav-box">
+				<h3><a href="/docs/hellonode/">Get Started</a></h3>
+				<p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/docs/">Documentation</a></h3>
+				<p>Learn how to use Kubernetes with the use of walkthroughs, samples, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude>help contribute to the docs</a>!</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="/community/">Community</a></h3>
+				<p>If you need help, you can connect with other Kubernetes users and the Kubernetes authors, attend community events, and watch video presentations from around the web.</p>
+			</div>
+			<div class="nav-box">
+				<h3><a href="http://blog.kubernetes.io">Blog</a></h3>
+				<p>Read the latest news for Kubernetes and the containers space in general, and get technical how-tos hot off the presses.</p>
+			</div>
+		</main>
+		<main data-auto-burger="primary">
+			<div class="left">
+				<h5 class="github-invite">Interested in hacking on the core Kubernetes code base?</h5>
+				<a href="https://github.com/kubernetes/kubernetes" class="button" data-auto-burger-exclude>View On Github</a>
+			</div>
+
+			<div class="right">
+				<h5 class="github-invite">Explore the community</h5>
+				<div class="social">
+					<a href="https://twitter.com/kubernetesio" class="twitter"><span>Twitter</span></a>
+					<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+					<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+					<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+					<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+					<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+				</div>
+			</div>
+			<div class="clear" style="clear: both"></div>
+		</main>
+	</nav>
+</header>
+
+
+<!--  HERO  -->
+<section id="hero" class="light-text">
+	<h1>Guides</h1>
+	<h5>How to get started, and achieve tasks, using Kubernetes</h5>
+	<div id="vendorStrip" class="light-text">
+		<ul>
+			<li><a href="/docs/" class="YAH">GUIDES</a></li>
+			<li><a href="/docs/reference" >REFERENCE</a></li>
+			<li><a href="/docs/samples" >SAMPLES</a></li>
+			<li><a href="/docs/troubleshooting/" >SUPPORT</a></li>
+		</ul>
+		<div id="searchBox">
+			<input type="text" id="search" placeholder="Search" onkeydown="if (event.keyCode==13) window.location.replace('/docs/search/?q=' + this.value)">
+		</div>
+	</div>
+</section>
+
+<section id="encyclopedia">
+	<div id="docsToc">
+        <div class="pi-accordion">
+        
+    <a class="item" data-title="Guides" href="/docs/"></a>
+<div class="item" data-title="Getting Started">
+  <div class="container">
+    <a class="item" data-title="What is Kubernetes?" href="/docs/whatisk8s/"></a>
+    <a class="item" data-title="Downloading or Building Kubernetes" href="/docs/getting-started-guides/binary_release/"></a>
+    <a class="item" data-title="Hello World Walkthrough" href="/docs/hellonode/"></a>
+    <a class="item" data-title="Online Training Course" href="https://www.udacity.com/course/scalable-microservices-with-kubernetes--ud615" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Accessing the Cluster">
+  <div class="container">
+    <a class="item" data-title="Installing and Setting up kubectl" href="/docs/user-guide/prereqs/"></a>
+    <a class="item" data-title="Accessing Clusters" href="/docs/user-guide/accessing-the-cluster/"></a>
+    <a class="item" data-title="Sharing Cluster Access with kubeconfig" href="/docs/user-guide/sharing-clusters/"></a>
+    <a class="item" data-title="Authenticating Across Clusters with kubeconfig" href="/docs/user-guide/kubeconfig-file/"></a>
+  </div>
+</div>
+    <a class="item" data-title="User Guide" href="/docs/user-guide/"></a>
+    <a class="item" data-title="Web UI (Dashboard)" href="/docs/user-guide/ui/"></a>
+<div class="item" data-title="Workload Deployment and Management">
+  <div class="container">
+    <a class="item" data-title="Launching, Exposing, and Killing Applications" href="/docs/user-guide/quick-start/"></a>
+    <a class="item" data-title="Deploying Applications" href="/docs/user-guide/deploying-applications/"></a>
+    <a class="item" data-title="Managing Resources" href="/docs/user-guide/managing-deployments/"></a>
+    <a class="item" data-title="Replication Controller Operations" href="/docs/user-guide/replication-controller/operations/"></a>
+    <a class="item" data-title="Resizing a Replication Controller" href="/docs/user-guide/resizing-a-replication-controller/"></a>
+    <a class="item" data-title="Rolling Updates" href="/docs/user-guide/rolling-updates/"></a>
+    <a class="item" data-title="Rolling Update Demo" href="/docs/user-guide/update-demo/"></a>
+    <a class="item" data-title="Secrets Walkthrough" href="/docs/user-guide/secrets/walkthrough/"></a>
+    <a class="item" data-title="Using ConfigMap" href="/docs/user-guide/configmap/"></a>
+    <a class="item" data-title="Horizontal Pod Autoscaling" href="/docs/user-guide/horizontal-pod-autoscaling/walkthrough/"></a>
+    <a class="item" data-title="Best Practices for Configuration" href="/docs/user-guide/config-best-practices/"></a>
+    <a class="item" data-title="Using kubectl to Manage Resources" href="/docs/user-guide/working-with-resources/"></a>
+    <a class="item" data-title="Garbage collection" href="/docs/user-guide/garbage-collector/"></a>
+  </div>
+</div>
+<div class="item" data-title="Batch Jobs">
+  <div class="container">
+    <a class="item" data-title="Jobs" href="/docs/user-guide/jobs/"></a>
+    <a class="item" data-title="Parallel Processing using Expansions" href="/docs/user-guide/jobs/expansions/"></a>
+    <a class="item" data-title="Coarse Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-1/"></a>
+    <a class="item" data-title="Fine Parallel Processing using a Work Queue" href="/docs/user-guide/jobs/work-queue-2/"></a>
+  </div>
+</div>
+<div class="item" data-title="Service Discovery and Load Balancing">
+  <div class="container">
+    <a class="item" data-title="Connecting Applications with Services" href="/docs/user-guide/connecting-applications/"></a>
+    <a class="item" data-title="Service Operations" href="/docs/user-guide/services/operations/"></a>
+    <a class="item" data-title="Creating an External Load Balancer" href="/docs/user-guide/load-balancer/"></a>
+    <a class="item" data-title="Configuring Your Cloud Provider's Firewalls" href="/docs/user-guide/services-firewalls/"></a>
+    <a class="item" data-title="Cross-cluster Service Discovery using Federated Services" href="/docs/user-guide/federation/federated-services/"></a>
+  </div>
+</div>
+<div class="item" data-title="Containers and Pods">
+  <div class="container">
+    <a class="item" data-title="Running Your First Containers" href="/docs/user-guide/simple-nginx/"></a>
+    <a class="item" data-title="Creating Single-Container Pods" href="/docs/user-guide/pods/single-container/"></a>
+    <a class="item" data-title="Creating Multi-Container Pods" href="/docs/user-guide/pods/multi-container/"></a>
+    <a class="item" data-title="Configuring Containers" href="/docs/user-guide/configuring-containers/"></a>
+    <a class="item" data-title="Working with Containers in Production" href="/docs/user-guide/production-pods/"></a>
+    <a class="item" data-title="Commands and Capabilities" href="/docs/user-guide/containers/"></a>
+    <a class="item" data-title="Using Environment Variables" href="/docs/user-guide/environment-guide/"></a>
+    <a class="item" data-title="Managing Compute Resources" href="/docs/user-guide/compute-resources/"></a>
+    <a class="item" data-title="The Lifecycle of a Pod" href="/docs/user-guide/pod-states/"></a>
+    <a class="item" data-title="Checking Pod Health" href="/docs/user-guide/liveness/"></a>
+    <a class="item" data-title="Container Lifecycle Hooks" href="/docs/user-guide/container-environment/"></a>
+    <a class="item" data-title="Assigning Pods to Nodes" href="/docs/user-guide/node-selection/"></a>
+    <a class="item" data-title="Using the Downward API to Convey Pod Properties" href="/docs/user-guide/downward-api/"></a>
+    <a class="item" data-title="Downward API Volumes" href="/docs/user-guide/downward-api/volume"></a>
+    <a class="item" data-title="Persistent Volumes Walkthrough" href="/docs/user-guide/persistent-volumes/walkthrough/"></a>
+    <a class="item" data-title="Bootstrapping Pet Sets" href="/docs/user-guide/petset/bootstrapping/"></a>
+  </div>
+</div>
+<div class="item" data-title="Monitoring, Logging, and Debugging Containers">
+  <div class="container">
+    <a class="item" data-title="Resource Usage Monitoring" href="/docs/user-guide/monitoring/"></a>
+    <a class="item" data-title="Logging" href="/docs/getting-started-guides/logging/"></a>
+    <a class="item" data-title="Logging with Elasticsearch and Kibana" href="/docs/getting-started-guides/logging-elasticsearch/"></a>
+    <a class="item" data-title="Running Commands in a Container with kubectl exec" href="/docs/user-guide/getting-into-containers/"></a>
+    <a class="item" data-title="Connect with Proxies" href="/docs/user-guide/connecting-to-applications-proxy/"></a>
+    <a class="item" data-title="Connect with Port Forwarding" href="/docs/user-guide/connecting-to-applications-port-forward/"></a>
+    <a class="item" data-title="Using Explorer to Examine the Runtime Environment" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/explorer" target='_blank'></a>
+  </div>
+</div>
+<div class="item" data-title="Creating a Cluster">
+  <div class="container">
+    <a class="item" data-title="Picking the Right Solution" href="/docs/getting-started-guides/"></a>
+<div class="item" data-title="Running Kubernetes on Your Local Machine">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes Locally via Minikube" href="/docs/getting-started-guides/minikube/"></a>
+    <a class="item" data-title="Deprecated Alternatives" href="/docs/getting-started-guides/alternatives/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Turn-key Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes on Google Container Engine" href="https://cloud.google.com/container-engine/docs/before-you-begin/" target='_blank'></a>
+    <a class="item" data-title="Running Kubernetes on Google Compute Engine" href="/docs/getting-started-guides/gce/"></a>
+    <a class="item" data-title="Running Kubernetes on AWS EC2" href="/docs/getting-started-guides/aws/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Weave-based)" href="/docs/getting-started-guides/coreos/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on Azure (Flannel-based)" href="/docs/getting-started-guides/azure/"></a>
+    <a class="item" data-title="Running Kubernetes on CenturyLink Cloud" href="/docs/getting-started-guides/clc/"></a>
+  </div>
+</div>
+<div class="item" data-title="Running Kubernetes on Custom Solutions">
+  <div class="container">
+    <a class="item" data-title="Creating a Custom Cluster from Scratch" href="/docs/getting-started-guides/scratch/"></a>
+<div class="item" data-title="Custom Cloud Solutions">
+  <div class="container">
+    <a class="item" data-title="CoreOS on AWS or GCE" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Ubuntu on AWS or Joyent" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="CoreOS on Rackspace" href="/docs/getting-started-guides/rackspace/"></a>
+  </div>
+</div>
+<div class="item" data-title="On-Premise VMs">
+  <div class="container">
+    <a class="item" data-title="CoreOS on Vagrant" href="/docs/getting-started-guides/coreos/"></a>
+    <a class="item" data-title="Cloudstack" href="/docs/getting-started-guides/cloudstack/"></a>
+    <a class="item" data-title="VMware vSphere" href="/docs/getting-started-guides/vsphere/"></a>
+    <a class="item" data-title="VMware Photon Controller" href="/docs/getting-started-guides/photon-controller/"></a>
+    <a class="item" data-title="Juju" href="/docs/getting-started-guides/juju/"></a>
+    <a class="item" data-title="DCOS" href="/docs/getting-started-guides/dcos/"></a>
+    <a class="item" data-title="CoreOS on libvirt" href="/docs/getting-started-guides/libvirt-coreos/"></a>
+    <a class="item" data-title="oVirt" href="/docs/getting-started-guides/ovirt/"></a>
+    <a class="item" data-title="OpenStack Heat" href="/docs/getting-started-guides/openstack-heat/"></a>
+    <a class="item" data-title="CoreOS on Multinode Cluster" href="/docs/getting-started-guides/coreos/coreos_multinode_cluster/"></a>
+    <a class="item" data-title="Fedora With Calico Networking" href="/docs/getting-started-guides/fedora/fedora-calico/"></a>
+<div class="item" data-title="rkt">
+  <div class="container">
+    <a class="item" data-title="Running Kubernetes with rkt" href="/docs/getting-started-guides/rkt/"></a>
+    <a class="item" data-title="Known Issues when Using rkt" href="/docs/getting-started-guides/rkt/notes/"></a>
+  </div>
+</div>
+    <a class="item" data-title="Kubernetes on Mesos" href="/docs/getting-started-guides/mesos/"></a>
+    <a class="item" data-title="Kubernetes on Mesos on Docker" href="/docs/getting-started-guides/mesos-docker/"></a>
+  </div>
+</div>
+<div class="item" data-title="Bare Metal">
+  <div class="container">
+    <a class="item" data-title="Offline" href="/docs/getting-started-guides/coreos/bare_metal_offline/"></a>
+    <a class="item" data-title="Fedora via Ansible" href="/docs/getting-started-guides/fedora/fedora_ansible_config/"></a>
+    <a class="item" data-title="Fedora (Single Node)" href="/docs/getting-started-guides/fedora/fedora_manual_config/"></a>
+    <a class="item" data-title="Fedora (Multi Node)" href="/docs/getting-started-guides/fedora/flannel_multi_node_cluster/"></a>
+    <a class="item" data-title="CentOS" href="/docs/getting-started-guides/centos/centos_manual_config/"></a>
+    <a class="item" data-title="CoreOS" href="/docs/getting-started-guides/coreos"></a>
+    <a class="item" data-title="CoreOS with Calico" href="/docs/getting-started-guides/coreos/bare_metal_calico/"></a>
+    <a class="item" data-title="Ubuntu" href="/docs/getting-started-guides/ubuntu/"></a>
+    <a class="item" data-title="Ubuntu Nodes with Calico" href="/docs/getting-started-guides/ubuntu-calico/"></a>
+  </div>
+</div>
+  </div>
+</div>
+    <a class="item" data-title="Portable Multi-Node Cluster" href="/docs/getting-started-guides/docker-multinode/"></a>
+    <a class="item" data-title="Building Large Clusters" href="/docs/admin/cluster-large/"></a>
+    <a class="item" data-title="Running in Multiple Zones" href="/docs/admin/multiple-zones/"></a>
+    <a class="item" data-title="Building High-Availability Clusters" href="/docs/admin/high-availability/"></a>
+  </div>
+</div>
+<div class="item" data-title="Administering Clusters">
+  <div class="container">
+    <a class="item" data-title="Admin Guide" href="/docs/admin/"></a>
+    <a class="item" data-title="Cluster Management Guide" href="/docs/admin/cluster-management/"></a>
+    <a class="item" data-title="Sharing a Cluster with Namespaces" href="/docs/admin/namespaces/"></a>
+    <a class="item" data-title="Namespaces Walkthrough" href="/docs/admin/namespaces/walkthrough/"></a>
+    <a class="item" data-title="Setting Pod CPU and Memory Limits" href="/docs/admin/limitrange/"></a>
+    <a class="item" data-title="Understanding Resource Quotas" href="/docs/admin/resourcequota/"></a>
+    <a class="item" data-title="Applying Resource Quotas and Limits" href="/docs/admin/resourcequota/walkthrough/"></a>
+    <a class="item" data-title="Kubernetes Components" href="/docs/admin/cluster-components/"></a>
+    <a class="item" data-title="Configuring Kubernetes Use of etcd" href="/docs/admin/etcd/"></a>
+    <a class="item" data-title="Federating Clusters" href="/docs/admin/federation/"></a>
+    <a class="item" data-title="Using Multiple Clusters" href="/docs/admin/multi-cluster/"></a>
+    <a class="item" data-title="Changing Cluster Size" href="https://github.com/kubernetes/kubernetes/wiki/User-FAQ#how-do-i-change-the-size-of-my-cluster/" target='_blank'></a>
+    <a class="item" data-title="Configuring Multiple Schedulers" href="/docs/admin/multiple-schedulers/"></a>
+    <a class="item" data-title="Networking in Kubernetes" href="/docs/admin/networking/"></a>
+    <a class="item" data-title="Using DNS Pods and Services" href="/docs/admin/dns/"></a>
+    <a class="item" data-title="Setting Up and Configuring DNS" href="https://github.com/kubernetes/kubernetes/tree/release-1.3/examples/cluster-dns" target='_blank'></a>
+    <a class="item" data-title="Master <-> Node Communication" href="/docs/admin/master-node-communication/"></a>
+    <a class="item" data-title="Network Plugins" href="/docs/admin/network-plugins/"></a>
+    <a class="item" data-title="Static Pods" href="/docs/admin/static-pods/"></a>
+    <a class="item" data-title="Configuring kubelet Garbage Collection" href="/docs/admin/garbage-collection/"></a>
+    <a class="item" data-title="Configuring Out Of Resource Handling" href="/docs/admin/out-of-resource/"></a>
+    <a class="item" data-title="Configuring Kubernetes with Salt" href="/docs/admin/salt/"></a>
+    <a class="item" data-title="Monitoring Node Health" href="/docs/admin/node-problem/"></a>
+  </div>
+</div>
+        </div> <!-- /pi-accordion -->
+		<button class="push-menu-close-button" onclick="kub.toggleToc()"></button>
+	</div> <!-- /docsToc -->
+	<div id="docsContent">
+        <p><a href="/editdocs#docs/user-guide/managing-deployments.md" id="editPageButton">Edit This Page</a></p>
+    	<h1>Managing Resources</h1>
+		<p>You’ve deployed your application and exposed it via a service. Now what? Kubernetes provides a number of tools to help you manage your application deployment, including scaling and updating. Among the features we’ll discuss in more depth are <a href="/docs/user-guide/configuring-containers/#configuration-in-kubernetes">configuration files</a> and <a href="/docs/user-guide/deploying-applications/#labels">labels</a>.</p>
+
+<p>You can find all the files for this example <a href="https://github.com/kubernetes/kubernetes.github.io/tree/release-1.3/docs/user-guide/">in our docs
+repo here</a>.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#organizing-resource-configurations" id="markdown-toc-organizing-resource-configurations">Organizing resource configurations</a></li>
+  <li><a href="#bulk-operations-in-kubectl" id="markdown-toc-bulk-operations-in-kubectl">Bulk operations in kubectl</a></li>
+  <li><a href="#using-labels-effectively" id="markdown-toc-using-labels-effectively">Using labels effectively</a></li>
+  <li><a href="#canary-deployments" id="markdown-toc-canary-deployments">Canary deployments</a></li>
+  <li><a href="#updating-labels" id="markdown-toc-updating-labels">Updating labels</a></li>
+  <li><a href="#updating-annotations" id="markdown-toc-updating-annotations">Updating annotations</a></li>
+  <li><a href="#scaling-your-application" id="markdown-toc-scaling-your-application">Scaling your application</a></li>
+  <li><a href="#in-place-updates-of-resources" id="markdown-toc-in-place-updates-of-resources">In-place updates of resources</a>    <ul>
+      <li><a href="#kubectl-apply" id="markdown-toc-kubectl-apply">kubectl apply</a></li>
+      <li><a href="#kubectl-edit" id="markdown-toc-kubectl-edit">kubectl edit</a></li>
+      <li><a href="#kubectl-patch" id="markdown-toc-kubectl-patch">kubectl patch</a></li>
+    </ul>
+  </li>
+  <li><a href="#disruptive-updates" id="markdown-toc-disruptive-updates">Disruptive updates</a></li>
+  <li><a href="#updating-your-application-without-a-service-outage" id="markdown-toc-updating-your-application-without-a-service-outage">Updating your application without a service outage</a></li>
+  <li><a href="#whats-next" id="markdown-toc-whats-next">What’s next?</a></li>
+</ul>
+
+<h2 id="organizing-resource-configurations">Organizing resource configurations</h2>
+
+<p>Many applications require multiple resources to be created, such as a Deployment and a Service. Management of multiple resources can be simplified by grouping them together in the same file (separated by <code class="highlighter-rouge">---</code> in YAML). For example:</p>
+
+<table class="includecode"><thead><tr><th><a href="https://raw.githubusercontent.com/kubernetes/kubernetes.github.io/release-1.3/docs/user-guide/nginx-app.yaml" download="nginx-app.yaml"><code>nginx-app.yaml</code></a><img src="/images/copycode.svg" style="max-height:24px" onclick="copyCode('nginx-app.yaml')" title="Copy nginx-app.yaml to clipboard" /></th></tr></thead>
+<tr><td>
+<div id="nginx-app.yaml" class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">my-nginx-svc</span>
+  <span class="s">labels</span><span class="pi">:</span>
+    <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="s">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">port</span><span class="pi">:</span> <span class="s">80</span>
+  <span class="s">selector</span><span class="pi">:</span>
+    <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="nn">---</span>
+<span class="s">apiVersion</span><span class="pi">:</span> <span class="s">extensions/v1beta1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">my-nginx</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">replicas</span><span class="pi">:</span> <span class="s">3</span>
+  <span class="s">template</span><span class="pi">:</span>
+    <span class="s">metadata</span><span class="pi">:</span>
+      <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="s">spec</span><span class="pi">:</span>
+      <span class="s">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+        <span class="s">image</span><span class="pi">:</span> <span class="s">nginx:1.7.9</span>
+        <span class="s">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">containerPort</span><span class="pi">:</span> <span class="s">80</span>
+</code></pre>
+</div>
+</td></tr></table>
+
+<p>Multiple resources can be created the same way as a single resource:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f docs/user-guide/nginx-app.yaml
+service <span class="s2">"my-nginx-svc"</span> created
+deployment <span class="s2">"my-nginx"</span> created
+</code></pre>
+</div>
+
+<p>The resources will be created in the order they appear in the file. Therefore, it’s best to specify the service first, since that will ensure the scheduler can spread the pods associated with the service as they are created by the controller(s), such as Deployment.</p>
+
+<p><code class="highlighter-rouge">kubectl create</code> also accepts multiple <code class="highlighter-rouge">-f</code> arguments:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f docs/user-guide/nginx/nginx-svc.yaml -f docs/user-guide/nginx/nginx-deployment.yaml
+</code></pre>
+</div>
+
+<p>And a directory can be specified rather than or in addition to individual files:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f docs/user-guide/nginx/
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">kubectl</code> will read any files with suffixes <code class="highlighter-rouge">.yaml</code>, <code class="highlighter-rouge">.yml</code>, or <code class="highlighter-rouge">.json</code>.</p>
+
+<p>It is a recommended practice to put resources related to the same microservice or application tier into the same file, and to group all of the files associated with your application in the same directory. If the tiers of your application bind to each other using DNS, then you can then simply deploy all of the components of your stack en masse.</p>
+
+<p>A URL can also be specified as a configuration source, which is handy for deploying directly from configuration files checked into github:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f https://raw.githubusercontent.com/kubernetes/kubernetes/master/docs/user-guide/nginx-deployment.yaml
+deployment <span class="s2">"nginx-deployment"</span> created
+</code></pre>
+</div>
+
+<h2 id="bulk-operations-in-kubectl">Bulk operations in kubectl</h2>
+
+<p>Resource creation isn’t the only operation that <code class="highlighter-rouge">kubectl</code> can perform in bulk. It can also extract resource names from configuration files in order to perform other operations, in particular to delete the same resources you created:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl delete -f docs/user-guide/nginx/
+deployment <span class="s2">"my-nginx"</span> deleted
+service <span class="s2">"my-nginx-svc"</span> deleted
+</code></pre>
+</div>
+
+<p>In the case of just two resources, it’s also easy to specify both on the command line using the resource/name syntax:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl delete deployments/my-nginx services/my-nginx-svc
+</code></pre>
+</div>
+
+<p>For larger numbers of resources, you’ll find it easier to specify the selector (label query) specified using <code class="highlighter-rouge">-l</code> or <code class="highlighter-rouge">--selector</code>, to filter resources by their labels:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl delete deployment,services -l <span class="nv">app</span><span class="o">=</span>nginx
+deployment <span class="s2">"my-nginx"</span> deleted
+service <span class="s2">"my-nginx-svc"</span> deleted
+</code></pre>
+</div>
+
+<p>Because <code class="highlighter-rouge">kubectl</code> outputs resource names in the same syntax it accepts, it’s easy to chain operations using <code class="highlighter-rouge">$()</code> or <code class="highlighter-rouge">xargs</code>:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get <span class="k">$(</span>k create -f docs/user-guide/nginx/ -o name | grep service<span class="k">)</span>
+NAME           CLUSTER-IP   EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>      AGE
+my-nginx-svc   10.0.0.208                 80/TCP       0s
+</code></pre>
+</div>
+
+<p>With the above commands, we first create resources under docs/user-guide/nginx/ and print the resources created with <code class="highlighter-rouge">-o name</code> output format 
+(print each resource as resource/name). Then we <code class="highlighter-rouge">grep</code> only the “service”, and then print it with <code class="highlighter-rouge">kubectl get</code>.</p>
+
+<p>If you happen to organize your resources across several subdirectories within a particular directory, you can recursively perform the operations on the subdirectories also, by specifying <code class="highlighter-rouge">--recursive</code> or <code class="highlighter-rouge">-R</code> alongside the <code class="highlighter-rouge">--filename,-f</code> flag.</p>
+
+<p>For instance, assume there is a directory <code class="highlighter-rouge">project/k8s/development</code> that holds all of the manifests needed for the development environment, organized by resource type:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>project/k8s/development
+├── configmap
+│   └── my-configmap.yaml
+├── deployment
+│   └── my-deployment.yaml
+└── pvc
+    └── my-pvc.yaml
+</code></pre>
+</div>
+
+<p>By default, performing a bulk operation on <code class="highlighter-rouge">project/k8s/development</code> will stop at the first level of the directory, not processing any subdirectories. If we tried to create the resources in this directory using the following command, we’d encounter an error:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f project/k8s/development
+error: you must provide one or more resources by argument or filename <span class="o">(</span>.json|.yaml|.yml|stdin<span class="o">)</span>
+</code></pre>
+</div>
+
+<p>Instead, specify the <code class="highlighter-rouge">--recursive</code> or <code class="highlighter-rouge">-R</code> flag with the <code class="highlighter-rouge">--filename,-f</code> flag as such:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f project/k8s/development --recursive
+configmap <span class="s2">"my-config"</span> created
+deployment <span class="s2">"my-deployment"</span> created
+persistentvolumeclaim <span class="s2">"my-pvc"</span> created
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">--recursive</code> flag works with any operation that accepts the <code class="highlighter-rouge">--filename,-f</code> flag such as: <code class="highlighter-rouge">kubectl {create,get,delete,describe,rollout} etc.</code></p>
+
+<p>The <code class="highlighter-rouge">--recursive</code> flag also works when multiple <code class="highlighter-rouge">-f</code> arguments are provided:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f project/k8s/namespaces -f project/k8s/development --recursive
+namespace <span class="s2">"development"</span> created
+namespace <span class="s2">"staging"</span> created
+configmap <span class="s2">"my-config"</span> created
+deployment <span class="s2">"my-deployment"</span> created
+persistentvolumeclaim <span class="s2">"my-pvc"</span> created
+</code></pre>
+</div>
+
+<p>If you’re interested in learning more about <code class="highlighter-rouge">kubectl</code>, go ahead and read <a href="/docs/user-guide/kubectl-overview">kubectl Overview</a>.</p>
+
+<h2 id="using-labels-effectively">Using labels effectively</h2>
+
+<p>The examples we’ve used so far apply at most a single label to any resource. There are many scenarios where multiple labels should be used to distinguish sets from one another.</p>
+
+<p>For instance, different applications would use different values for the <code class="highlighter-rouge">app</code> label, but a multi-tier application, such as the <a href="https://github.com/kubernetes/kubernetes/tree/master/examples/guestbook/">guestbook example</a>, would additionally need to distinguish each tier. The frontend could carry the following labels:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>     <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">guestbook</span>
+        <span class="s">tier</span><span class="pi">:</span> <span class="s">frontend</span>
+</code></pre>
+</div>
+
+<p>while the Redis master and slave would have different <code class="highlighter-rouge">tier</code> labels, and perhaps even an additional <code class="highlighter-rouge">role</code> label:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>     <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">guestbook</span>
+        <span class="s">tier</span><span class="pi">:</span> <span class="s">backend</span>
+        <span class="s">role</span><span class="pi">:</span> <span class="s">master</span>
+</code></pre>
+</div>
+
+<p>and</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>     <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">guestbook</span>
+        <span class="s">tier</span><span class="pi">:</span> <span class="s">backend</span>
+        <span class="s">role</span><span class="pi">:</span> <span class="s">slave</span>
+</code></pre>
+</div>
+
+<p>The labels allow us to slice and dice our resources along any dimension specified by a label:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl create -f examples/guestbook/all-in-one/guestbook-all-in-one.yaml
+<span class="gp">$ </span>kubectl get pods -Lapp -Ltier -Lrole
+NAME                           READY     STATUS    RESTARTS   AGE       APP         TIER       ROLE
+guestbook-fe-4nlpb             1/1       Running   0          1m        guestbook   frontend   &lt;none&gt;
+guestbook-fe-ght6d             1/1       Running   0          1m        guestbook   frontend   &lt;none&gt;
+guestbook-fe-jpy62             1/1       Running   0          1m        guestbook   frontend   &lt;none&gt;
+guestbook-redis-master-5pg3b   1/1       Running   0          1m        guestbook   backend    master
+guestbook-redis-slave-2q2yf    1/1       Running   0          1m        guestbook   backend    slave
+guestbook-redis-slave-qgazl    1/1       Running   0          1m        guestbook   backend    slave
+my-nginx-divi2                 1/1       Running   0          29m       nginx       &lt;none&gt;     &lt;none&gt;
+my-nginx-o0ef1                 1/1       Running   0          29m       nginx       &lt;none&gt;     &lt;none&gt;
+<span class="gp">$ </span>kubectl get pods -lapp<span class="o">=</span>guestbook,role<span class="o">=</span>slave
+NAME                          READY     STATUS    RESTARTS   AGE
+guestbook-redis-slave-2q2yf   1/1       Running   0          3m
+guestbook-redis-slave-qgazl   1/1       Running   0          3m
+</code></pre>
+</div>
+
+<h2 id="canary-deployments">Canary deployments</h2>
+
+<p>Another scenario where multiple labels are needed is to distinguish deployments of different releases or configurations of the same component. It is common practice to deploy a <em>canary</em> of a new application release (specified via image tag in the pod template) side by side with the previous release so that the new release can receive live production traffic before fully rolling it out.</p>
+
+<p>For instance, you can use a <code class="highlighter-rouge">track</code> label to differentiate different releases.</p>
+
+<p>The primary, stable release would have a <code class="highlighter-rouge">track</code> label with value as <code class="highlighter-rouge">stable</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>     <span class="s">name</span><span class="pi">:</span> <span class="s">frontend</span>
+     <span class="s">replicas</span><span class="pi">:</span> <span class="s">3</span>
+     <span class="s">...</span>
+     <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">guestbook</span>
+        <span class="s">tier</span><span class="pi">:</span> <span class="s">frontend</span>
+        <span class="s">track</span><span class="pi">:</span> <span class="s">stable</span>
+     <span class="s">...</span>
+     <span class="s">image</span><span class="pi">:</span> <span class="s">gb-frontend:v3</span>
+</code></pre>
+</div>
+
+<p>and then you can create a new release of the guestbook frontend that carries the <code class="highlighter-rouge">track</code> label with different value (i.e. <code class="highlighter-rouge">canary</code>), so that two sets of pods would not overlap:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>     <span class="s">name</span><span class="pi">:</span> <span class="s">frontend-canary</span>
+     <span class="s">replicas</span><span class="pi">:</span> <span class="s">1</span>
+     <span class="s">...</span>
+     <span class="s">labels</span><span class="pi">:</span>
+        <span class="s">app</span><span class="pi">:</span> <span class="s">guestbook</span>
+        <span class="s">tier</span><span class="pi">:</span> <span class="s">frontend</span>
+        <span class="s">track</span><span class="pi">:</span> <span class="s">canary</span>
+     <span class="s">...</span>
+     <span class="s">image</span><span class="pi">:</span> <span class="s">gb-frontend:v4</span>
+</code></pre>
+</div>
+
+<p>The frontend service would span both sets of replicas by selecting the common subset of their labels (i.e. omitting the <code class="highlighter-rouge">track</code> label), so that the traffic will be redirected to both applications:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>  <span class="s">selector</span><span class="pi">:</span>
+     <span class="s">app</span><span class="pi">:</span> <span class="s">guestbook</span>
+     <span class="s">tier</span><span class="pi">:</span> <span class="s">frontend</span>
+</code></pre>
+</div>
+
+<p>You can tweak the number of replicas of the stable and canary releases to determine the ratio of each release that will receive live production traffic (in this case, 3:1).
+Once you’re confident, you can update the stable track to the new application release and remove the canary one.</p>
+
+<p>For a more concrete example, check the <a href="https://github.com/kelseyhightower/talks/tree/master/kubecon-eu-2016/demo#deploy-a-canary">tutorial of deploying Ghost</a>.</p>
+
+<h2 id="updating-labels">Updating labels</h2>
+
+<p>Sometimes existing pods and other resources need to be relabeled before creating new resources. This can be done with <code class="highlighter-rouge">kubectl label</code>. 
+For example, if you want to label all your nginx pods as frontend tier, simply run:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl label pods -l <span class="nv">app</span><span class="o">=</span>nginx <span class="nv">tier</span><span class="o">=</span>fe
+pod <span class="s2">"my-nginx-2035384211-j5fhi"</span> labeled
+pod <span class="s2">"my-nginx-2035384211-u2c7e"</span> labeled
+pod <span class="s2">"my-nginx-2035384211-u3t6x"</span> labeled
+</code></pre>
+</div>
+
+<p>This first filters all pods with the label “app=nginx”, and then labels them with the “tier=fe”. 
+To see the pods you just labeled, run:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx -L tier
+NAME                        READY     STATUS    RESTARTS   AGE       TIER
+my-nginx-2035384211-j5fhi   1/1       Running   0          23m       fe
+my-nginx-2035384211-u2c7e   1/1       Running   0          23m       fe
+my-nginx-2035384211-u3t6x   1/1       Running   0          23m       fe
+</code></pre>
+</div>
+
+<p>This outputs all “app=nginx” pods, with an additional label column of pods’ tier (specified with <code class="highlighter-rouge">-L</code> or <code class="highlighter-rouge">--label-columns</code>).</p>
+
+<p>For more information, please see <a href="/docs/user-guide/labels/">labels</a> and <a href="/docs/user-guide/kubectl/kubectl_label/">kubectl label</a> document.</p>
+
+<h2 id="updating-annotations">Updating annotations</h2>
+
+<p>Sometimes you would want to attach annotations to resources. Annotations are arbitrary non-identifying metadata for retrieval by API clients such as tools, libraries, etc. This can be done with <code class="highlighter-rouge">kubectl annotate</code>. For example:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl annotate pods my-nginx-v4-9gw19 <span class="nv">description</span><span class="o">=</span><span class="s1">'my frontend running nginx'</span>
+<span class="gp">$ </span>kubectl get pods my-nginx-v4-9gw19 -o yaml
+apiversion: v1
+kind: pod
+metadata:
+  annotations:
+    description: my frontend running nginx
+...
+</code></pre>
+</div>
+
+<p>For more information, please see <a href="/docs/user-guide/annotations/">annotations</a> and <a href="/docs/user-guide/kubectl/kubectl_annotate/">kubectl annotate</a> document.</p>
+
+<h2 id="scaling-your-application">Scaling your application</h2>
+
+<p>When load on your application grows or shrinks, it’s easy to scale with <code class="highlighter-rouge">kubectl</code>. For instance, to decrease the number of nginx replicas from 3 to 1, do:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl scale deployment/my-nginx --replicas<span class="o">=</span>1
+deployment <span class="s2">"my-nginx"</span> scaled
+</code></pre>
+</div>
+
+<p>Now you only have one pod managed by the deployment.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx
+NAME                        READY     STATUS    RESTARTS   AGE
+my-nginx-2035384211-j5fhi   1/1       Running   0          30m
+</code></pre>
+</div>
+
+<p>To have the system automatically choose the number of nginx replicas as needed, ranging from 1 to 3, do:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl autoscale deployment/my-nginx --min<span class="o">=</span>1 --max<span class="o">=</span>3
+deployment <span class="s2">"my-nginx"</span> autoscaled
+</code></pre>
+</div>
+
+<p>Now your nginx replicas will be scaled up and down as needed, automatically.</p>
+
+<p>For more information, please see <a href="/docs/user-guide/kubectl/kubectl_scale/">kubectl scale</a>, <a href="/docs/user-guide/kubectl/kubectl_autoscale/">kubectl autoscale</a> and <a href="/docs/user-guide/horizontal-pod-autoscaler/">horizontal pod autoscaler</a> document.</p>
+
+<h2 id="in-place-updates-of-resources">In-place updates of resources</h2>
+
+<p>Sometimes it’s necessary to make narrow, non-disruptive updates to resources you’ve created.</p>
+
+<h3 id="kubectl-apply">kubectl apply</h3>
+
+<p>It is suggested to maintain a set of configuration files in source control (see <a href="http://martinfowler.com/bliki/InfrastructureAsCode.html">configuration as code</a>),
+so that they can be maintained and versioned along with the code for the resources they configure.
+Then, you can use <a href="/docs/user-guide/kubectl/kubectl_apply/"><code class="highlighter-rouge">kubectl apply</code></a> to push your configuration changes to the cluster.</p>
+
+<p>This command will compare the version of the configuration that you’re pushing with the previous version and apply the changes you’ve made, without overwriting any automated changes to properties you haven’t specified.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl apply -f docs/user-guide/nginx/nginx-deployment.yaml
+deployment <span class="s2">"my-nginx"</span> configured
+</code></pre>
+</div>
+
+<p>Note that <code class="highlighter-rouge">kubectl apply</code> attaches an annotation to the resource in order to determine the changes to the configuration since the previous invocation. When it’s invoked, <code class="highlighter-rouge">kubectl apply</code> does a three-way diff between the previous configuration, the provided input and the current configuration of the resource, in order to determine how to modify the resource.</p>
+
+<p>Currently, resources are created without this annotation, so the first invocation of <code class="highlighter-rouge">kubectl apply</code> will fall back to a two-way diff between the provided input and the current configuration of the resource. During this first invocation, it cannot detect the deletion of properties set when the resource was created. For this reason, it will not remove them.</p>
+
+<p>All subsequent calls to <code class="highlighter-rouge">kubectl apply</code>, and other commands that modify the configuration, such as <code class="highlighter-rouge">kubectl replace</code> and <code class="highlighter-rouge">kubectl edit</code>, will update the annotation, allowing subsequent calls to <code class="highlighter-rouge">kubectl apply</code> to detect and perform deletions using a three-way diff.</p>
+
+<p><strong>Note:</strong> To use apply, always create resource initially with either <code class="highlighter-rouge">kubectl apply</code> or <code class="highlighter-rouge">kubectl create --save-config</code>.</p>
+
+<h3 id="kubectl-edit">kubectl edit</h3>
+
+<p>Alternatively, you may also update resources with <code class="highlighter-rouge">kubectl edit</code>:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl edit deployment/my-nginx
+</code></pre>
+</div>
+
+<p>This is equivalent to first <code class="highlighter-rouge">get</code> the resource, edit it in text editor, and then <code class="highlighter-rouge">apply</code> the resource with the updated version:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl get deployment my-nginx -o yaml &gt; /tmp/nginx.yaml
+<span class="gp">$ </span>vi /tmp/nginx.yaml
+<span class="c"># do some edit, and then save the file</span>
+<span class="gp">$ </span>kubectl apply -f /tmp/nginx.yaml
+deployment <span class="s2">"my-nginx"</span> configured
+<span class="gp">$ </span>rm /tmp/nginx.yaml
+</code></pre>
+</div>
+
+<p>This allows you to do more significant changes more easily. Note that you can specify the editor with your <code class="highlighter-rouge">EDITOR</code> or <code class="highlighter-rouge">KUBE_EDITOR</code> environment variables.</p>
+
+<p>For more information, please see <a href="/docs/user-guide/kubectl/kubectl_edit/">kubectl edit</a> document.</p>
+
+<h3 id="kubectl-patch">kubectl patch</h3>
+
+<p>Suppose you want to fix a typo of the container’s image of a Deployment. One way to do that is with <code class="highlighter-rouge">kubectl patch</code>:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># Suppose you have a Deployment with a container named "nginx" and its image "nignx" (typo), </span>
+<span class="c"># use container name "nginx" as a key to update the image from "nignx" (typo) to "nginx"</span>
+<span class="gp">$ </span>kubectl get deployment my-nginx -o yaml
+</code></pre>
+</div>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">extensions/v1beta1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="nn">...</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">template</span><span class="pi">:</span>
+    <span class="s">spec</span><span class="pi">:</span>
+      <span class="s">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">image</span><span class="pi">:</span> <span class="s">nignx</span>
+        <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="nn">...</span>
+</code></pre>
+</div>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl patch deployment my-nginx -p<span class="s1">'{"spec":{"template":{"spec":{"containers":[{"name":"nginx","image":"nginx"}]}}}}'</span>
+<span class="s2">"my-nginx"</span> patched
+<span class="gp">$ </span>kubectl get pod my-nginx-1jgkf -o yaml
+</code></pre>
+</div>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">extensions/v1beta1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="nn">...</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">template</span><span class="pi">:</span>
+    <span class="s">spec</span><span class="pi">:</span>
+      <span class="s">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">image</span><span class="pi">:</span> <span class="s">nginx</span>
+        <span class="s">name</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="nn">...</span>
+</code></pre>
+</div>
+
+<p>The patch is specified using json.</p>
+
+<p>The system ensures that you don’t clobber changes made by other users or components by confirming that the <code class="highlighter-rouge">resourceVersion</code> doesn’t differ from the version you edited. If you want to update regardless of other changes, remove the <code class="highlighter-rouge">resourceVersion</code> field when you edit the resource. However, if you do this, don’t use your original configuration file as the source since additional fields most likely were set in the live state.</p>
+
+<p>For more information, please see <a href="/docs/user-guide/kubectl/kubectl_patch/">kubectl patch</a> document.</p>
+
+<h2 id="disruptive-updates">Disruptive updates</h2>
+
+<p>In some cases, you may need to update resource fields that cannot be updated once initialized, or you may just want to make a recursive change immediately, such as to fix broken pods created by a Deployment. To change such fields, use <code class="highlighter-rouge">replace --force</code>, which deletes and re-creates the resource. In this case, you can simply modify your original configuration file:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl replace -f docs/user-guide/nginx/nginx-deployment.yaml --force
+deployment <span class="s2">"my-nginx"</span> deleted
+deployment <span class="s2">"my-nginx"</span> replaced
+</code></pre>
+</div>
+
+<h2 id="updating-your-application-without-a-service-outage">Updating your application without a service outage</h2>
+
+<p>At some point, you’ll eventually need to update your deployed application, typically by specifying a new image or image tag, as in the canary deployment scenario above. <code class="highlighter-rouge">kubectl</code> supports several update operations, each of which is applicable to different scenarios.</p>
+
+<p>We’ll guide you through how to create and update applications with Deployments. If your deployed application is managed by Replication Controllers, 
+you should read <a href="/docs/user-guide/rolling-updates/">how to use <code class="highlighter-rouge">kubectl rolling-update</code></a> instead.</p>
+
+<p>Let’s say you were running version 1.7.9 of nginx:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl run my-nginx --image<span class="o">=</span>nginx:1.7.9 --replicas<span class="o">=</span>3
+deployment <span class="s2">"my-nginx"</span> created
+</code></pre>
+</div>
+
+<p>To update to version 1.9.1, simply change <code class="highlighter-rouge">.spec.template.spec.containers[0].image</code> from <code class="highlighter-rouge">nginx:1.7.9</code> to <code class="highlighter-rouge">nginx:1.9.1</code>, with the kubectl commands we learned above.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>kubectl edit deployment/my-nginx
+</code></pre>
+</div>
+
+<p>That’s it! The Deployment will declaratively update the deployed nginx application progressively behind the scene. It ensures that only a certain number of old replicas may be down while they are being updated, and only a certain number of new replicas may be created above the desired number of pods. To learn more details about it, visit <a href="/docs/user-guide/deployments/">Deployment page</a>.</p>
+
+<h2 id="whats-next">What’s next?</h2>
+
+<ul>
+  <li><a href="/docs/user-guide/introspection-and-debugging/">Learn about how to use <code class="highlighter-rouge">kubectl</code> for application introspection and debugging.</a></li>
+  <li><a href="/docs/user-guide/config-best-practices/">Configuration Best Practices and Tips</a></li>
+</ul>
+
+        <p><a href=""><img src="https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/managing-deployments.md?pixel" alt="Analytics" /></a>
+        <div id="pd_rating_holder_8345992"></div>
+		<script type="text/javascript">
+	        PDRTJS_settings_8345992 = {
+		        "id" : "8345992",
+		        "unique_id" : "/docs/user-guide/managing-deployments/",
+		        "title" : "Managing Resources",
+		        "permalink" : "http://kubernetes.github.io/docs/user-guide/managing-deployments/"
+	        };
+	        (function(d,c,j){if(!document.getElementById(j)){var pd=d.createElement(c),s;pd.id=j;pd.src=('https:'==document.location.protocol)?'https://polldaddy.com/js/rating/rating.js':'http://i0.poll.fm/js/rating/rating.js';s=document.getElementsByTagName(c)[0];s.parentNode.insertBefore(pd,s);}}(document,'script','pd-rating-js'));
+        </script>
+	</div>
+</section>
+
+<footer>
+	<main class="light-text">
+		<nav>
+			<a href="/docs/hellonode/">Get Started</a>
+			<a href="/docs/">Documentation</a>
+			<a href="http://blog.kubernetes.io/">Blog</a>
+			<a href="/community/">Community</a>
+		</nav>
+		<div class="social">
+			<div>
+				<a href="https://twitter.com/kubernetesio" class="twitter"><span>twitter</span></a>
+				<a href="https://github.com/kubernetes/kubernetes" class="github"><span>Github</span></a>
+				<a href="http://slack.k8s.io/" class="slack"><span>Slack</span></a>
+			</div>
+			<div>
+				<a href="http://stackoverflow.com/questions/tagged/kubernetes" class="stack-overflow"><span>Stack Overflow</span></a>
+				<a href="https://groups.google.com/forum/#!forum/kubernetes-users" class="mailing-list"><span>Mailing List</span></a>
+				<a href="https://calendar.google.com/calendar/embed?src=nt2tcnbtbied3l6gi2h29slvc0%40group.calendar.google.com" class="calendar"><span>Events Calendar</span></a>
+			</div>
+			<div>
+				<span>I wish this page</span>
+				<input type="text" id="wishField" name="wishField" placeholder="enter your wish">
+			</div>
+		</div>
+		<div id="miceType" class="center">&copy; 2016 Kubernetes</div>
+	</main>
+</footer>
+
+
+<button class="flyout-button" onclick="kub.toggleToc()"></button>
+
+<style>
+	.cse .gsc-control-cse, .gsc-control-cse, {
+		padding: 0;
+	}
+	.gsc-control-cse table, .gsc-control-cse-en table {
+		margin:0px !important;
+	}
+
+	.gsc-above-wrapper-area {
+		border-bottom: 0;
+	}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36037335-10', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Commenting out AnswerDash for now; we need to work on our list of questions/answers/design first
+<!-- Start of AnswerDash script <script>var AnswerDash;!function(e,t,n,s,a){if(!t.getElementById(s)){var i,r=t.createElement(n),c=t.getElementsByTagName(n)[0];e[a]||(i=e[a]=function(){i.__oninit.push(arguments)},i.__oninit=[]),r.type="text/javascript",r.async=!0,r.src="https://p1.answerdash.com/answerdash.min.js?siteid=756",r.setAttribute("id",s),c.parentNode.insertBefore(r,c)}}(window,document,"script","answerdash-script","AnswerDash");</script> <!-- End of AnswerDash script -->
+</body>
+</html>
